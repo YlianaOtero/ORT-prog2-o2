@@ -7,27 +7,22 @@ package Interfaz;
 import Dominio.Articulo;
 import Dominio.ListaArticulos;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ylian
  */
-public class VentanaArticulo extends javax.swing.JFrame {
+public class AAAAAAA extends javax.swing.JFrame {
 
     /**
-     * Creates new form Articulo2
+     * Creates new form AAAAAAA
      */
-    public VentanaArticulo() {
+    public AAAAAAA() {
         initComponents();
     }
     
-    public VentanaArticulo(ListaArticulos unaLista) {
+    public AAAAAAA (ListaArticulos unaLista) {
         this.articulos = unaLista;
-        if (!unaLista.getLista().isEmpty()) {
-            ((DefaultTableModel)tbl_datos.getModel()).addRow(unaLista.getLista().toArray());
-        }
-        
         initComponents();
     }
 
@@ -103,10 +98,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
         tbl_datos.setName(""); // NOI18N
         tbl_datos.getTableHeader().setReorderingAllowed(false);
         slp_datos.setViewportView(tbl_datos);
-        if (tbl_datos.getColumnModel().getColumnCount() > 0) {
-            tbl_datos.getColumnModel().getColumn(0).setResizable(false);
-            tbl_datos.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,7 +116,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                             .addComponent(lbl_nombre)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(slp_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -145,11 +136,39 @@ public class VentanaArticulo extends javax.swing.JFrame {
                             .addComponent(lbl_descripcion))
                         .addGap(31, 31, 31)
                         .addComponent(btn_agregar)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
+        // TODO add your handling code here:
+        String nombre = txt_nombre.getText();
+        String descripcion = txt_descripcion.getText();
+
+        if (nombre.length() == 0 || descripcion.length() == 0) {
+            JOptionPane.showMessageDialog(onp_aviso, "El articulo debe tener tanto "
+                + "nombre como descripcion.", "Datos incompletos",
+                JOptionPane.ERROR_MESSAGE);
+        } else {
+            Articulo nuevo = new Articulo(nombre, descripcion);
+
+            int agregar = this.articulos.agregarArticulo(nuevo);
+
+            switch (agregar) {
+                case 1 -> JOptionPane.showMessageDialog(onp_aviso,
+                    "El articulo fue ingresado correctamente.", "Articulo "
+                    + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
+                case 0 -> JOptionPane.showMessageDialog(onp_aviso, "El articulo ya "
+                    + "existia previamente en la lista.", "Articulo no ingresado",
+                    JOptionPane.ERROR_MESSAGE);
+                case -1 -> JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
+                    + "articulo con ese nombre.", "Articulo no ingresado",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btn_agregarActionPerformed
 
     private void txt_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_descripcionActionPerformed
         // TODO add your handling code here:
@@ -158,34 +177,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombreActionPerformed
-
-    private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
-        // TODO add your handling code here:
-        String nombre = txt_nombre.getText();
-        String descripcion = txt_descripcion.getText();
-        
-        if (nombre.length() == 0 || descripcion.length() == 0) {
-            JOptionPane.showMessageDialog(onp_aviso, "El articulo debe tener tanto "
-                    + "nombre como descripcion.", "Datos incompletos", 
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            Articulo nuevo = new Articulo(nombre, descripcion);
-        
-            int agregar = this.articulos.agregarArticulo(nuevo);
-
-            switch (agregar) {
-                case 1 -> JOptionPane.showMessageDialog(onp_aviso, 
-                            "El articulo fue ingresado correctamente.", "Articulo "
-                                    + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
-                case 0 -> JOptionPane.showMessageDialog(onp_aviso, "El articulo ya "
-                        + "existia previamente en la lista.", "Articulo no ingresado", 
-                        JOptionPane.ERROR_MESSAGE);
-                case -1 -> JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
-                        + "articulo con ese nombre.", "Articulo no ingresado", 
-                        JOptionPane.ERROR_MESSAGE);
-            }  
-        }   
-    }//GEN-LAST:event_btn_agregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,35 +195,23 @@ public class VentanaArticulo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaArticulo().setVisible(true);
+                new AAAAAAA().setVisible(true);
             }
         });
     }
-    
-    public String getNombreIngresado() {
-        return txt_nombre.getText();
-    }
-    
-    public String getDescripcionIngresada() {
-        return txt_descripcion.getText();
-    }
-
 
     private ListaArticulos articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
