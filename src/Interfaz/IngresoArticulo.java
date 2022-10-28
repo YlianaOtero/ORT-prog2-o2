@@ -7,6 +7,8 @@ package Interfaz;
 import Dominio.Articulo;
 import Dominio.ListaArticulos;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -15,7 +17,7 @@ import javax.swing.JOptionPane;
 public class IngresoArticulo extends javax.swing.JFrame {
 
     /**
-     * Creates new form AAAAAAA
+     * Creates new form IngresoArticulo
      */
     public IngresoArticulo() {
         initComponents();
@@ -23,7 +25,16 @@ public class IngresoArticulo extends javax.swing.JFrame {
     
     public IngresoArticulo (ListaArticulos unaLista) {
         this.articulos = unaLista;
+        int cantidad = this.articulos.getCantidad();
+        
         initComponents();
+        
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        for (int elem = 0; elem < cantidad; elem++) {
+            String nombre = this.articulos.getArticuloEnPos(elem).getNombre();
+            String descripcion = this.articulos.getArticuloEnPos(elem).getDescripcion();
+            modelo.insertRow(elem, new Object[] { nombre, descripcion });
+        }
     }
 
     /**
@@ -45,6 +56,7 @@ public class IngresoArticulo extends javax.swing.JFrame {
         tbl_datos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Articulos");
 
         lbl_descripcion.setText("Descripción");
 
@@ -71,10 +83,7 @@ public class IngresoArticulo extends javax.swing.JFrame {
 
         tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Nombre", "Descripción"
@@ -157,9 +166,14 @@ public class IngresoArticulo extends javax.swing.JFrame {
             int agregar = this.articulos.agregarArticulo(nuevo);
 
             switch (agregar) {
-                case 1 -> JOptionPane.showMessageDialog(onp_aviso,
+                case 1 -> {
+                    JOptionPane.showMessageDialog(onp_aviso,
                     "El articulo fue ingresado correctamente.", "Articulo "
                     + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
+                    int cantidad = this.articulos.getCantidad();
+                    DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+                    modelo.insertRow(cantidad-1, new Object[] { nombre, descripcion });
+                }
                 case 0 -> JOptionPane.showMessageDialog(onp_aviso, "El articulo ya "
                     + "existia previamente en la lista.", "Articulo no ingresado",
                     JOptionPane.ERROR_MESSAGE);
