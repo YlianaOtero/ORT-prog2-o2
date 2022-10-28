@@ -12,16 +12,16 @@ import javax.swing.JOptionPane;
  *
  * @author ylian
  */
-public class AAAAAAA extends javax.swing.JFrame {
+public class IngresoArticulo extends javax.swing.JFrame {
 
     /**
      * Creates new form AAAAAAA
      */
-    public AAAAAAA() {
+    public IngresoArticulo() {
         initComponents();
     }
     
-    public AAAAAAA (ListaArticulos unaLista) {
+    public IngresoArticulo (ListaArticulos unaLista) {
         this.articulos = unaLista;
         initComponents();
     }
@@ -195,20 +195,21 @@ public class AAAAAAA extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AAAAAAA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AAAAAAA().setVisible(true);
+                new IngresoArticulo().setVisible(true);
             }
         });
     }

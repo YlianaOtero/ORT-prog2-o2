@@ -11,13 +11,13 @@ import Dominio.ListaArticulos;
  *
  * @author ylian
  */
-public class Prueba extends AAAAAAA {
+public class Prueba extends IngresoArticulo {
     public static void main(String[] args) {
         ListaArticulos lista = new ListaArticulos();
         Articulo nuevo = new Articulo("a1", "asadasd");
         int agrego = lista.agregarArticulo(nuevo);
      //   System.out.println(lista.getArticuloEnPos(0).getNombre());
-        AAAAAAA nueva = new AAAAAAA(lista);
+        IngresoArticulo nueva = new IngresoArticulo(lista);
         nueva.setVisible(true);
     }
 }
