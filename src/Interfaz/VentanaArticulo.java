@@ -4,6 +4,11 @@
  */
 package Interfaz;
 
+import Dominio.Articulo;
+import Dominio.ListaArticulos;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ylian
@@ -16,6 +21,15 @@ public class VentanaArticulo extends javax.swing.JFrame {
     public VentanaArticulo() {
         initComponents();
     }
+    
+    public VentanaArticulo(ListaArticulos unaLista) {
+        this.articulos = unaLista;
+        if (!unaLista.getLista().isEmpty()) {
+            ((DefaultTableModel)tbl_datos.getModel()).addRow(unaLista.getLista().toArray());
+        }
+        
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,6 +40,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        onp_aviso = new javax.swing.JOptionPane();
         lbl_descripcion = new javax.swing.JLabel();
         btn_agregar = new javax.swing.JButton();
         txt_descripcion = new javax.swing.JTextField();
@@ -39,6 +54,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
         lbl_descripcion.setText("Descripción");
 
         btn_agregar.setText("Agregar");
+        btn_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregarActionPerformed(evt);
+            }
+        });
 
         txt_descripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +159,34 @@ public class VentanaArticulo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombreActionPerformed
 
+    private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
+        // TODO add your handling code here:
+        String nombre = txt_nombre.getText();
+        String descripcion = txt_descripcion.getText();
+        
+        if (nombre.length() == 0 || descripcion.length() == 0) {
+            JOptionPane.showMessageDialog(onp_aviso, "El articulo debe tener tanto "
+                    + "nombre como descripcion.", "Datos incompletos", 
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            Articulo nuevo = new Articulo(nombre, descripcion);
+        
+            int agregar = this.articulos.agregarArticulo(nuevo);
+
+            switch (agregar) {
+                case 1 -> JOptionPane.showMessageDialog(onp_aviso, 
+                            "El articulo fue ingresado correctamente.", "Articulo "
+                                    + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
+                case 0 -> JOptionPane.showMessageDialog(onp_aviso, "El articulo ya "
+                        + "existia previamente en la lista.", "Articulo no ingresado", 
+                        JOptionPane.ERROR_MESSAGE);
+                case -1 -> JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
+                        + "articulo con ese nombre.", "Articulo no ingresado", 
+                        JOptionPane.ERROR_MESSAGE);
+            }  
+        }   
+    }//GEN-LAST:event_btn_agregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,10 +234,12 @@ public class VentanaArticulo extends javax.swing.JFrame {
     }
 
 
+    private ListaArticulos articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_descripcion;
     private javax.swing.JLabel lbl_nombre;
+    private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JScrollPane slp_datos;
     private javax.swing.JTable tbl_datos;
     private javax.swing.JTextField txt_descripcion;
