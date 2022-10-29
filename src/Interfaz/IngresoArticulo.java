@@ -29,13 +29,17 @@ public class IngresoArticulo extends javax.swing.JFrame {
     }
     
     public IngresoArticulo (Inventario unaLista) {
-        
         this.articulos = unaLista;
-        int cantidad = this.articulos.getCantidad();
         
         initComponents();
         
+        cargarTabla();
+    }
+    
+    private void cargarTabla() {
+        int cantidad = this.articulos.getCantidad();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        
         for (int elem = 0; elem < cantidad; elem++) {
             String nombre = this.articulos.getArticuloEnPos(elem).getNombre();
             String descripcion = this.articulos.getArticuloEnPos(elem).getDescripcion();
@@ -175,29 +179,27 @@ public class IngresoArticulo extends javax.swing.JFrame {
                 + "nombre como descripcion.", "Datos incompletos",
                 JOptionPane.ERROR_MESSAGE);
         } else {
-            Articulo nuevo = new Articulo(nombre, descripcion);
-
-            int agregar = this.articulos.agregarArticulo(nuevo);
-
-            switch (agregar) {
-                case 1 -> {
-                    JOptionPane.showMessageDialog(onp_aviso,
-                    "El articulo fue ingresado correctamente.", "Articulo "
-                    + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
-                    int cantidad = this.articulos.getCantidad();
-                    DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-                    modelo.insertRow(cantidad-1, new Object[] { nombre, descripcion });
-                }
-                case 0 -> JOptionPane.showMessageDialog(onp_aviso, "El articulo ya "
-                    + "existia previamente en la lista.", "Articulo no ingresado",
-                    JOptionPane.ERROR_MESSAGE);
-                case -1 -> JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
+            if (this.articulos.nombreYaExistente(nombre)) {
+                JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
                     + "articulo con ese nombre.", "Articulo no ingresado",
                     JOptionPane.ERROR_MESSAGE);
+            } else {
+                agregarEnInventario(nombre, descripcion);
             }
         }
     }//GEN-LAST:event_btn_agregarActionPerformed
 
+    private void agregarEnInventario(String nombre, String descripcion) {
+        Articulo nuevo = new Articulo(nombre, descripcion);
+        this.articulos.agregarArticulo(nuevo);
+        JOptionPane.showMessageDialog(onp_aviso,
+            "El articulo fue ingresado correctamente.", "Articulo "
+            + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
+        int cantidad = this.articulos.getCantidad();
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.insertRow(cantidad-1, new Object[] { nombre, descripcion });
+    }
+    
     private void txt_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_descripcionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_descripcionActionPerformed
