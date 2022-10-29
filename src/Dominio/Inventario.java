@@ -1,17 +1,18 @@
 package Dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /** Representa un inventario de articulos.
  * @author yliana*/
-public class ListaArticulos {
+public class Inventario implements Serializable {
     private ArrayList<Articulo> lista;
     private int cantidad;
     
     /** Crea un objeto de tipo ListaArticulos.*/
-    public ListaArticulos() {
+    public Inventario() {
         this.lista = new ArrayList<Articulo>();
         this.cantidad = 0;
     }
