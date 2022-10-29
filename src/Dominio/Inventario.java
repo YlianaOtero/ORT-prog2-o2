@@ -11,7 +11,7 @@ public class Inventario implements Serializable {
     private ArrayList<Articulo> lista;
     private int cantidad;
     
-    /** Crea un objeto de tipo ListaArticulos.*/
+    /** Crea un objeto de tipo Inventario.*/
     public Inventario() {
         this.lista = new ArrayList<Articulo>();
         this.cantidad = 0;
