@@ -66,24 +66,11 @@ public class Inventario implements Serializable {
         return pos;
     }
     
-    /** @param unArticulo el artículo a agregar.
-     * @return Devuelve 1 en caso de haber agregado el artículo exitosamente. En 
-     * cualquier otro caso, no fue agregado. Si devuelve 0, es porque el artículo
-     * ya existía previamente en la lista, y si devuelve -1, es porque la lista
-     * ya contiene a otro artículo con el mismo nombre.*/
-    public int agregarArticulo(Articulo unArticulo) {
-        int resultado = 1;
-        
-        if (estaEnLaLista(unArticulo)) {
-            resultado = 0;
-        } else if (nombreYaExistente(unArticulo.getNombre())) {
-            resultado = -1;
-        } else {
-            this.lista.add(unArticulo);
-            this.cantidad++;
-        }
-        
-        return resultado;     
+    /** Agrega un articulo a la lista, sin importar si este ya estaba presente. 
+     * @param unArticulo el artículo a agregar.*/
+    public void agregarArticulo(Articulo unArticulo) {
+        this.lista.add(unArticulo);
+        this.cantidad++;
     }
     
     /** Borra al artículo de la lista, cuando este mismo artículo pertenece a ella.
