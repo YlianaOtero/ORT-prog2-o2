@@ -5,7 +5,15 @@
 package Interfaz;
 
 import Dominio.Articulo;
-import Dominio.ListaArticulos;
+import Dominio.Inventario;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,17 +21,20 @@ import Dominio.ListaArticulos;
  */
 public class Prueba extends IngresoArticulo {
     public static void main(String[] args) {
-        ListaArticulos lista = new ListaArticulos();
-        Articulo nuevo = new Articulo("Taza", "Taza sublimada de Shrek");
-        int agrego = lista.agregarArticulo(nuevo);
-        Articulo nuevo2 = new Articulo("Papas rusticas", "Papitas");
-        int agrego2 = lista.agregarArticulo(nuevo2);
-        Articulo nuevo3 = new Articulo("Silla oficina", "Silla con ruedas");
-        int agrego3 = lista.agregarArticulo(nuevo3);
-        Articulo nuevo4 = new Articulo("Agua mineral", "Agua mineral SIRTE con gas");
-        int agrego4 = lista.agregarArticulo(nuevo4);
-     //   System.out.println(lista.getArticuloEnPos(0).getNombre());
+        Inventario lista = new Inventario();
+        
+        ObjectInputStream in;
+        try {
+            in = new ObjectInputStream(new FileInputStream("salida"));
+            lista = (Inventario)in.readObject();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IngresoArticulo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         IngresoArticulo nueva = new IngresoArticulo(lista);
         nueva.setVisible(true);
+        
     }
 }

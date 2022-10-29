@@ -5,7 +5,15 @@
 package Interfaz;
 
 import Dominio.Articulo;
-import Dominio.ListaArticulos;
+import Dominio.Inventario;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -23,7 +31,8 @@ public class IngresoArticulo extends javax.swing.JFrame {
         initComponents();
     }
     
-    public IngresoArticulo (ListaArticulos unaLista) {
+    public IngresoArticulo (Inventario unaLista) {
+        
         this.articulos = unaLista;
         int cantidad = this.articulos.getCantidad();
         
@@ -57,6 +66,14 @@ public class IngresoArticulo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Articulos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lbl_descripcion.setText("Descripción");
 
@@ -192,8 +209,19 @@ public class IngresoArticulo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombreActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        guardarInventario();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        guardarInventario();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -227,8 +255,21 @@ public class IngresoArticulo extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void guardarInventario() {
+        ObjectOutputStream out;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream("salida"));
+            out.writeObject(this.articulos);
+            out.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    private ListaArticulos articulos;
+    private Inventario articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_descripcion;
