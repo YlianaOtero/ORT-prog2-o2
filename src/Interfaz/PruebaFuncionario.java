@@ -4,7 +4,6 @@
  */
 package Interfaz;
 
-import Dominio.Funcionario;
 import Dominio.ListaFuncionarios;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
