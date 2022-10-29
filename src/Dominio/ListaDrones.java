@@ -1,12 +1,13 @@
 package Dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /** Representa un registro de drones.
  * @author yliana*/
-public class ListaDrones {
+public class ListaDrones implements Serializable {
     private ArrayList<Dron> lista;
     private int cantidad;
     

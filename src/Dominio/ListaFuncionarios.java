@@ -1,12 +1,13 @@
 package Dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 /** Representa un registro de funcionarios.
  * @author yliana*/
-public class ListaFuncionarios {
+public class ListaFuncionarios implements Serializable {
     private ArrayList<Funcionario> lista;
     private int cantidad;
     

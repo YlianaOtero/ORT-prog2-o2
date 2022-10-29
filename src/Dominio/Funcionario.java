@@ -1,8 +1,10 @@
 package Dominio;
 
+import java.io.Serializable;
+
 /** Representa un funcionario puntual, con nombre, edad y número.
  * @author yliana*/
-public class Funcionario {
+public class Funcionario implements Serializable {
     private static int UltimoNumero = 0;
 
     private String nombre;

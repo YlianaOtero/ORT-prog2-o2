@@ -1,8 +1,9 @@
 package Dominio;
+import java.io.Serializable;
 
 /** Representa un articulo puntual, con nombre y descripción.
  * @author ylian*/
-public class Articulo {
+public class Articulo implements Serializable {
     private String nombre;
     private String descripcion;
 

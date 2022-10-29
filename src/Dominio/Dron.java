@@ -1,9 +1,11 @@
 package Dominio;
 
+import java.io.Serializable;
+
 /** Representa a un dron puntual, con su código de indentificación, modelo y
  * tipo de cámara.
  * @author yliana*/
-public class Dron {
+public class Dron implements Serializable {
     private String identificacion;
     private String modelo;
     private int tipoCamara;
