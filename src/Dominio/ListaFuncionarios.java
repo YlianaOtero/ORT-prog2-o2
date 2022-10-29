@@ -33,6 +33,21 @@ public class ListaFuncionarios implements Serializable {
         return this.lista.get(pos);
     }
     
+    /** Busca el número de funcionario mas alto en la lista.
+     * @return El mayor número de funcionario entre los presentes.*/
+    public int numeroMasAlto() {
+        int numero = 0;
+        
+        for (int pos = 0; pos < cantidad; pos++) {
+            int numeroActual = getFuncionarioEnPos(pos).getNumero();
+            if (numeroActual > numero) {
+                numero = numeroActual;
+            }
+        }
+        
+        return numero;
+    }
+    
     /** Busca a un funcionario puntual en la lista. Se asume que el funcionario está presente.
      * @param unFuncionario - el funcionario a buscar.
      * @return La posición del funcionario en la lista.*/
@@ -66,24 +81,11 @@ public class ListaFuncionarios implements Serializable {
         return pos;
     }
     
-    /** @param unFuncionario el funcionario a agregar.
-     * @return Devuelve 1 en caso de haber agregado el funcionario exitosamente. En 
-     * cualquier otro caso, no fue agregado. Si devuelve 0, es porque el funcionario
-     * ya existía previamente en la lista, y si devuelve -1, es porque la lista
-     * ya contiene a otro funcionario con el mismo nombre.*/
-    public int agregarFuncionario(Funcionario unFuncionario) {
-        int resultado = 1;
-        
-        if (estaEnLaLista(unFuncionario)) {
-            resultado = 0;
-        } else if (nombreYaExistente(unFuncionario.getNombre())) {
-            resultado = -1;
-        } else {
-            this.lista.add(unFuncionario);
-            this.cantidad++;
-        }
-        
-        return resultado;     
+    /** Agrega un funcionario a la lista, sin importar si este ya estaba presente. 
+     * @param unFuncionario el funcionario a agregar.*/
+    public void agregarFuncionario(Funcionario unFuncionario) {
+        this.lista.add(unFuncionario);
+        this.cantidad++;  
     }
     
     /** Busca a un funcionario puntual en la lista.
