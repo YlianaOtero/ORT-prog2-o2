@@ -6,17 +6,14 @@ package Interfaz;
 
 import Dominio.Articulo;
 import Dominio.Inventario;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -259,13 +256,13 @@ public class IngresoArticulo extends javax.swing.JFrame {
     public void guardarInventario() {
         ObjectOutputStream out;
         try {
-            out = new ObjectOutputStream(new FileOutputStream("salida"));
+            out = new ObjectOutputStream(new FileOutputStream("articulos"));
             out.writeObject(this.articulos);
             out.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

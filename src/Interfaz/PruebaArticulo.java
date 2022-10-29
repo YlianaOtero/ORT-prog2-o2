@@ -19,18 +19,18 @@ import java.util.logging.Logger;
  *
  * @author ylian
  */
-public class Prueba extends IngresoArticulo {
+public class PruebaArticulo extends IngresoArticulo {
     public static void main(String[] args) {
         Inventario lista = new Inventario();
         
         ObjectInputStream in;
         try {
-            in = new ObjectInputStream(new FileInputStream("salida"));
+            in = new ObjectInputStream(new FileInputStream("articulos"));
             lista = (Inventario)in.readObject();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(IngresoArticulo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         IngresoArticulo nueva = new IngresoArticulo(lista);
