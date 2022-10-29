@@ -31,28 +31,26 @@ public class IngresoFuncionario extends javax.swing.JFrame {
     }
     
     public IngresoFuncionario (ListaFuncionarios unaLista) {
-        
         this.funcionarios = unaLista;
-        int cantidad = this.funcionarios.getCantidad();
+        
+        int ultimoNumero = this.funcionarios.numeroMasAlto();
+        Funcionario.setUltimoNumero(ultimoNumero);
         
         initComponents();
         
+        cargarTabla();
+    }
+    
+    private void cargarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        int cantidad = this.funcionarios.getCantidad();
+        
         for (int elem = 0; elem < cantidad; elem++) {
             String nombre = this.funcionarios.getFuncionarioEnPos(elem).getNombre();
             int edad = this.funcionarios.getFuncionarioEnPos(elem).getEdad();
             int numero = this.funcionarios.getFuncionarioEnPos(elem).getNumero();
             modelo.insertRow(elem, new Object[] { nombre, edad, numero });
         }
-        
-        int ultimoNumero = this.funcionarios.numeroMasAlto();
-        Funcionario.setUltimoNumero(ultimoNumero);
-            
-//        if (cantidad > 0) {
-//            Funcionario nuevo = new Funcionario("PruebaArticulo", 0);
-//            int ultimoNumero = this.funcionarios.getFuncionarioEnPos(cantidad-1).getUltimoNumero();
-//            Funcionario.setUltimoNumero(ultimoNumero+1);
-//        }
     }
 
     /**
@@ -183,44 +181,43 @@ public class IngresoFuncionario extends javax.swing.JFrame {
 
         if (nombre.length() == 0 || edadIngresada.length() == 0) {
             JOptionPane.showMessageDialog(onp_aviso, "El funcionario debe tener tanto "
-                + "nombre como edad.", "Datos incompletos",
-                JOptionPane.ERROR_MESSAGE);
-        } 
-        
-        try {
-            int edad = Integer.valueOf(edadIngresada);
-            if (edad < 0 || edad > 100) {
-                JOptionPane.showMessageDialog(onp_aviso, "La edad debe estar entre 0 "
-                    + "y 100 años.", "Datos incorrectos",
-                    JOptionPane.ERROR_MESSAGE);
-            } else {
-
-                if (this.funcionarios.nombreYaExistente(nombre)) {
+                + "nombre como edad.", "Datos incompletos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                int edad = Integer.valueOf(edadIngresada);
+                
+                if (edad < 0 || edad > 100) {
+                    JOptionPane.showMessageDialog(onp_aviso, "La edad debe estar entre 0 "
+                        + "y 100 años.", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+                } else if (this.funcionarios.nombreYaExistente(nombre)) {
                     JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
                         + "funcionario con ese nombre.", "Funcionario no ingresado",
                         JOptionPane.ERROR_MESSAGE);
-                    
                 } else {
-                    Funcionario nuevo = new Funcionario(nombre, edad);
-                    this.funcionarios.agregarFuncionario(nuevo);
-                    JOptionPane.showMessageDialog(onp_aviso,
-                            "El funcionario fue ingresado correctamente.", "Funcionario "
-                            + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
-                        int cantidad = this.funcionarios.getCantidad();
-                        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-                        int numero = nuevo.getNumero();
-                        modelo.insertRow(cantidad-1, new Object[] { nombre, edad, numero });
-                    
+                    agregarEnLista(nombre, edad);
                 }
-            }     
-        
-        } catch (InputMismatchException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(onp_aviso, "La edad solo puede contener "
-                + "números.", "Datos incorrectos",
-                JOptionPane.ERROR_MESSAGE);
+    
+            } catch (InputMismatchException | NumberFormatException e) {
+                JOptionPane.showMessageDialog(onp_aviso, "La edad solo puede contener "
+                    + "números.", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btn_agregarActionPerformed
 
+    private void agregarEnLista(String nombre, int edad) {
+        Funcionario nuevo = new Funcionario(nombre, edad);
+        this.funcionarios.agregarFuncionario(nuevo);
+        
+        JOptionPane.showMessageDialog(onp_aviso,
+                "El funcionario fue ingresado correctamente.", "Funcionario "
+                + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
+        
+        int cantidad = this.funcionarios.getCantidad();
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        int numero = nuevo.getNumero();
+        modelo.insertRow(cantidad-1, new Object[] { nombre, edad, numero });
+    }
+    
     private void txt_edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_edadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_edadActionPerformed
