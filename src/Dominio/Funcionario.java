@@ -42,6 +42,12 @@ public class Funcionario implements Serializable {
         return UltimoNumero;
     }
     
+    /** Modifica la variable UltimoNumero.
+     * @param unNumero número a guardar en la variable UltimoNumero.*/
+    public static void setUltimoNumero(int unNumero) {
+        UltimoNumero = unNumero;
+    }
+    
     /** Modifica el nombre del funcionario. Se asume que los datos son correctos.
      * @param unNombre el nuevo nombre a sobreescribir en el funcionario.*/
     public void setNombre(String unNombre) {
