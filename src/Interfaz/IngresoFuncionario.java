@@ -63,7 +63,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
     private void initComponents() {
 
         onp_aviso = new javax.swing.JOptionPane();
-        lbl_descripcion = new javax.swing.JLabel();
+        lbl_edad = new javax.swing.JLabel();
         btn_agregar = new javax.swing.JButton();
         txt_edad = new javax.swing.JTextField();
         txt_nombre = new javax.swing.JTextField();
@@ -79,7 +79,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
             }
         });
 
-        lbl_descripcion.setText("Edad");
+        lbl_edad.setText("Edad");
 
         btn_agregar.setText("Agregar");
         btn_agregar.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +139,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
                     .addComponent(btn_agregar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(lbl_descripcion)
+                            .addComponent(lbl_edad)
                             .addGap(48, 48, 48)
                             .addComponent(txt_edad, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
@@ -163,13 +163,11 @@ public class IngresoFuncionario extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_edad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_descripcion))
+                            .addComponent(lbl_edad))
                         .addGap(31, 31, 31)
                         .addComponent(btn_agregar)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
-
-        getAccessibleContext().setAccessibleName("Funcionarios");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -282,7 +280,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
     private ListaFuncionarios funcionarios;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
-    private javax.swing.JLabel lbl_descripcion;
+    private javax.swing.JLabel lbl_edad;
     private javax.swing.JLabel lbl_nombre;
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JScrollPane slp_datos;

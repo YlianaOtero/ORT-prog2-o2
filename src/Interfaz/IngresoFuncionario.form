@@ -37,7 +37,7 @@
                   <Component id="btn_agregar" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="lbl_descripcion" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_edad" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="txt_edad" min="-2" pref="207" max="-2" attributes="0"/>
                       </Group>
@@ -68,7 +68,7 @@
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txt_edad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_descripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_edad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btn_agregar" min="-2" max="-2" attributes="0"/>
@@ -80,7 +80,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lbl_descripcion">
+    <Component class="javax.swing.JLabel" name="lbl_edad">
       <Properties>
         <Property name="text" type="java.lang.String" value="Edad"/>
       </Properties>
