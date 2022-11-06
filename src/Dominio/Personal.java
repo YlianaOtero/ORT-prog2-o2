@@ -11,7 +11,7 @@ public class Personal implements Serializable {
     private ArrayList<Funcionario> lista;
     private int cantidad;
     
-    /** Crea un objeto de tipo ListaFuncionarios.*/
+    /** Crea un objeto de tipo Personal.*/
     public Personal() {
         this.lista = new ArrayList<Funcionario>();
         this.cantidad = 0;
