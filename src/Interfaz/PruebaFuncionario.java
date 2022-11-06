@@ -4,7 +4,7 @@
  */
 package Interfaz;
 
-import Dominio.ListaFuncionarios;
+import Dominio.Personal;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.util.logging.Logger;
  */
 public class PruebaFuncionario extends IngresoFuncionario {
     public static void main(String[] args) {
-        ListaFuncionarios lista = new ListaFuncionarios();
+        Personal lista = new Personal();
         
         ObjectInputStream in;
         try {
             in = new ObjectInputStream(new FileInputStream("funcionarios"));
-            lista = (ListaFuncionarios)in.readObject();
+            lista = (Personal)in.readObject();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(IngresoFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
