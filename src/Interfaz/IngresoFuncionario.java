@@ -5,7 +5,7 @@
 package Interfaz;
 
 import Dominio.Funcionario;
-import Dominio.ListaFuncionarios;
+import Dominio.Personal;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.lang.NumberFormatException;
 
 /**
  *
- * @author ylian
+ * @author yliana
  */
 public class IngresoFuncionario extends javax.swing.JFrame {
 
@@ -30,7 +30,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         initComponents();
     }
     
-    public IngresoFuncionario (ListaFuncionarios unaLista) {
+    public IngresoFuncionario (Personal unaLista) {
         this.funcionarios = unaLista;
         
         int ultimoNumero = this.funcionarios.numeroMasAlto();
@@ -226,7 +226,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        guardarListaFuncionarios();
+        guardarPersonal();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -264,7 +264,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         });
     }
     
-    public void guardarListaFuncionarios() {
+    public void guardarPersonal() {
         ObjectOutputStream out;
         try {
             out = new ObjectOutputStream(new FileOutputStream("funcionarios"));
@@ -277,7 +277,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         }
     }
 
-    private ListaFuncionarios funcionarios;
+    private Personal funcionarios;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_edad;
