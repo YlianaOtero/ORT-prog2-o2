@@ -4,6 +4,8 @@
  */
 package Interfaz;
 
+import Dominio.Sistema;
+
 /**
  *
  * @author nalux
@@ -14,6 +16,11 @@ public class VentanaInicial extends javax.swing.JFrame {
      * Creates new form VentanaInicial
      */
     public VentanaInicial() {
+        initComponents();
+    }
+
+    public VentanaInicial(Sistema datos) {
+        this.datos = datos;
         initComponents();
     }
 
@@ -94,7 +101,7 @@ public class VentanaInicial extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 //creo ventana para crear el articulo   
-        IngresoArticulo ventanaArt = new IngresoArticulo();
+        IngresoArticulo ventanaArt = new IngresoArticulo(datos.getInventario());
 //la hago visible
         ventanaArt.setVisible(true);
 
@@ -103,17 +110,17 @@ public class VentanaInicial extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // creo ventana para crear funcioario
-        IngresoFuncionario ventanaFun = new IngresoFuncionario();
+        IngresoFuncionario ventanaFun = new IngresoFuncionario(datos.getPersonal());
         ventanaFun.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void itemMenuArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuArticuloActionPerformed
         // creo ventana para crear dron
-        IngresoDron ventanaDron = new IngresoDron();
+        IngresoDron ventanaDron = new IngresoDron(datos.getDrones());
         ventanaDron.setVisible(true);
     }//GEN-LAST:event_itemMenuArticuloActionPerformed
 
-
+    private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itemMenuArticulo;
     private javax.swing.JMenu jMenu1;

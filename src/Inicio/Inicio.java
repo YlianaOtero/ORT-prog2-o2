@@ -8,7 +8,8 @@ import Interfaz.*;
  */
 public class Inicio {
     public static void main(String[] args) {
-        VentanaInicial ventanaIni = new VentanaInicial();
+        Sistema datos = new Sistema(true);
+        VentanaInicial ventanaIni = new VentanaInicial(datos);
         //cree la ventana de inicio (la de la clase VentanaInicial.java)
         ventanaIni.setVisible(true);
         //la hago visible
