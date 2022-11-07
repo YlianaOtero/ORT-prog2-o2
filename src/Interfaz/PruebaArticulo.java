@@ -5,6 +5,8 @@
 package Interfaz;
 
 import Dominio.Inventario;
+import Dominio.Sistema;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,20 +20,10 @@ import java.util.logging.Logger;
  */
 public class PruebaArticulo extends IngresoArticulo {
     public static void main(String[] args) {
-        Inventario lista = new Inventario();
-        
-        ObjectInputStream in;
-        try {
-            in = new ObjectInputStream(new FileInputStream("articulos"));
-            lista = (Inventario)in.readObject();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(IngresoArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        boolean precargado = true;
+        Sistema datos = new Sistema(precargado);
 
-        IngresoArticulo nueva = new IngresoArticulo(lista);
+        IngresoArticulo nueva = new IngresoArticulo(datos.getInventario());
         nueva.setVisible(true);
-        
     }
 }
