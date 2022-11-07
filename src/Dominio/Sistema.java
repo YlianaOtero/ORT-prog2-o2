@@ -13,7 +13,7 @@ public class Sistema implements Serializable {
     private Personal personal;
     private ListaCargas cargas;
     private ListaVuelos vuelos;
-    public ObjectInputStream in;
+    private ObjectInputStream in;
     
     /** Crea un objeto de tipo Sistema.
      * @param sistemaPrecargado si es True, se debe intentar cargar los datos del sistema desde archivos existentes.
@@ -26,8 +26,33 @@ public class Sistema implements Serializable {
         }
     }
 
+    /** @return El inventario del sistema.*/
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    /** @return La lista de drones del sistema.*/
+    public ListaDrones getDrones() {
+        return drones;
+    }
+
+    /** @return El personal del sistema.*/
+    public Personal getPersonal() {
+        return personal;
+    }
+
+    /** @return La lista de cargas del sistema.*/
+    public ListaCargas getCargas() {
+        return cargas;
+    }
+
+    /** @return La lista de vuelos del sistema.*/
+    public ListaVuelos getVuelos() {
+        return vuelos;
+    }
+
     /** Se cargan todos los elementos del Sistema desde archivos preexistentes. */
-    public void cargarSistema() {
+    private void cargarSistema() {
         cargarInventario();
         cargarPersonal();
         cargarDrones(); 
@@ -36,7 +61,7 @@ public class Sistema implements Serializable {
     }
     
     /** Se cargan todos los elementos el sistema desde un estado limpio.*/
-    public void inicializarDeCero() {
+    private void inicializarDeCero() {
         inventario = new Inventario();
         drones = new ListaDrones();
         personal = new Personal();
@@ -46,7 +71,7 @@ public class Sistema implements Serializable {
 
     /** Se intenta cargar el inventario desde un archivo preexistente. En caso de
      * que no se encuentre el archivo, se carga el inventario desde cero.*/
-    public void cargarInventario() {
+    private void cargarInventario() {
         try {
             in = new ObjectInputStream(new FileInputStream("articulos"));
             inventario = (Inventario)in.readObject();
@@ -57,7 +82,7 @@ public class Sistema implements Serializable {
 
     /** Se intenta cargar el personal desde un archivo preexistente. En caso de
      * que no se encuentre el archivo, se carga el personal desde cero.*/
-    public void cargarPersonal() {
+    private void cargarPersonal() {
         try {
             in = new ObjectInputStream(new FileInputStream("funcionarios"));
             personal = (Personal)in.readObject();
@@ -68,7 +93,7 @@ public class Sistema implements Serializable {
 
     /** Se intenta cargar la lista de drones desde un archivo preexistente. 
      * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    public void cargarDrones() {
+    private void cargarDrones() {
         try {
             in = new ObjectInputStream(new FileInputStream("drones"));
             drones = (ListaDrones)in.readObject();
@@ -79,7 +104,7 @@ public class Sistema implements Serializable {
 
     /** Se intenta cargar la lista de cargas desde un archivo preexistente. 
      * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    public void cargarCargas() {
+    private void cargarCargas() {
         try {
             in = new ObjectInputStream(new FileInputStream("cargas"));
             cargas = (ListaCargas)in.readObject();
@@ -90,7 +115,7 @@ public class Sistema implements Serializable {
 
     /** Se intenta cargar la lista de vuelos desde un archivo preexistente. 
      * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    public void cargarVuelos() {
+    private void cargarVuelos() {
         try {
             in = new ObjectInputStream(new FileInputStream("vuelos"));
             vuelos = (ListaVuelos)in.readObject();
