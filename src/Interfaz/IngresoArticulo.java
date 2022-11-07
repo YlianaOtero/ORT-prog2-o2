@@ -6,6 +6,9 @@ package Interfaz;
 
 import Dominio.Articulo;
 import Dominio.Inventario;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ylian
  */
-public class IngresoArticulo extends javax.swing.JFrame {
+public class IngresoArticulo extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoArticulo
@@ -29,15 +32,15 @@ public class IngresoArticulo extends javax.swing.JFrame {
     }
     
     public IngresoArticulo (Inventario unaLista) {
-        this.articulos = unaLista;
-        
+        articulos = unaLista;
+        unaLista.agregarListener(this);
         initComponents();
         
         cargarTabla();
     }
     
     private void cargarTabla() {
-        int cantidad = this.articulos.getCantidad();
+        int cantidad = articulos.getCantidad();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         
         for (int elem = 0; elem < cantidad; elem++) {
@@ -45,6 +48,11 @@ public class IngresoArticulo extends javax.swing.JFrame {
             String descripcion = this.articulos.getArticuloEnPos(elem).getDescripcion();
             modelo.insertRow(elem, new Object[] { nombre, descripcion });
         }
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.setRowCount(0);
     }
 
     /**
@@ -191,13 +199,10 @@ public class IngresoArticulo extends javax.swing.JFrame {
 
     private void agregarEnInventario(String nombre, String descripcion) {
         Articulo nuevo = new Articulo(nombre, descripcion);
-        this.articulos.agregarArticulo(nuevo);
+        articulos.agregarArticulo(nuevo);
         JOptionPane.showMessageDialog(onp_aviso,
             "El articulo fue ingresado correctamente.", "Articulo "
             + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
-        int cantidad = this.articulos.getCantidad();
-        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        modelo.insertRow(cantidad-1, new Object[] { nombre, descripcion });
     }
     
     private void txt_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_descripcionActionPerformed
@@ -255,11 +260,11 @@ public class IngresoArticulo extends javax.swing.JFrame {
         });
     }
     
-    public void guardarInventario() {
+    public static void guardarInventario() {
         ObjectOutputStream out;
         try {
             out = new ObjectOutputStream(new FileOutputStream("articulos"));
-            out.writeObject(this.articulos);
+            out.writeObject(articulos);
             out.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,7 +273,7 @@ public class IngresoArticulo extends javax.swing.JFrame {
         }
     }
 
-    private Inventario articulos;
+    private static Inventario articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_descripcion;
@@ -279,4 +284,9 @@ public class IngresoArticulo extends javax.swing.JFrame {
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        limpiarTabla();
+        cargarTabla();
+    }
 }

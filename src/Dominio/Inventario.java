@@ -1,18 +1,24 @@
 package Dominio;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import Interfaz.IngresoArticulo;
 
 /** Representa un inventario de articulos.
  * @author yliana*/
 public class Inventario implements Serializable {
     private ArrayList<Articulo> lista;
     private int cantidad;
+    private PropertyChangeSupport manejador;
     
     /** Crea un objeto de tipo Inventario.*/
     public Inventario() {
+        manejador = new PropertyChangeSupport(this);
         this.lista = new ArrayList<Articulo>();
         this.cantidad = 0;
     }
@@ -69,8 +75,18 @@ public class Inventario implements Serializable {
     /** Agrega un articulo a la lista, sin importar si este ya estaba presente. 
      * @param unArticulo el artículo a agregar.*/
     public void agregarArticulo(Articulo unArticulo) {
+        ArrayList<Articulo> listaAnterior = this.lista;
+        int cantidadAnterior = this.cantidad;
+
         this.lista.add(unArticulo);
         this.cantidad++;
+
+        actualizarEnListener(listaAnterior, cantidadAnterior);
+    }
+
+    private void actualizarEnListener(ArrayList<Articulo> listaAnterior, int cantidadAnterior) {
+        manejador.firePropertyChange("lista", listaAnterior, this.lista);
+        manejador.firePropertyChange("cantidad", cantidadAnterior, this.cantidad);
     }
     
     /** Borra al artículo de la lista, cuando este mismo artículo pertenece a ella.
@@ -84,8 +100,13 @@ public class Inventario implements Serializable {
         if (estaEnLaLista(unArticulo)) {
             resultado = -1;
         } else {
+            ArrayList<Articulo> listaAnterior = this.lista;
+            int cantidadAnterior = this.cantidad;
+
             this.lista.remove(unArticulo);
             this.cantidad--;
+
+            actualizarEnListener(listaAnterior, cantidadAnterior);
         }
         
         return resultado;
@@ -94,9 +115,13 @@ public class Inventario implements Serializable {
     /** Borra de la lista al artículo presente en la posición pos.
      * @param pos - una posición válida de la lista (rango 0..cantidad)*/
     public void removerArticuloEnPos(int pos) {
-        
+        ArrayList<Articulo> listaAnterior = this.lista;
+        int cantidadAnterior = this.cantidad;
+
         this.lista.remove(pos);
         this.cantidad--;
+
+        actualizarEnListener(listaAnterior, cantidadAnterior);
     }
     
     /** Busca a un artículo puntual en la lista.
@@ -132,5 +157,9 @@ public class Inventario implements Serializable {
                 return nombre1.compareToIgnoreCase(nombre2);
             }
         });
+    }
+
+    public void agregarListener(IngresoArticulo ingresoArticulo) {
+        manejador.addPropertyChangeListener(ingresoArticulo); // anota interesado
     }
 }

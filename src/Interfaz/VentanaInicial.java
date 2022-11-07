@@ -4,7 +4,15 @@
  */
 package Interfaz;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.lang.System.Logger.Level;
+import java.util.logging.Logger;
+
 import Dominio.Sistema;
+import Inicio.Inicio;
 
 /**
  *
@@ -119,6 +127,27 @@ public class VentanaInicial extends javax.swing.JFrame {
         IngresoDron ventanaDron = new IngresoDron(datos.getDrones());
         ventanaDron.setVisible(true);
     }//GEN-LAST:event_itemMenuArticuloActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        guardarSistema();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        guardarSistema();
+    }//GEN-LAST:event_formWindowClosing
+
+    public void guardarSistema() {
+        ObjectOutputStream out;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream("sistema"));
+            out.writeObject(this.datos);
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(null);
+        } 
+    }
 
     private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables

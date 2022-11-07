@@ -2,7 +2,7 @@ package Dominio;
 import java.io.Serializable;
 
 /** Representa un articulo puntual, con nombre y descripción.
- * @author ylian*/
+ * @author yliana*/
 public class Articulo implements Serializable {
     private String nombre;
     private String descripcion;
@@ -36,4 +36,5 @@ public class Articulo implements Serializable {
     public void setDescripcion(String unaDescripcion) {
         this.descripcion = unaDescripcion;
     }
+
 }
