@@ -5,10 +5,10 @@ import java.io.Serializable;
 /** Representa una carga puntual.
  * @author yliana*/
 public class Carga implements Serializable{
-    Funcionario funcionario;
-    Articulo articulo;
-    int cantUnidades;
-    String codigo;
+    private Funcionario funcionario;
+    private Articulo articulo;
+    private int cantUnidades;
+    private String codigo;
     
     /** Crea un objeto de tipo Carga. Se asumen datos validos.
      * @param func el funcionario del personal que ingresa la carga.
