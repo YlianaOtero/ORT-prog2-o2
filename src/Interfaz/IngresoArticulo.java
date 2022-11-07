@@ -65,7 +65,7 @@ public class IngresoArticulo extends javax.swing.JFrame {
         slp_datos = new javax.swing.JScrollPane();
         tbl_datos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Articulos");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {

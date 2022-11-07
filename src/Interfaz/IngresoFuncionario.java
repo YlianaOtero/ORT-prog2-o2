@@ -71,7 +71,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         slp_datos = new javax.swing.JScrollPane();
         tbl_datos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Funcionarios");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
