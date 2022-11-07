@@ -1,13 +1,9 @@
 package Dominio;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.util.ArrayList;
 
 /** Clase principal del programa.
  * @author yliana*/
@@ -97,7 +93,7 @@ public class Sistema implements Serializable {
     public void cargarVuelos() {
         try {
             in = new ObjectInputStream(new FileInputStream("vuelos"));
-            vuelos = (ListaCargas)in.readObject();
+            vuelos = (ListaVuelos)in.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             vuelos = new ListaVuelos();
         }
