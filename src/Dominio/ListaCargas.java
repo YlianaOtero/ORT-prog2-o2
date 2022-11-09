@@ -4,17 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ListaCargas implements Serializable {
-    private ArrayList<Carga> lista;
+    private ArrayList<Carga[][]> lista;
     private int cantidad;
 
     /** Crea un objeto de tipo ListaCargas.*/
     public ListaCargas() {
-        this.lista = new ArrayList<Carga>();
+        this.lista = new ArrayList<Carga[][]>();
         this.cantidad = 0;
+        
     }
     
     /** @return El ArrayList de cargas.*/
-    public ArrayList<Carga> getLista() {
+    public ArrayList<Carga[][]> getLista() {
         return this.lista;
     }
     
@@ -25,7 +26,8 @@ public class ListaCargas implements Serializable {
 
     /** @param pos una posición válida en la lista.
      * @return El carga presente en la posición de la lista pasada por parámetro.*/
-    public Carga getCargaEnPos(int pos) {
+    public Carga[][] getCargaEnPos(area,i,j) {
+    //en VentanaCarga hago metodo que cuando cambie de letra (A,B,C,D,E) cambie de numero (0,1,2,3,4) para quedarme con el numero
         return this.lista.get(pos);
     }
 
