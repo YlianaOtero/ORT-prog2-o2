@@ -36,6 +36,14 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jMenu1.setText("Registrar");
@@ -107,6 +115,14 @@ public class Inicio extends javax.swing.JFrame {
         VentanaCargas ventCarg = new VentanaCargas(sistema);
         ventCarg.setVisible(true);
     }                                          
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {                                  
+        // TODO add your handling code here:
+    }                                 
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        // TODO add your handling code here:
+    }                                  
   private Sistema datos;
   private Sistema sistema;
     /**
