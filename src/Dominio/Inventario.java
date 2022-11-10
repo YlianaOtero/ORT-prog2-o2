@@ -22,6 +22,9 @@ public class Inventario implements Serializable {
         this.cantidad = 0;
     }
     
+    public void crearManejador() {
+        this.manejador = new PropertyChangeSupport(this);
+    }
     /** @return El ArrayList de artículos.*/
     public ArrayList<Articulo> getLista() {
         return this.lista;

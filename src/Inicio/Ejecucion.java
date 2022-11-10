@@ -19,7 +19,9 @@ public class Ejecucion {
         try {
             in = new ObjectInputStream(new FileInputStream("sistema"));
             datos = (Sistema)in.readObject();
-            Inventario i = new Inventario(); // para volver a crear el manejador
+        
+            Inventario i = datos.getInventario(); // para volver a crear el manejador
+            i.crearManejador();
         } catch (IOException | ClassNotFoundException ex) {
             datos =  new Sistema(true);
         }
