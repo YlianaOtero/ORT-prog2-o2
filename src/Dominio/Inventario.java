@@ -13,8 +13,8 @@ import Interfaz.IngresoArticulo;
 public class Inventario implements Serializable {
     private ArrayList<Articulo> lista;
     private int cantidad;
-    private PropertyChangeSupport manejador;
-    
+    transient private PropertyChangeSupport manejador;
+
     /** Crea un objeto de tipo Inventario.*/
     public Inventario() {
         manejador = new PropertyChangeSupport(this);
