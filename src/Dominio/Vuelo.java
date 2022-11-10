@@ -4,10 +4,12 @@
  */
 package Dominio;
 
+import java.io.Serializable;
+
 /** Representa un vuelo puntual, con el id, area, fila
  * y cargas correspondientes.
  * @author ylian*/
-public class Vuelo {
+public class Vuelo implements Serializable {
     private String idDron;
     private char area;
     private int fila;
