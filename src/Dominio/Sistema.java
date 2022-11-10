@@ -11,7 +11,7 @@ public class Sistema implements Serializable {
     private Inventario inventario;
     private ListaDrones drones;
     private Personal personal;
-    private ListaCargas cargas;
+ //   private ListaCargas cargas;
     private ListaVuelos vuelos;
     private ObjectInputStream in;
     
@@ -19,11 +19,17 @@ public class Sistema implements Serializable {
      * @param sistemaPrecargado si es True, se debe intentar cargar los datos del sistema desde archivos existentes.
      * Si es False, es debe crear todo desde cero.*/
     public Sistema(boolean sistemaPrecargado) {
-        if (sistemaPrecargado) {
+        /* if (sistemaPrecargado) {
             cargarSistema();
         } else {
             inicializarDeCero();
-        }
+        } */
+
+        inventario = new Inventario();
+        drones = new ListaDrones();
+        personal = new Personal();
+      //  cargas = new ListaCargas();
+        vuelos = new ListaVuelos();
     }
 
     /** @return El inventario del sistema.*/
@@ -42,9 +48,9 @@ public class Sistema implements Serializable {
     }
 
     /** @return La lista de cargas del sistema.*/
-    public ListaCargas getCargas() {
+  /*    public ListaCargas getCargas() {
         return cargas;
-    }
+    }*/
 
     /** @return La lista de vuelos del sistema.*/
     public ListaVuelos getVuelos() {
@@ -53,11 +59,7 @@ public class Sistema implements Serializable {
 
     /** Se cargan todos los elementos del Sistema desde archivos preexistentes. */
     private void cargarSistema() {
-        cargarInventario();
-        cargarPersonal();
-        cargarDrones(); 
-        cargarCargas();
-        cargarVuelos();
+        
     }
     
     /** Se cargan todos los elementos el sistema desde un estado limpio.*/
@@ -65,62 +67,8 @@ public class Sistema implements Serializable {
         inventario = new Inventario();
         drones = new ListaDrones();
         personal = new Personal();
-        cargas = new ListaCargas();
+      //  cargas = new ListaCargas();
         vuelos = new ListaVuelos();
     }
 
-    /** Se intenta cargar el inventario desde un archivo preexistente. En caso de
-     * que no se encuentre el archivo, se carga el inventario desde cero.*/
-    private void cargarInventario() {
-        try {
-            in = new ObjectInputStream(new FileInputStream("articulos"));
-            inventario = (Inventario)in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            inventario = new Inventario();
-        }
-    }
-
-    /** Se intenta cargar el personal desde un archivo preexistente. En caso de
-     * que no se encuentre el archivo, se carga el personal desde cero.*/
-    private void cargarPersonal() {
-        try {
-            in = new ObjectInputStream(new FileInputStream("funcionarios"));
-            personal = (Personal)in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            personal = new Personal();
-        }
-    }
-
-    /** Se intenta cargar la lista de drones desde un archivo preexistente. 
-     * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    private void cargarDrones() {
-        try {
-            in = new ObjectInputStream(new FileInputStream("drones"));
-            drones = (ListaDrones)in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            drones = new ListaDrones();
-        }
-    }
-
-    /** Se intenta cargar la lista de cargas desde un archivo preexistente. 
-     * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    private void cargarCargas() {
-        try {
-            in = new ObjectInputStream(new FileInputStream("cargas"));
-            cargas = (ListaCargas)in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            cargas = new ListaCargas();
-        }
-    }
-
-    /** Se intenta cargar la lista de vuelos desde un archivo preexistente. 
-     * En caso de que no se encuentre el archivo, se carga la lista desde cero.*/
-    private void cargarVuelos() {
-        try {
-            in = new ObjectInputStream(new FileInputStream("vuelos"));
-            vuelos = (ListaVuelos)in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            vuelos = new ListaVuelos();
-        }
-    }
 }
