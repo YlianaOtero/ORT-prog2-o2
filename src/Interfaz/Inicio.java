@@ -3,6 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaz;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Logger;
+
 import Dominio.Sistema;
 
 /**
@@ -15,6 +21,11 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form Inicio
      */
     public Inicio() {
+        initComponents();
+    }
+
+    public Inicio(Sistema datos) {
+        this.datos = datos;
         initComponents();
     }
 
@@ -118,11 +129,28 @@ public class Inicio extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {                                  
         // TODO add your handling code here:
+       // guardarSistema();
     }                                 
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
+        guardarSistema();
     }                                  
+
+
+    public void guardarSistema() {
+        ObjectOutputStream out;
+         try { 
+            out = new ObjectOutputStream(new FileOutputStream("sistema"));
+            out.writeObject(datos);
+            out.close();
+        }  catch (IOException ex) {
+            System.out.println("No puedo guardar el archivo");
+          //  Logger.getLogger(Inicio.class.getName()).log(null);
+        }  
+    }
+
+    
   private Sistema datos;
   private Sistema sistema;
     /**
