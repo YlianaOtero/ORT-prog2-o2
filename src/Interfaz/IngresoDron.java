@@ -224,10 +224,10 @@ public class IngresoDron extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        guardarListaDrones();
+     //   guardarListaDrones();
     }//GEN-LAST:event_formWindowClosing
 
-    public void guardarListaDrones() {
+    /* public void guardarListaDrones() {
         ObjectOutputStream out;
         try {
             out = new ObjectOutputStream(new FileOutputStream("drones"));
@@ -238,7 +238,7 @@ public class IngresoDron extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } */
     
     /**
      * @param args the command line arguments

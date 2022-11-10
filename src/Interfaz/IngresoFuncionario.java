@@ -226,7 +226,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        guardarPersonal();
+      //  guardarPersonal();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -264,7 +264,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         });
     }
     
-    public void guardarPersonal() {
+    /* public void guardarPersonal() {
         ObjectOutputStream out;
         try {
             out = new ObjectOutputStream(new FileOutputStream("funcionarios"));
@@ -275,7 +275,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } */
 
     private Personal funcionarios;
     // Variables declaration - do not modify//GEN-BEGIN:variables

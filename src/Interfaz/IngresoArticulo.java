@@ -9,12 +9,6 @@ import Dominio.Inventario;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -215,12 +209,12 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        guardarInventario();
+       // guardarInventario();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        guardarInventario();
+    //    guardarInventario();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -260,7 +254,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         });
     }
     
-    public static void guardarInventario() {
+   /*  public void guardarInventario() {
         ObjectOutputStream out;
         try {
             out = new ObjectOutputStream(new FileOutputStream("articulos"));
@@ -271,9 +265,9 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         } catch (IOException ex) {
             Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } */
 
-    private static Inventario articulos;
+    private Inventario articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_descripcion;
