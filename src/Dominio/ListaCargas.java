@@ -26,14 +26,14 @@ public class ListaCargas implements Serializable {
 
     /** @param pos una posición válida en la lista.
      * @return El carga presente en la posición de la lista pasada por parámetro.*/
-    public Carga[][] getCargaEnPos(area,i,j) {
+    public Carga[][] getCargaEnPos(int area, int i, int j) {
     //en VentanaCarga hago metodo que cuando cambie de letra (A,B,C,D,E) cambie de numero (0,1,2,3,4) para quedarme con el numero
-        return this.lista.get(pos);
+        return this.lista.get(i);
     }
 
     /** Agrega un Carga a la lista, sin importar si este ya estaba presente. 
      * @param unCarga el carga a agregar.*/
-    public void agregarCarga(Carga unCarga) {
+    public void agregarCarga(Carga[][] unCarga) {
         this.lista.add(unCarga);
         this.cantidad++;
     }
