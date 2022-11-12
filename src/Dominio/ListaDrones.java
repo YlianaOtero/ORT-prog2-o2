@@ -3,8 +3,6 @@ package Dominio;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import Interfaz.IngresoDron;
 
