@@ -42,11 +42,8 @@ public class ListaDrones implements Serializable {
         return this.lista.get(pos);
     }
     
-    /** @param unDron el dron a agregar.
-     * @return Devuelve 1 en caso de haber agregado el dron exitosamente. En 
-     * cualquier otro caso, no fue agregado. Si devuelve 0, es porque el dron
-     * ya existía previamente en la lista, y si devuelve -1, es porque la lista
-     * ya contiene a otro dron con el mismo identificacion.*/
+    /** Agrega un dron a la lista, sin importar si este ya estaba presente. 
+     * @param unDron el dron a agregar.*/
     public void agregarDron(Dron unDron) {
         ArrayList<Dron> listaAnterior = this.lista;
         int cantidadAnterior = this.cantidad;
@@ -83,18 +80,6 @@ public class ListaDrones implements Serializable {
         }
         
         return existe;
-    }
-    
-    /** Ordena la lista alfabéticamente por identificacion, sin distinguir mayúsculas de minúsculas.*/
-    public void ordenarLista() { 
-        Collections.sort(this.lista, new Comparator<Dron>(){
-            @Override
-            public int compare(Dron art1, Dron art2) {
-                String identificacion1 = art1.getIdentificacion();
-                String identificacion2 = art2.getIdentificacion();
-                return identificacion1.compareToIgnoreCase(identificacion2);
-            }
-        });
     }
 
     public void agregarListener(IngresoDron ingresoDron) {
