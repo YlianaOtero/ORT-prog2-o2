@@ -6,13 +6,10 @@ package Interfaz;
 
 import Dominio.Funcionario;
 import Dominio.Personal;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.InputMismatchException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.lang.NumberFormatException;
@@ -21,7 +18,7 @@ import java.lang.NumberFormatException;
  *
  * @author yliana
  */
-public class IngresoFuncionario extends javax.swing.JFrame {
+public class IngresoFuncionario extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoFuncionario
@@ -32,6 +29,7 @@ public class IngresoFuncionario extends javax.swing.JFrame {
     
     public IngresoFuncionario (Personal unaLista) {
         this.funcionarios = unaLista;
+        unaLista.agregarListener(this);
         
         int ultimoNumero = this.funcionarios.numeroMasAlto();
         Funcionario.setUltimoNumero(ultimoNumero);
@@ -51,6 +49,11 @@ public class IngresoFuncionario extends javax.swing.JFrame {
             int numero = this.funcionarios.getFuncionarioEnPos(elem).getNumero();
             modelo.insertRow(elem, new Object[] { nombre, edad, numero });
         }
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.setRowCount(0);
     }
 
     /**
@@ -209,11 +212,6 @@ public class IngresoFuncionario extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(onp_aviso,
                 "El funcionario fue ingresado correctamente.", "Funcionario "
                 + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
-        
-        int cantidad = this.funcionarios.getCantidad();
-        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        int numero = nuevo.getNumero();
-        modelo.insertRow(cantidad-1, new Object[] { nombre, edad, numero });
     }
     
     private void txt_edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_edadActionPerformed
@@ -288,4 +286,9 @@ public class IngresoFuncionario extends javax.swing.JFrame {
     private javax.swing.JTextField txt_edad;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        limpiarTabla();
+        cargarTabla();   
+    }
 }

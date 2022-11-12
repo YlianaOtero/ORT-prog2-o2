@@ -1,20 +1,29 @@
 package Dominio;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import Interfaz.IngresoDron;
 
 /** Representa un registro de drones.
  * @author yliana*/
 public class ListaDrones implements Serializable {
     private ArrayList<Dron> lista;
     private int cantidad;
+    transient private PropertyChangeSupport manejador;
     
     /** Crea un objeto de tipo ListaDrones.*/
     public ListaDrones() {
+        this.manejador = new PropertyChangeSupport(this);
         this.lista = new ArrayList<Dron>();
         this.cantidad = 0;
+    }
+
+    public void crearManejador() {
+        this.manejador = new PropertyChangeSupport(this);
     }
     
     /** @return El ArrayList de drons.*/
@@ -38,19 +47,19 @@ public class ListaDrones implements Serializable {
      * cualquier otro caso, no fue agregado. Si devuelve 0, es porque el dron
      * ya existía previamente en la lista, y si devuelve -1, es porque la lista
      * ya contiene a otro dron con el mismo identificacion.*/
-    public int agregarDron(Dron unDron) {
-        int resultado = 1;
-        
-        if (estaEnLaLista(unDron)) {
-            resultado = 0;
-        } else if (identificacionYaExistente(unDron.getIdentificacion())) {
-            resultado = -1;
-        } else {
-            this.lista.add(unDron);
-            this.cantidad++;
-        }
-        
-        return resultado;     
+    public void agregarDron(Dron unDron) {
+        ArrayList<Dron> listaAnterior = this.lista;
+        int cantidadAnterior = this.cantidad;
+
+        this.lista.add(unDron);
+        this.cantidad++;  
+
+        actualizarEnListener(listaAnterior, cantidadAnterior);
+    }
+
+    private void actualizarEnListener(ArrayList<Dron> listaAnterior, int cantidadAnterior) {
+        manejador.firePropertyChange("lista", listaAnterior, this.lista);
+        manejador.firePropertyChange("cantidad", cantidadAnterior, this.cantidad);
     }
     
     /** Busca a un dron puntual en la lista.
@@ -86,5 +95,9 @@ public class ListaDrones implements Serializable {
                 return identificacion1.compareToIgnoreCase(identificacion2);
             }
         });
+    }
+
+    public void agregarListener(IngresoDron ingresoDron) {
+        manejador.addPropertyChangeListener(ingresoDron); // anota interesado
     }
 }

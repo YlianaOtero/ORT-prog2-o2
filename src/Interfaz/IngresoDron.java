@@ -6,6 +6,9 @@ package Interfaz;
 
 import Dominio.Dron;
 import Dominio.ListaDrones;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ylian
  */
-public class IngresoDron extends javax.swing.JFrame {
+public class IngresoDron extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoDron
@@ -30,7 +33,8 @@ public class IngresoDron extends javax.swing.JFrame {
     
     public IngresoDron(ListaDrones unaLista) {
         this.drones = unaLista;
-      
+        unaLista.agregarListener(this);
+
         initComponents();
         
         cargarTabla();
@@ -48,6 +52,10 @@ public class IngresoDron extends javax.swing.JFrame {
         }
     }
 
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.setRowCount(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -207,11 +215,6 @@ public class IngresoDron extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(onp_aviso,
                 "El dron fue ingresado correctamente.", "Dron ingresado",
                 + JOptionPane.INFORMATION_MESSAGE);
-        
-        int cantidad = this.drones.getCantidad();
-        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        
-        modelo.insertRow(cantidad-1, new Object[] { identificacion, modeloDron, tipoCamara });
     }
     
     private void txt_modeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_modeloActionPerformed
@@ -226,7 +229,7 @@ public class IngresoDron extends javax.swing.JFrame {
         // TODO add your handling code here:
      //   guardarListaDrones();
     }//GEN-LAST:event_formWindowClosing
-
+ 
     /* public void guardarListaDrones() {
         ObjectOutputStream out;
         try {
@@ -288,4 +291,10 @@ public class IngresoDron extends javax.swing.JFrame {
     private javax.swing.JTextField txt_identificacion;
     private javax.swing.JTextField txt_modelo;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        limpiarTabla();
+        cargarTabla();
+    }
 }

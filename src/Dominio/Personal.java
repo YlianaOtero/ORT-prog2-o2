@@ -1,20 +1,29 @@
 package Dominio;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import Interfaz.IngresoFuncionario;
 
 /** Representa un registro de funcionarios.
  * @author yliana*/
 public class Personal implements Serializable {
     private ArrayList<Funcionario> lista;
     private int cantidad;
+    transient private PropertyChangeSupport manejador;
     
     /** Crea un objeto de tipo Personal.*/
     public Personal() {
+        manejador = new PropertyChangeSupport(this);
         this.lista = new ArrayList<Funcionario>();
         this.cantidad = 0;
+    }
+
+    public void crearManejador() {
+        this.manejador = new PropertyChangeSupport(this);
     }
     
     /** @return El ArrayList de funcionarios.*/
@@ -84,8 +93,13 @@ public class Personal implements Serializable {
     /** Agrega un funcionario a la lista, sin importar si este ya estaba presente. 
      * @param unFuncionario el funcionario a agregar.*/
     public void agregarFuncionario(Funcionario unFuncionario) {
+        ArrayList<Funcionario> listaAnterior = this.lista;
+        int cantidadAnterior = this.cantidad;
+
         this.lista.add(unFuncionario);
         this.cantidad++;  
+
+        actualizarEnListener(listaAnterior, cantidadAnterior);
     }
     
     /** Busca a un funcionario puntual en la lista.
@@ -121,5 +135,14 @@ public class Personal implements Serializable {
                 return nombre1.compareToIgnoreCase(nombre2);
             }
         });
+    }
+
+    public void agregarListener(IngresoFuncionario ingresoFuncionario) {
+        manejador.addPropertyChangeListener(ingresoFuncionario); // anota interesado
+    }
+
+    private void actualizarEnListener(ArrayList<Funcionario> listaAnterior, int cantidadAnterior) {
+        manejador.firePropertyChange("lista", listaAnterior, this.lista);
+        manejador.firePropertyChange("cantidad", cantidadAnterior, this.cantidad);
     }
 }
