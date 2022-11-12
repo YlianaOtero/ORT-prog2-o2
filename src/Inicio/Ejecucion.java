@@ -12,28 +12,29 @@ import Interfaz.*;
  */
 public class Ejecucion {
     public static void main(String[] args) {
-
-
         Sistema datos; 
         ObjectInputStream in;
+        
         try {
             in = new ObjectInputStream(new FileInputStream("sistema"));
             datos = (Sistema)in.readObject();
         
-            Inventario i = datos.getInventario(); // para volver a crear el manejador
-            i.crearManejador();
-            Personal p = datos.getPersonal();
-            p.crearManejador();
-            ListaDrones d = datos.getDrones();
-            d.crearManejador();
-            
+           crearManejadores(datos);
         } catch (IOException | ClassNotFoundException ex) {
             datos =  new Sistema(true);
         }
 
         Inicio ventanaIni = new Inicio(datos);
-        //cree la ventana de inicio (la de la clase VentanaInicial.java)
         ventanaIni.setVisible(true);
-        //la hago visiblen
     }    
+
+    public static void crearManejadores(Sistema datos) {
+        Inventario inventario = datos.getInventario();
+        Personal personal = datos.getPersonal();
+        ListaDrones drones = datos.getDrones();
+
+        inventario.crearManejador();
+        personal.crearManejador();
+        drones.crearManejador();
+    }
 }
