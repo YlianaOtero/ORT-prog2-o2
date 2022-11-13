@@ -12,7 +12,6 @@ import java.beans.PropertyChangeListener;
 import java.util.InputMismatchException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.lang.NumberFormatException;
 
 /**
  *

@@ -53,6 +53,8 @@ public class VentanaCargas extends javax.swing.JFrame {
         panelEspacios = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        
+        setTitle("Ingreso/Egreso de Carga");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

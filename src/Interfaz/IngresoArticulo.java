@@ -68,7 +68,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         tbl_datos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Articulos");
+        setTitle("Artículos");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

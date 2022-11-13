@@ -3,18 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaz;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.logging.Logger;
 
 import Dominio.Sistema;
+import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -51,8 +48,10 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        panel = new javax.swing.JPanel();
-  
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        
+        setTitle("Control de Inventarios");
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,9 +117,31 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Emisión de estadísticas");
+
+        jMenuItem6.setText("Estadísticas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu3);
+        
+        
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 716, 307);
+        setBounds(600, 250, 600, 400);
+        
+        Container c = getContentPane(); //Gets the content layer
+        JLabel label = new JLabel(); //JLabel Creation
+        label.setIcon(new ImageIcon("bienvenida.png")); //Sets the image to be displayed as an icon
+        Dimension size = label.getPreferredSize(); //Gets the size of the image
+        label.setBounds(25, 50, size.width, size.height); //Sets the location of the image
+ 
+        c.add(label); //Adds objects to the container
+    
     }// </editor-fold>                        
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -219,12 +240,13 @@ public class Inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private JPanel panel;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration                   
 }
