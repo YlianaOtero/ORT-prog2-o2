@@ -26,7 +26,7 @@ public class Ejecucion {
             datos = (Sistema)in.readObject();
         
            crearManejadores(datos);
-        } catch (IOException | ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException | NullPointerException ex) {
             datos =  new Sistema(true);
         }
         
@@ -37,9 +37,11 @@ public class Ejecucion {
         Inventario inventario = datos.getInventario();
         Personal personal = datos.getPersonal();
         ListaDrones drones = datos.getDrones();
-
+        ListaVuelos vuelos = datos.getVuelos();
+        
         inventario.crearManejador();
         personal.crearManejador();
         drones.crearManejador();
+        vuelos.crearManejador();
     }
 }

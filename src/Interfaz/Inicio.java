@@ -10,6 +10,11 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Logger;
 
 import Dominio.Sistema;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -37,16 +42,20 @@ public class Inicio extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
+        
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-
+        panel = new javax.swing.JPanel();
+  
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -56,10 +65,12 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
-
+        
+        
+        
         jMenu1.setText("Registrar");
 
-        jMenuItem2.setText("articulo");
+        jMenuItem2.setText("Registrar artículo");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -67,7 +78,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("funcionario");
+        jMenuItem3.setText("Registrar funcionario");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -75,7 +86,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
-        jMenuItem4.setText("dron");
+        jMenuItem4.setText("Registrar dron");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -83,11 +94,21 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem5.setText("Registrar vuelo de dron");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+
+            
+        });
+        jMenu1.add(jMenuItem5);
+        
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ingreso/Egreso");
 
-        jMenuItem1.setText("cargas");
+        jMenuItem1.setText("Ingreso/Egreso manual de carga");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -120,7 +141,13 @@ public class Inicio extends javax.swing.JFrame {
          // creo ventana para crear dron
         IngresoDron ventanaDron = new IngresoDron(datos.getDrones());
         ventanaDron.setVisible(true);
-    }                                          
+        
+    }               
+    
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {
+        IngresoVuelo ventanaVuelo = new IngresoVuelo();
+            ventanaVuelo.setVisible(true);
+    }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         VentanaCargas ventCarg = new VentanaCargas(sistema);
@@ -179,7 +206,8 @@ public class Inicio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -196,5 +224,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private JPanel panel;
     // End of variables declaration                   
 }

@@ -253,19 +253,6 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
             }
         });
     }
-    
-   /*  public void guardarInventario() {
-        ObjectOutputStream out;
-        try {
-            out = new ObjectOutputStream(new FileOutputStream("articulos"));
-            out.writeObject(articulos);
-            out.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } */
 
     private Inventario articulos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
