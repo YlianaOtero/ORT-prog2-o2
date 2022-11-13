@@ -4,10 +4,17 @@
  */
 package Interfaz;
 
+import Dominio.ListaVuelos;
+import Dominio.Vuelo;
+import IO.ArchivoLectura;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,10 +27,11 @@ public class IngresoVuelo extends javax.swing.JFrame {
      */
     public IngresoVuelo() {
         initComponents();
-       
-       
     }
 
+    public IngresoVuelo(ListaVuelos unaLista) {
+        vuelos = unaLista;
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,10 +41,17 @@ public class IngresoVuelo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        onp_aviso = new javax.swing.JOptionPane();
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_datos = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbl_area = new javax.swing.JLabel();
+        lbl_fila = new javax.swing.JLabel();
+        lbl_coincidencias = new javax.swing.JLabel();
+        lbl_diferencias = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
@@ -55,53 +70,87 @@ public class IngresoVuelo extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Archivo", null, null, null, null, null, null, null, null, null, ""},
-                {"Manual", null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "De", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
+        tbl_datos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbl_datos);
+        if (tbl_datos.getColumnModel().getColumnCount() > 0) {
+            tbl_datos.getColumnModel().getColumn(0).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(1).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(2).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(3).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(4).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(5).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(6).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(7).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(8).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(9).setResizable(false);
+            tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
+
+        jLabel2.setText(" ");
+
+        lbl_area.setText("Área: ");
+
+        lbl_fila.setText("Fila: ");
+
+        lbl_coincidencias.setText("Total coincidencias: ");
+
+        lbl_diferencias.setText("Total diferencias:  ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_diferencias)
+                    .addComponent(lbl_coincidencias)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbl_area)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_fila)))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_area)
+                            .addComponent(lbl_fila))))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(lbl_coincidencias)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_diferencias)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,8 +158,68 @@ public class IngresoVuelo extends javax.swing.JFrame {
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
         // TODO add your handling code here:
+        String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+        ArchivoLectura arch = new ArchivoLectura(ruta);
+        int cantLineas = 0;
+        int cantLineasDeCarga = 0;
+        
+        String idDron = "";
+        String pos = "";
+        ArrayList<String> codigosCargas = new ArrayList<String>();
+        codigosCargas.add("Archivo");
+        
+        while (arch.hayMasLineas()) {
+            cantLineas++;
+            switch (cantLineas) {
+                case 1 -> idDron = arch.linea();
+                case 2 -> pos = arch.linea();
+                default -> {
+                    codigosCargas.add(arch.linea());
+                    cantLineasDeCarga++;
+                }
+            }
+        }
+        
+        arch.cerrar();
+        
+        if (cantLineas < 2) {
+            JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener "
+                   + "identificación del dron, área y fila, y los correspondientes "
+                    + "códigos de carga." , "Datos incompletos",JOptionPane.ERROR_MESSAGE);
+        } else if (cantLineasDeCarga < 10) {
+           JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener 10 líneas de"
+                   + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
+                 "Datos incompletos",JOptionPane.ERROR_MESSAGE);
+        } else {
+            insertarEnTabla(idDron, pos, codigosCargas);
+            codigosCargas.remove(0);
+            insertarEnSistema(idDron, pos, codigosCargas);
+        }
+        
+        
     }//GEN-LAST:event_fileChooserActionPerformed
 
+    private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
+        char area = pos.charAt(0);
+        int fila =  Character.getNumericValue(pos.charAt(2));
+        
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.insertRow(0,codigos.toArray());
+        
+        lbl_area.setText(lbl_area.getText() + area);
+        lbl_fila.setText(lbl_fila.getText() + fila);
+    }
+    
+    private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
+        char area = pos.charAt(0);
+        int fila =  Character.getNumericValue(pos.charAt(2));
+        String[] cargas = (String[]) codigos.toArray();
+        
+        Vuelo nuevo = new Vuelo(id, area, fila, cargas);
+        vuelos.agregarVuelo(nuevo);
+    }
+    
+    
     private void modificarFileChooser() {
         UIManager.put("FileChooser.lookInLabelText","Mirar en:");
         UIManager.put("FileChooser.saveButtonText","Guardar");
@@ -173,11 +282,20 @@ public class IngresoVuelo extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    
+    private ListaVuelos vuelos = new ListaVuelos();
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbl_area;
+    private javax.swing.JLabel lbl_coincidencias;
+    private javax.swing.JLabel lbl_diferencias;
+    private javax.swing.JLabel lbl_fila;
+    private javax.swing.JOptionPane onp_aviso;
+    private javax.swing.JTable tbl_datos;
     // End of variables declaration//GEN-END:variables
 }

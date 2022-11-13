@@ -57,7 +57,7 @@ public class Vuelo implements Serializable {
     /** Verifica que una fila sea correcta para un vuelo.
      * @param filaPosible la fila a evaluar si es válida o no.
      * @return True en caso de ser una fila válida, False en caso contrario.*/
-    public static boolean filaValida(char filaPosible) {
+    public static boolean filaValida(int filaPosible) {
         return filaPosible > 0 && filaPosible <= 12;
     }
 }
