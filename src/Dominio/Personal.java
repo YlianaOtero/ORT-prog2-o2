@@ -3,8 +3,6 @@ package Dominio;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import Interfaz.IngresoFuncionario;
 
@@ -57,39 +55,6 @@ public class Personal implements Serializable {
         return numero;
     }
     
-    /** Busca a un funcionario puntual en la lista. Se asume que el funcionario está presente.
-     * @param unFuncionario - el funcionario a buscar.
-     * @return La posición del funcionario en la lista.*/
-    public int getPosFuncionario(Funcionario unFuncionario) {
-        boolean encontrado = false;
-        
-        int pos = 0;
-        
-        while (pos < this.cantidad && !encontrado) {
-            encontrado = unFuncionario.equals(this.lista.get(pos));
-            pos++;
-        }
-        
-        return pos;
-    }
-    
-    /** Busca un funcionario puntual en la lista, pero por nombre. Se asume que existe
-     * un funcionario con ese nombre en la lista.
-     * @param unNombre - el nombre del funcionario a buscar.
-     * @return La posición del funcionario con este nombre en la lista.*/
-    public int getPosFuncionario(String unNombre) {
-        boolean encontrado = false;
-        
-        int pos = 0;
-        
-        while (pos < this.cantidad && !encontrado) {
-            encontrado = unNombre.equalsIgnoreCase(this.lista.get(pos).getNombre());
-            pos++;
-        }
-        
-        return pos;
-    }
-    
     /** Agrega un funcionario a la lista, sin importar si este ya estaba presente. 
      * @param unFuncionario el funcionario a agregar.*/
     public void agregarFuncionario(Funcionario unFuncionario) {
@@ -100,13 +65,6 @@ public class Personal implements Serializable {
         this.cantidad++;  
 
         actualizarEnListener(listaAnterior, cantidadAnterior);
-    }
-    
-    /** Busca a un funcionario puntual en la lista.
-     * @param unFuncionario el funcionario a buscar en la lista.
-     * @return Devuelve true si el funcionario fue encontrado, y false en caso de que no.*/
-    public boolean estaEnLaLista(Funcionario unFuncionario) {
-        return this.lista.contains(unFuncionario);
     }
     
     /** Busca un nombre puntual entre todos los nombres de los funcionarios de la lista.
@@ -123,18 +81,6 @@ public class Personal implements Serializable {
         }
         
         return existe;
-    }
-    
-    /** Ordena la lista alfabéticamente por nombre, sin distinguir mayúsculas de minúsculas.*/
-    public void ordenarLista() { 
-        Collections.sort(this.lista, new Comparator<Funcionario>(){
-            @Override
-            public int compare(Funcionario art1, Funcionario art2) {
-                String nombre1 = art1.getNombre();
-                String nombre2 = art2.getNombre();
-                return nombre1.compareToIgnoreCase(nombre2);
-            }
-        });
     }
 
     public void agregarListener(IngresoFuncionario ingresoFuncionario) {
