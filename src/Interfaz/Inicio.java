@@ -120,7 +120,7 @@ public class Inicio extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        pack();
+        setBounds(0, 0, 716, 307);
     }// </editor-fold>                        
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
