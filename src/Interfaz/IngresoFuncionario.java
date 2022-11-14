@@ -5,10 +5,11 @@
 package Interfaz;
 
 import Dominio.Funcionario;
-import Dominio.Personal;
+import Dominio.Sistema;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,11 +27,12 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
         initComponents();
     }
     
-    public IngresoFuncionario (Personal unaLista) {
-        this.funcionarios = unaLista;
-        unaLista.agregarListener(this);
+    public IngresoFuncionario (Sistema datos) {
+        this.datos = datos;
+        this.funcionarios = datos.getFuncionarios();
+        datos.agregarListener(this);
         
-        int ultimoNumero = this.funcionarios.numeroMasAlto();
+        int ultimoNumero = datos.numeroFuncionarioMasAlto();
         Funcionario.setUltimoNumero(ultimoNumero);
         
         initComponents();
@@ -40,12 +42,13 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
     
     private void cargarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        int cantidad = this.funcionarios.getCantidad();
+        int cantidad = funcionarios.size();
         
         for (int elem = 0; elem < cantidad; elem++) {
-            String nombre = this.funcionarios.getFuncionarioEnPos(elem).getNombre();
-            int edad = this.funcionarios.getFuncionarioEnPos(elem).getEdad();
-            int numero = this.funcionarios.getFuncionarioEnPos(elem).getNumero();
+            String nombre = funcionarios.get(elem).getNombre();
+            int edad = this.funcionarios.get(elem).getEdad();
+            int numero = this.funcionarios.get(elem).getNumero();
+            
             modelo.insertRow(elem, new Object[] { nombre, edad, numero });
         }
     }
@@ -189,7 +192,7 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
                 if (edad < 0 || edad > 100) {
                     JOptionPane.showMessageDialog(onp_aviso, "La edad debe estar entre 0 "
                         + "y 100 años.", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
-                } else if (this.funcionarios.nombreYaExistente(nombre)) {
+                } else if (datos.nombreFuncionarioYaExistente(nombre)) {
                     JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
                         + "funcionario con ese nombre.", "Funcionario no ingresado",
                         JOptionPane.ERROR_MESSAGE);
@@ -206,7 +209,7 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
 
     private void agregarEnLista(String nombre, int edad) {
         Funcionario nuevo = new Funcionario(nombre, edad);
-        this.funcionarios.agregarFuncionario(nuevo);
+        datos.agregarFuncionario(nuevo);
         
         JOptionPane.showMessageDialog(onp_aviso,
                 "El funcionario fue ingresado correctamente.", "Funcionario "
@@ -274,7 +277,8 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
         }
     } */
 
-    private Personal funcionarios;
+    private ArrayList<Funcionario> funcionarios;
+    private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_edad;

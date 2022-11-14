@@ -5,10 +5,11 @@
 package Interfaz;
 
 import Dominio.Articulo;
-import Dominio.Inventario;
+import Dominio.Sistema;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,21 +26,24 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         initComponents();
     }
     
-    public IngresoArticulo (Inventario unaLista) {
-        articulos = unaLista;
-        unaLista.agregarListener(this);
+    public IngresoArticulo (Sistema datos) {
+        this.datos = datos;
+        this.articulos = datos.getArticulos();
+        datos.agregarListener(this);
+        
         initComponents();
         
         cargarTabla();
     }
     
     private void cargarTabla() {
-        int cantidad = articulos.getCantidad();
+        int cantidad = articulos.size();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         
         for (int elem = 0; elem < cantidad; elem++) {
-            String nombre = this.articulos.getArticuloEnPos(elem).getNombre();
-            String descripcion = this.articulos.getArticuloEnPos(elem).getDescripcion();
+            String nombre = articulos.get(elem).getNombre();
+            String descripcion = articulos.get(elem).getDescripcion();
+            
             modelo.insertRow(elem, new Object[] { nombre, descripcion });
         }
     }
@@ -181,7 +185,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
                 + "nombre como descripcion.", "Datos incompletos",
                 JOptionPane.ERROR_MESSAGE);
         } else {
-            if (this.articulos.nombreYaExistente(nombre)) {
+            if (datos.nombreArticuloYaExistente(nombre)) {
                 JOptionPane.showMessageDialog(onp_aviso, "Ya existe un "
                     + "articulo con ese nombre.", "Articulo no ingresado",
                     JOptionPane.ERROR_MESSAGE);
@@ -193,7 +197,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
 
     private void agregarEnInventario(String nombre, String descripcion) {
         Articulo nuevo = new Articulo(nombre, descripcion);
-        articulos.agregarArticulo(nuevo);
+        datos.agregarArticulo(nuevo);
         JOptionPane.showMessageDialog(onp_aviso,
             "El articulo fue ingresado correctamente.", "Articulo "
             + "ingresado",  JOptionPane.INFORMATION_MESSAGE);
@@ -209,12 +213,10 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-       // guardarInventario();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-    //    guardarInventario();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -254,7 +256,8 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         });
     }
 
-    private Inventario articulos;
+    private ArrayList<Articulo> articulos;
+    private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_descripcion;

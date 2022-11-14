@@ -146,27 +146,27 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
 // creo ventana para crear funcioario
-        IngresoFuncionario ventanaFun = new IngresoFuncionario(datos.getPersonal());
+        IngresoFuncionario ventanaFun = new IngresoFuncionario(datos);
         ventanaFun.setVisible(true);       
 
     }                                          
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         //creo ventana para crear el articulo   
-        IngresoArticulo ventanaArt = new IngresoArticulo(datos.getInventario());
+        IngresoArticulo ventanaArt = new IngresoArticulo(datos);
         //la hago visible
         ventanaArt.setVisible(true);
     }                                          
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {                                           
          // creo ventana para crear dron
-        IngresoDron ventanaDron = new IngresoDron(datos.getDrones());
+        IngresoDron ventanaDron = new IngresoDron(datos);
         ventanaDron.setVisible(true);
         
     }               
     
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {
-        IngresoVuelo ventanaVuelo = new IngresoVuelo();
+        IngresoVuelo ventanaVuelo = new IngresoVuelo(datos);
             ventanaVuelo.setVisible(true);
     }
 

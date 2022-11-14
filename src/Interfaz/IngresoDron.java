@@ -5,10 +5,11 @@
 package Interfaz;
 
 import Dominio.Dron;
-import Dominio.ListaDrones;
+import Dominio.Sistema;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,9 +26,10 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
         initComponents();
     }
     
-    public IngresoDron(ListaDrones unaLista) {
-        this.drones = unaLista;
-        unaLista.agregarListener(this);
+    public IngresoDron(Sistema datos) {
+        this.datos = datos;
+        this.drones = datos.getDrones();
+        datos.agregarListener(this);
 
         initComponents();
         
@@ -36,12 +38,13 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
     
     private void cargarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        int cantidad = this.drones.getCantidad();
+        int cantidad = drones.size();
         
         for (int elem = 0; elem < cantidad; elem++) {
-            String identificacion = this.drones.getDronEnPos(elem).getIdentificacion();
-            String modeloDron = this.drones.getDronEnPos(elem).getModelo();
-            int tipoCamara = this.drones.getDronEnPos(elem).getTipoCamara();
+            String identificacion = drones.get(elem).getIdentificacion();
+            String modeloDron = drones.get(elem).getModelo();
+            int tipoCamara = drones.get(elem).getTipoCamara();
+            
             modelo.insertRow(elem, new Object[] { identificacion, modeloDron, tipoCamara });
         }
     }
@@ -194,7 +197,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
         if (identificacion.length() == 0 || modelo.length() == 0) {
             JOptionPane.showMessageDialog(onp_aviso, "Por favor, ingrese todos los "
                 + "datos solicitados.", "Datos incompletos", JOptionPane.ERROR_MESSAGE);
-        } else if (this.drones.identificacionYaExistente(identificacion)) {
+        } else if (datos.identificacionDronYaExistente(identificacion)) {
             JOptionPane.showMessageDialog(onp_aviso, "Ya existe un dron con esa "
                 + "identificacion.", "Dron no ingresado", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -204,7 +207,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
 
     private void agregarEnLista(String identificacion, String modeloDron, int tipoCamara) {
         Dron nuevo = new Dron(identificacion, modeloDron, tipoCamara);
-        this.drones.agregarDron(nuevo);
+        datos.agregarDron(nuevo);
         
         JOptionPane.showMessageDialog(onp_aviso,
                 "El dron fue ingresado correctamente.", "Dron ingresado",
@@ -221,21 +224,8 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-     //   guardarListaDrones();
     }//GEN-LAST:event_formWindowClosing
  
-    /* public void guardarListaDrones() {
-        ObjectOutputStream out;
-        try {
-            out = new ObjectOutputStream(new FileOutputStream("drones"));
-            out.writeObject(this.drones);
-            out.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PruebaArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } */
     
     /**
      * @param args the command line arguments
@@ -272,7 +262,8 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
         });
     }
 
-    private ListaDrones drones;
+    private ArrayList<Dron> drones;
+    private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JLabel lbl_identificacion;
@@ -287,7 +278,6 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
     // End of variables declaration//GEN-END:variables
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
         limpiarTabla();
         cargarTabla();
     }

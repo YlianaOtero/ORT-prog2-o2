@@ -25,23 +25,11 @@ public class Ejecucion {
             in = new ObjectInputStream(new FileInputStream("sistema"));
             datos = (Sistema)in.readObject();
         
-           crearManejadores(datos);
+           datos.crearManejador();
         } catch (IOException | ClassNotFoundException | NullPointerException ex) {
             datos =  new Sistema(true);
         }
         
         return datos;
-    }
-
-    public static void crearManejadores(Sistema datos) {
-        Inventario inventario = datos.getInventario();
-        Personal personal = datos.getPersonal();
-        ListaDrones drones = datos.getDrones();
-        ListaVuelos vuelos = datos.getVuelos();
-        
-        inventario.crearManejador();
-        personal.crearManejador();
-        drones.crearManejador();
-        vuelos.crearManejador();
     }
 }

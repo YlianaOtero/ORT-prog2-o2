@@ -4,12 +4,10 @@
  */
 package Interfaz;
 
-import Dominio.ListaVuelos;
+import Dominio.Sistema;
 import Dominio.Vuelo;
 import IO.ArchivoLectura;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -29,8 +27,11 @@ public class IngresoVuelo extends javax.swing.JFrame {
         initComponents();
     }
 
-    public IngresoVuelo(ListaVuelos unaLista) {
-        vuelos = unaLista;
+    public IngresoVuelo(Sistema datos) {
+        this.datos = datos;
+        this.vuelos = datos.getVuelos();
+        
+        initComponents();
     } 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -216,7 +217,7 @@ public class IngresoVuelo extends javax.swing.JFrame {
         String[] cargas = (String[]) codigos.toArray();
         
         Vuelo nuevo = new Vuelo(id, area, fila, cargas);
-        vuelos.agregarVuelo(nuevo);
+        datos.agregarVuelo(nuevo);
     }
     
     
@@ -284,7 +285,8 @@ public class IngresoVuelo extends javax.swing.JFrame {
     }
     
     
-    private ListaVuelos vuelos = new ListaVuelos();
+    private ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
+    private Sistema datos;
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
