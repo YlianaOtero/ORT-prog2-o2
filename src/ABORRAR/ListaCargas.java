@@ -1,5 +1,6 @@
-package Dominio;
+package ABORRAR;
 
+import Dominio.Carga;
 import java.io.Serializable;
 import java.util.ArrayList;
 
