@@ -172,6 +172,8 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
+        setBounds(500, 300, 600, 400);
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

@@ -185,6 +185,8 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
                         .addGap(26, 26, 26))))
         );
 
+        setBounds(500, 300, 600, 400);
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

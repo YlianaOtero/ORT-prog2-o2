@@ -154,6 +154,8 @@ public class IngresoVuelo extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        setBounds(500, 300, 600, 400);
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

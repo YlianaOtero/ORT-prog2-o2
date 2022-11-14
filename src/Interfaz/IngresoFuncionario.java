@@ -174,6 +174,8 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
+        setBounds(500, 300, 600, 400);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
