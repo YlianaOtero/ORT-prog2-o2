@@ -226,13 +226,16 @@ public class IngresoVuelo extends javax.swing.JFrame {
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
-        
+        String[] manuales = datosManuales(area, fila);
+
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.insertRow(0,codigos.toArray());
-        modelo.insertRow(1, datosManuales(area, fila));
+        modelo.insertRow(1, manuales);
        
         lbl_area.setText(lbl_area.getText() + area);
         lbl_fila.setText(lbl_fila.getText() + fila);
+
+        marcarDiferencias();
     }
     
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
@@ -274,12 +277,15 @@ public class IngresoVuelo extends javax.swing.JFrame {
             
             if (archivo.equals(manual)) {
                 coincidencias++;
-                compColumna.setBackground(Color.green);
+              //  compColumna.setBackground(Color.green);
             } else {
                 diferencias++;
-                compColumna.setBackground(Color.red);
+             //   compColumna.setBackground(Color.red);
             }
         }
+
+        lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
+        lbl_diferencias.setText(lbl_fila.getText() + diferencias);
     }
     
     
