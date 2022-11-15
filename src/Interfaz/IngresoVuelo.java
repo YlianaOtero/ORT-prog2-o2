@@ -46,7 +46,7 @@ public class IngresoVuelo extends javax.swing.JFrame {
         Articulo a = new Articulo("Test", "test");
         datos.resetCargas();
         for (int i = 0; i < 10; i++) {
-            char codigo = (char)(i+1);
+            char codigo = (char)(i+1 + '0');
             String cod = ""+codigo;
             Carga c1 = new Carga(f, a, i, cod);
             
@@ -229,7 +229,7 @@ public class IngresoVuelo extends javax.swing.JFrame {
         
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.insertRow(0,codigos.toArray());
-        modelo.insertRow(1, (String[])datosManuales(area, fila));
+        modelo.insertRow(1, datosManuales(area, fila));
        
         lbl_area.setText(lbl_area.getText() + area);
         lbl_fila.setText(lbl_fila.getText() + fila);
