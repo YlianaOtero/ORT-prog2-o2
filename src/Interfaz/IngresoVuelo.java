@@ -4,9 +4,14 @@
  */
 package Interfaz;
 
+import Dominio.Articulo;
+import Dominio.Carga;
+import Dominio.Funcionario;
 import Dominio.Sistema;
 import Dominio.Vuelo;
 import IO.ArchivoLectura;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -24,15 +29,31 @@ public class IngresoVuelo extends javax.swing.JFrame {
      * Creates new form IngresoVuelo
      */
     public IngresoVuelo() {
+        crearCargasPrueba();
         initComponents();
     }
 
     public IngresoVuelo(Sistema datos) {
         this.datos = datos;
         this.vuelos = datos.getVuelos();
+        this.cargas = datos.getCargas();
         
         initComponents();
     } 
+    
+    private void crearCargasPrueba() {
+        Funcionario f = new Funcionario("Yliana", 20);
+        Articulo a = new Articulo("Test", "test");
+        datos.resetCargas();
+        for (int i = 0; i < 10; i++) {
+            char codigo = (char)(i+1);
+            String cod = ""+codigo;
+            Carga c1 = new Carga(f, a, i, cod);
+            
+            cargas.get(0)[0][i] = c1;
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -208,7 +229,8 @@ public class IngresoVuelo extends javax.swing.JFrame {
         
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.insertRow(0,codigos.toArray());
-        
+        modelo.insertRow(1, (String[])datosManuales(area, fila));
+       
         lbl_area.setText(lbl_area.getText() + area);
         lbl_fila.setText(lbl_fila.getText() + fila);
     }
@@ -216,10 +238,48 @@ public class IngresoVuelo extends javax.swing.JFrame {
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
-        String[] cargas = (String[]) codigos.toArray();
+        String[] codigosCargas = (String[]) codigos.toArray();
         
-        Vuelo nuevo = new Vuelo(id, area, fila, cargas);
+        Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas);
         datos.agregarVuelo(nuevo);
+    }
+    
+    private String[] datosManuales(char area, int fila) {
+        int areaNum = area - 65;
+        
+        String[] aInsertar = new String[11];
+        aInsertar[0] = "Manual";
+        
+        Carga[] datosArea = cargas.get(areaNum)[fila];
+        
+        for (int i = 0; i < 10; i++) {
+            String codigoActual = datosArea[i].getCodigo();
+            aInsertar[i+1] = codigoActual;
+        }
+        
+        return aInsertar;
+    }
+    
+    private void marcarDiferencias() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        
+        int diferencias = 0;
+        int coincidencias = 0;
+        
+        for (int i = 1; i <11; i++) {
+            String archivo = (String) modelo.getValueAt(0, i);
+            String manual = (String) modelo.getValueAt(1, i);
+            
+            Component compColumna = tbl_datos.getComponent(i);
+            
+            if (archivo.equals(manual)) {
+                coincidencias++;
+                compColumna.setBackground(Color.green);
+            } else {
+                diferencias++;
+                compColumna.setBackground(Color.red);
+            }
+        }
     }
     
     
@@ -288,7 +348,8 @@ public class IngresoVuelo extends javax.swing.JFrame {
     
     
     private ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
-    private Sistema datos;
+    private Sistema datos = new Sistema(true);
+    private ArrayList<Carga[][]> cargas = datos.getCargas();
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
