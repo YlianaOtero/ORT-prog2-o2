@@ -14,16 +14,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author ylian
  */
-public class IngresoVuelo extends javax.swing.JFrame {
+public class IngresoVuelo extends javax.swing.JFrame implements TableCellRenderer {
 
     /**
      * Creates new form IngresoVuelo
@@ -74,7 +76,7 @@ public class IngresoVuelo extends javax.swing.JFrame {
         lbl_fila = new javax.swing.JLabel();
         lbl_coincidencias = new javax.swing.JLabel();
         lbl_diferencias = new javax.swing.JLabel();
-
+        super.setOpacity(1.0f);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
         setName("Regístro de Vuelo"); // NOI18N
@@ -235,7 +237,8 @@ public class IngresoVuelo extends javax.swing.JFrame {
         lbl_area.setText(lbl_area.getText() + area);
         lbl_fila.setText(lbl_fila.getText() + fila);
 
-        marcarDiferencias();
+   //     marcarDiferencias();
+        getTableCellRendererComponent(tbl_datos, modelo, rootPaneCheckingEnabled, rootPaneCheckingEnabled, area, fila);
     }
     
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
@@ -369,4 +372,32 @@ public class IngresoVuelo extends javax.swing.JFrame {
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JTable tbl_datos;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
+                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+                if (modelo.getRowCount() > 0) {
+                int diferencias = 0;
+                int coincidencias = 0;
+                
+                for (int i = 1; i <11; i++) {
+                    String archivo = (String) modelo.getValueAt(0, i);
+                    String manual = (String) modelo.getValueAt(1, i);
+                    
+                  //  Component compColumna = tbl_datos.getComponent(i);
+                    
+                    if (archivo.equals(manual)) {
+                        coincidencias++;
+                        super.setBackground(Color.GREEN);
+                    } else {
+                        diferencias++;
+                        super.setBackground(Color.red);
+                    }
+                }
+        
+                lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
+                lbl_diferencias.setText(lbl_fila.getText() + diferencias);
+            }
+        return this;
+    }
 }
