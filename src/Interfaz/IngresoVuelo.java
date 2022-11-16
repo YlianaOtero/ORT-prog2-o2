@@ -9,6 +9,7 @@ import Dominio.Carga;
 import Dominio.Funcionario;
 import Dominio.Sistema;
 import Dominio.Vuelo;
+import Interfaz.MyTable;
 import IO.ArchivoLectura;
 import java.awt.Color;
 import java.awt.Component;
@@ -32,7 +33,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
      */
     public IngresoVuelo() {
         crearCargasPrueba();
+
+        
         initComponents();
+
+
     }
 
     public IngresoVuelo(Sistema datos) {
@@ -49,7 +54,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         datos.resetCargas();
         for (int i = 0; i < 10; i++) {
             char codigo = (char)(i+1 + '0');
-            String cod = "3";
+            String cod = Character.toString(codigo);
             Carga c1 = new Carga(f, a, i, cod);
             
             cargas.get(0)[0][i] = c1;
@@ -69,40 +74,9 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_datos = new javax.swing.JTable(){
-            public Component prepareRenderer(
-                TableCellRenderer renderer, int row, int column)
-            {
-                Component c = super.prepareRenderer(renderer, row, column);
-
-                //c.setBackground(Color.GREEN);
-
-                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-
-                int diferencias = 0;
-                int coincidencias = 0;
-
-                for (int i = 1; i <11; i++) {
-                    String archivo = (String) modelo.getValueAt(0, i);
-                    String manual = (String) modelo.getValueAt(1, i);
-
-                    Component celdaFilaCero = tbl_datos.getComponentAt(0, i);
-                    Component celdaFilaUno = tbl_datos.getComponentAt(1, i);
-
-                    c = super.prepareRenderer(renderer, 0, i);
-                    if (archivo.equals(manual)) {
-                        coincidencias++;
-                        c.setForeground(Color.GREEN);
-                    } else {
-                        diferencias++;
-                        c.setForeground(Color.RED);
-                    }
-                }
-                tbl_datos.getColumnModel().getColumn(0).setCellRenderer(renderer);
-                return c;
-            }
-
-        };
+       // tbl_datos = new javax.swing.JTable();
+      //  tbl_datos.setDefaultRenderer(getClass(), new MyTable());
+        tbl_datos = new MyTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_area = new javax.swing.JLabel();
@@ -153,13 +127,9 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
 
         jLabel2.setText(" ");
 
-        lbl_area.setText("Área: ");
+        
 
-        lbl_fila.setText("Fila: ");
-
-        lbl_coincidencias.setText("Total coincidencias: ");
-
-        lbl_diferencias.setText("Total diferencias:  ");
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,24 +221,55 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             insertarEnTabla(idDron, pos, codigosCargas);
             codigosCargas.remove(0);
             insertarEnSistema(idDron, pos, codigosCargas);
+
+            DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        String archivo = modelo.getValueAt(0, 10).toString();
+        String manual = modelo.getValueAt(1, 10).toString();
+
+        System.out.println(archivo.equals(manual));
         }
         
         
     }//GEN-LAST:event_fileChooserActionPerformed
 
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+
+        if (modelo.getRowCount() != 0) {
+            modelo.setRowCount(0);
+        }
+
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
         String[] manuales = datosManuales(area, fila);
 
-        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        
         modelo.insertRow(0,codigos.toArray());
         modelo.insertRow(1, manuales);
-       
-        lbl_area.setText(lbl_area.getText() + area);
-        lbl_fila.setText(lbl_fila.getText() + fila);
 
-      //  marcarDiferencias();
+        lbl_area.setText("Área: " + area);
+        lbl_fila.setText("Fila: " + fila);
+
+        contarDiferencias();
+    }
+
+    private void contarDiferencias() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        int diferencias = 0;
+        int coincidencias = 10;
+        for (int columna = 1; columna < 11; columna++) {
+            String archivo = modelo.getValueAt(0, columna).toString();
+            String manual = modelo.getValueAt(1, columna).toString();
+
+            if (!archivo.equals(manual)) {
+                diferencias++;
+                coincidencias--;
+            }
+        }
+        
+        lbl_coincidencias.setText("Total coincidencias: " + Integer.toString(coincidencias));
+        lbl_diferencias.setText("Total diferencias:  " + Integer.toString(diferencias));
+
     }
     
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
@@ -294,35 +295,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         }
         
         return aInsertar;
-    }
-    
-    private void marcarDiferencias() {
-        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        
-        int diferencias = 0;
-        int coincidencias = 0;
-        
-        for (int i = 1; i <11; i++) {
-            String archivo = (String) modelo.getValueAt(0, i);
-            String manual = (String) modelo.getValueAt(1, i);
-            
-            Component celdaFilaCero = tbl_datos.getComponentAt(0, i);
-            Component celdaFilaUno = tbl_datos.getComponentAt(1, i);
-            
-            
-            if (archivo.equals(manual)) {
-                coincidencias++;
-                celdaFilaCero.setBackground(Color.green);
-                celdaFilaUno.setBackground(Color.green);
-            } else {
-                diferencias++;
-                celdaFilaCero.setBackground(Color.red);
-                celdaFilaUno.setBackground(Color.red);
-            }
-        }
-
-        lbl_coincidencias.setText(lbl_area.getText() + (char)(coincidencias + '0'));
-        lbl_diferencias.setText(lbl_fila.getText() + (char)(diferencias + '0'));
     }
     
     
@@ -404,7 +376,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     private javax.swing.JLabel lbl_diferencias;
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
-    private javax.swing.JTable tbl_datos;
+   // private javax.swing.JTable tbl_datos;
+   private MyTable tbl_datos;
     // End of variables declaration//GEN-END:variables
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
