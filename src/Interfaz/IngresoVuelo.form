@@ -196,6 +196,9 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public Component prepareRenderer(&#xa;        TableCellRenderer renderer, int row, int column)&#xa;    {&#xa;        Component c = super.prepareRenderer(renderer, row, column);&#xa;&#xa;        //c.setBackground(Color.GREEN);&#xa;&#xa;        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();&#xa;&#xa;        int diferencias = 0;&#xa;        int coincidencias = 0;&#xa;&#xa;        for (int i = 1; i &lt;11; i++) {&#xa;            String archivo = (String) modelo.getValueAt(0, i);&#xa;            String manual = (String) modelo.getValueAt(1, i);&#xa;&#xa;            Component celdaFilaCero = tbl_datos.getComponentAt(0, i);&#xa;            Component celdaFilaUno = tbl_datos.getComponentAt(1, i);&#xa;&#xa;            c = super.prepareRenderer(renderer, 0, i);&#xa;            if (archivo.equals(manual)) {&#xa;                coincidencias++;&#xa;                c.setForeground(Color.GREEN);&#xa;            } else {&#xa;                diferencias++;&#xa;                c.setForeground(Color.RED);&#xa;            }&#xa;        }&#xa;tbl_datos.getColumnModel().getColumn(0).setCellRenderer(renderer);&#xa;        return c;&#xa;    }&#xa;&#xa;&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

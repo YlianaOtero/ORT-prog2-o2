@@ -49,7 +49,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         datos.resetCargas();
         for (int i = 0; i < 10; i++) {
             char codigo = (char)(i+1 + '0');
-            String cod = ""+codigo;
+            String cod = "3";
             Carga c1 = new Carga(f, a, i, cod);
             
             cargas.get(0)[0][i] = c1;
@@ -69,14 +69,47 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_datos = new javax.swing.JTable();
+        tbl_datos = new javax.swing.JTable(){
+            public Component prepareRenderer(
+                TableCellRenderer renderer, int row, int column)
+            {
+                Component c = super.prepareRenderer(renderer, row, column);
+
+                //c.setBackground(Color.GREEN);
+
+                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+
+                int diferencias = 0;
+                int coincidencias = 0;
+
+                for (int i = 1; i <11; i++) {
+                    String archivo = (String) modelo.getValueAt(0, i);
+                    String manual = (String) modelo.getValueAt(1, i);
+
+                    Component celdaFilaCero = tbl_datos.getComponentAt(0, i);
+                    Component celdaFilaUno = tbl_datos.getComponentAt(1, i);
+
+                    c = super.prepareRenderer(renderer, 0, i);
+                    if (archivo.equals(manual)) {
+                        coincidencias++;
+                        c.setForeground(Color.GREEN);
+                    } else {
+                        diferencias++;
+                        c.setForeground(Color.RED);
+                    }
+                }
+                tbl_datos.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                return c;
+            }
+
+        };
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_area = new javax.swing.JLabel();
         lbl_fila = new javax.swing.JLabel();
         lbl_coincidencias = new javax.swing.JLabel();
         lbl_diferencias = new javax.swing.JLabel();
-        super.setOpacity(1.0f);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
         setName("Regístro de Vuelo"); // NOI18N
@@ -177,8 +210,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        setBounds(500, 300, 600, 400);
-        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -237,14 +268,13 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         lbl_area.setText(lbl_area.getText() + area);
         lbl_fila.setText(lbl_fila.getText() + fila);
 
-   //     marcarDiferencias();
-        getTableCellRendererComponent(tbl_datos, modelo, rootPaneCheckingEnabled, rootPaneCheckingEnabled, area, fila);
+      //  marcarDiferencias();
     }
     
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
-        String[] codigosCargas = (String[]) codigos.toArray();
+        String[] codigosCargas = codigos.toArray((String[]::new));
         
         Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas);
         datos.agregarVuelo(nuevo);
@@ -276,19 +306,23 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             String archivo = (String) modelo.getValueAt(0, i);
             String manual = (String) modelo.getValueAt(1, i);
             
-            Component compColumna = tbl_datos.getComponent(i);
+            Component celdaFilaCero = tbl_datos.getComponentAt(0, i);
+            Component celdaFilaUno = tbl_datos.getComponentAt(1, i);
+            
             
             if (archivo.equals(manual)) {
                 coincidencias++;
-              //  compColumna.setBackground(Color.green);
+                celdaFilaCero.setBackground(Color.green);
+                celdaFilaUno.setBackground(Color.green);
             } else {
                 diferencias++;
-             //   compColumna.setBackground(Color.red);
+                celdaFilaCero.setBackground(Color.red);
+                celdaFilaUno.setBackground(Color.red);
             }
         }
 
-        lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
-        lbl_diferencias.setText(lbl_fila.getText() + diferencias);
+        lbl_coincidencias.setText(lbl_area.getText() + (char)(coincidencias + '0'));
+        lbl_diferencias.setText(lbl_fila.getText() + (char)(diferencias + '0'));
     }
     
     
