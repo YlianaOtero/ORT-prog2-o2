@@ -12,6 +12,8 @@ import Dominio.Vuelo;
 import IO.ArchivoLectura;
 import java.awt.Color;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -28,7 +30,7 @@ import javax.swing.table.TableModel;
  *
  * @author ylian
  */
-public class IngresoVuelo extends javax.swing.JFrame implements TableCellRenderer {
+public class IngresoVuelo extends javax.swing.JFrame implements TableCellRenderer, PropertyChangeListener {
 
     /**
      * Creates new form IngresoVuelo
@@ -239,6 +241,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         
     }//GEN-LAST:event_fileChooserActionPerformed
 
+    private String idDron = "";
+    private String pos = "";
+    private ArrayList<String> codigosCargas = new ArrayList<String>();
+    
+
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
 
@@ -306,12 +313,20 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         String[] aInsertar = new String[11];
         aInsertar[0] = "Manual";
         
-        Carga[] datosArea = cargas.get(areaNum)[fila];
-        
-        for (int i = 0; i < 10; i++) {
-            String codigoActual = datosArea[i].getCodigo();
-            aInsertar[i+1] = codigoActual;
+        try {
+            Carga[] datosArea;
+            datosArea = cargas.get(areaNum)[fila];
+            
+            for (int i = 0; i < 10; i++) {
+                String codigoActual = datosArea[i].getCodigo();
+                aInsertar[i+1] = codigoActual;
+            }
+        } catch (java.lang.NullPointerException e){
+            JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
+                   + " "
+                    + "" , "Datos incorrectos",JOptionPane.ERROR_MESSAGE);
         }
+        
         
         return aInsertar;
     }
@@ -424,5 +439,18 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
                 lbl_diferencias.setText(lbl_fila.getText() + diferencias);
             }
         return this;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+        modelo.setRowCount(0);
+        codigosCargas.add("Archivo");
+        insertarEnTabla(idDron, pos, codigosCargas);
+
+
+        
+        
     }
 }

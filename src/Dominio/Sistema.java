@@ -3,6 +3,8 @@ package Dominio;
 import Interfaz.IngresoArticulo;
 import Interfaz.IngresoDron;
 import Interfaz.IngresoFuncionario;
+import Interfaz.IngresoVuelo;
+
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -222,6 +224,10 @@ public class Sistema implements Serializable {
         }
         
         return unDron;
+    }
+
+    public void agregarListener(IngresoVuelo ingresoVuelo) {
+        manejador.addPropertyChangeListener(ingresoVuelo); // anota interesado
     }
     
     public final void resetCargas(){
