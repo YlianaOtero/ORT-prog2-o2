@@ -9,7 +9,6 @@ import Dominio.Carga;
 import Dominio.Funcionario;
 import Dominio.Sistema;
 import Dominio.Vuelo;
-import Interfaz.MyTable;
 import IO.ArchivoLectura;
 import java.awt.Color;
 import java.awt.Component;
@@ -42,7 +41,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
 
     public IngresoVuelo(Sistema datos) {
         this.datos = datos;
-        this.vuelos = datos.getVuelos();
         this.cargas = datos.getCargas();
         
         initComponents();
@@ -55,6 +53,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         for (int i = 0; i < 10; i++) {
             char codigo = (char)(i+1 + '0');
             String cod = Character.toString(codigo);
+            if (i == 0) {
+                cod = "1";
+            } else if (i == 3) {
+                cod = "3";
+            }
             Carga c1 = new Carga(f, a, i, cod);
             
             cargas.get(0)[0][i] = c1;
@@ -362,7 +365,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     }
     
     
-    private ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
     private Sistema datos = new Sistema(true);
     private ArrayList<Carga[][]> cargas = datos.getCargas();
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
