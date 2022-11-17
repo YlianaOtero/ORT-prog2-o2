@@ -16,13 +16,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -82,6 +85,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1.setRowHeader(new JViewport());
        // tbl_datos = new javax.swing.JTable();
       //  tbl_datos.setDefaultRenderer(getClass(), new MyTable());
         tbl_datos = new MyTable();
@@ -91,6 +95,15 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         lbl_fila = new javax.swing.JLabel();
         lbl_coincidencias = new javax.swing.JLabel();
         lbl_diferencias = new javax.swing.JLabel();
+        tbl_rowHeader = new javax.swing.JTable();
+        tbl_rowHeader.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Manual", "Archivo"
+            }
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
@@ -118,6 +131,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             }
         ));
         tbl_datos.getTableHeader().setReorderingAllowed(false);
+        
         jScrollPane1.setViewportView(tbl_datos);
         if (tbl_datos.getColumnModel().getColumnCount() > 0) {
             tbl_datos.getColumnModel().getColumn(0).setResizable(false);
@@ -133,6 +147,39 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
         setCellsAlignment(tbl_datos, SwingConstants.CENTER);
+
+        /* TableModel frozenModel = new DefaultTableModel(                                 
+                tbl_datos.getModel().getRowCount(),                                 
+                2);       
+        //populate the frozen model     
+        for (int i = 0; i < tbl_datos.getModel().getRowCount(); i++) {       
+            for (int j = 0; j < 2; j++) {         
+                String value = (String) tbl_datos.getModel().getValueAt(i, j);         
+                frozenModel.setValueAt(value, i, j);       
+            }     
+        }
+        JTable frozenTable = new JTable(frozenModel);
+
+        for (int j = 0; j < 2; j++) {
+            tbl_datos.removeColumn(tbl_datos.getColumnModel().getColumn(0));
+            }     tbl_datos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //format the frozen table     
+            JTableHeader header = tbl_datos.getTableHeader();     
+            frozenTable.setBackground(header.getBackground());     
+            frozenTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);    
+            frozenTable.setEnabled(false);     
+            //set frozen table as row header view   
+            JViewport viewport = new JViewport();    
+            viewport.setView(frozenTable); 
+            viewport.setPreferredSize(frozenTable.getPreferredSize());   
+            jScrollPane1.setRowHeaderView(viewport);   
+            jScrollPane1.setCorner(JScrollPane.UPPER_LEFT_CORNER, 
+                    frozenTable.getTableHeader());  */
+            
+        
+
+
+
 
         jLabel2.setText(" ");
 
@@ -409,7 +456,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     private javax.swing.JLabel lbl_diferencias;
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
-   // private javax.swing.JTable tbl_datos;
+    private javax.swing.JTable tbl_rowHeader;
    private MyTable tbl_datos;
     // End of variables declaration//GEN-END:variables
     @Override
@@ -444,6 +491,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO Auto-generated method stub
+        tbl_datos = new MyTable();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.setRowCount(0);
         codigosCargas.add("Archivo");
