@@ -9,7 +9,16 @@ public class Dron implements Serializable {
     private String identificacion;
     private String modelo;
     private int tipoCamara;
-    
+    private boolean tieneVuelos;
+
+    public boolean getTieneVuelos() {
+        return tieneVuelos;
+    }
+
+    public void setTieneVuelos(boolean tieneVuelos) {
+        this.tieneVuelos = tieneVuelos;
+    }
+
     /** Crea un objeto de tipo Dron. Se asume que los datos son correctos.
      * @param unaIdentificacion código de identificación del dron.
      * @param unModelo modelo del dron.
@@ -18,6 +27,7 @@ public class Dron implements Serializable {
         this.identificacion = unaIdentificacion;
         this.modelo = unModelo;
         this.tipoCamara = unTipoCamara;
+        this.tieneVuelos = false;
     }
     
     /** @return Código de identificación del dron.*/
