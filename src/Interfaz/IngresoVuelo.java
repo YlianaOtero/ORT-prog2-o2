@@ -15,11 +15,14 @@ import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -127,6 +130,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             tbl_datos.getColumnModel().getColumn(9).setResizable(false);
             tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
+        setCellsAlignment(tbl_datos, SwingConstants.CENTER);
 
         jLabel2.setText(" ");
 
@@ -183,7 +187,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(500, 300, 1000, 550);
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
@@ -254,6 +258,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         lbl_fila.setText("Fila: " + fila);
 
         contarDiferencias();
+        
     }
 
     private void contarDiferencias() {
@@ -274,7 +279,18 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         lbl_diferencias.setText("Total diferencias:  " + Integer.toString(diferencias));
 
     }
-    
+    public static void setCellsAlignment(JTable table, int alignment)
+    {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(alignment);
+
+        TableModel tableModel = table.getModel();
+
+        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++)
+        {
+            table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
+        }
+    }
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));

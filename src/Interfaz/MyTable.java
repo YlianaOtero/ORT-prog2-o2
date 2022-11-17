@@ -29,6 +29,7 @@ public class MyTable extends JTable {
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int columna) {
         Component result = super.prepareRenderer(renderer, row, columna);
+        
         if (columna > 0) {
             if (debeSerVerde(columna)) {
                 result.setBackground(Color.green);
