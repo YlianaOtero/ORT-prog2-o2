@@ -84,6 +84,23 @@ public class Sistema implements Serializable {
         
         return existe;
     }
+
+    public Articulo buscarArticuloPorNombre(String unNombre) {
+        boolean existe = false;
+        Articulo unArticulo = new Articulo(unNombre, "");
+
+        for (int pos = 0; pos < articulos.size() && !existe; pos++) {
+            Articulo articuloActual = articulos.get(pos);
+            String nombreActual = articuloActual.getNombre();
+            
+            existe = nombreActual.equalsIgnoreCase(unNombre);
+            if (existe) {
+                unArticulo = articuloActual;
+            }
+        }
+
+        return unArticulo;
+    }
     
     public void agregarListener(IngresoArticulo ingresoArticulo) {
         manejador.addPropertyChangeListener(ingresoArticulo); // anota interesado
@@ -143,6 +160,23 @@ public class Sistema implements Serializable {
         return existe;
     }
 
+    public Funcionario buscarFuncionarioPorNombre(String unNombre) {
+        boolean existe = false;
+        Funcionario unFuncionario = new Funcionario(unNombre, 0);
+
+        for (int pos = 0; pos < funcionarios.size() && !existe; pos++) {
+            Funcionario funcionarioActual = funcionarios.get(pos);
+            String nombreActual = funcionarioActual.getNombre();
+            
+            existe = nombreActual.equalsIgnoreCase(unNombre);
+            if (existe) {
+                unFuncionario = funcionarioActual;
+            }
+        }
+        
+        return unFuncionario;
+    }
+
     public void agregarListener(IngresoFuncionario ingresoFuncionario) {
         manejador.addPropertyChangeListener(ingresoFuncionario); // anota interesado
     }
@@ -168,7 +202,26 @@ public class Sistema implements Serializable {
      * @param unVuelo el Vuelo a agregar.*/
     public void agregarVuelo(Vuelo unVuelo) {
         vuelos.add(unVuelo);
+        Dron dronDelVuelo = buscarDronPorID(unVuelo.getIdDron());
+        dronDelVuelo.setTieneVuelos(true);
         manejador.firePropertyChange("cant", vuelos.size()-1, vuelos.size());
+    }
+
+    public Dron buscarDronPorID(String unID) {
+        boolean existe = false;
+        Dron unDron = new Dron(unID, "", 1);
+
+        for (int pos = 0; pos < drones.size() && !existe; pos++) {
+            Dron dronActual = drones.get(pos);
+            String idActual = dronActual.getIdentificacion();
+            
+            existe = idActual.equalsIgnoreCase(unID);
+            if (existe) {
+                unDron = dronActual;
+            }
+        }
+        
+        return unDron;
     }
     
     public final void resetCargas(){
