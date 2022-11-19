@@ -38,7 +38,7 @@ public class VentanaCargas extends javax.swing.JFrame {
         
         initComponents();
         generateButtons();
-        contador.setVisible(false);
+     //   contador.setVisible(false);
     }
     
     public static void main(String args[]) {
@@ -102,7 +102,8 @@ public class VentanaCargas extends javax.swing.JFrame {
         jTextFieldCod = new javax.swing.JTextField();
         jButtonIngr = new javax.swing.JButton();
         panelEspacios = new javax.swing.JPanel();
-        contador = new javax.swing.JLabel();
+      //  contador = new javax.swing.JLabel();
+        contador2 = 0;
         letraArea = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -226,9 +227,9 @@ public class VentanaCargas extends javax.swing.JFrame {
         getContentPane().add(panelEspacios);
         panelEspacios.setBounds(30, 60, 610, 460);
 
-        contador.setText("0");
-        getContentPane().add(contador);
-        contador.setBounds(440, 560, 37, 16);
+     //   contador.setText("0");
+//        getContentPane().add(contador);
+//        contador.setBounds(440, 560, 37, 16);
 
         letraArea.setText("A");
         getContentPane().add(letraArea);
@@ -279,26 +280,30 @@ public class VentanaCargas extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
-       if (contador.getText() == "0") {
+       if (contador2 == 0) {
            letraArea.setText("E");
-            contador.setText("4");
+            contador2 = 4;
+            System.out.println("Deberia valer 4, y vale " + contador2);
         } else {
-           contador.setText(Integer.parseInt(contador.getText()) - 1 + "");
-            
-           letraArea.setText(sistema.areas[Integer.parseInt(contador.getText())]);
+           System.out.print("Deberia valer " + (contador2-1) + ", y vale ");
+           contador2--;
+           System.out.println(contador2);
+           letraArea.setText(sistema.areas[contador2]);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        if (contador.getText() == "4") {
+        if (contador2 == 4) {
+            contador2 = 0;
             letraArea.setText("A");
-            contador.setText("0");
+            System.out.println("Deberia valer 0, y vale " + contador2);
         } else {
-            contador.setText(Integer.parseInt(contador.getText()) + 1 + "");
-            
-            letraArea.setText(sistema.areas[Integer.parseInt(contador.getText())]);
+            System.out.print("Deberia valer " + (contador2+1) + ", y vale ");
+            contador2++;
+            System.out.println(contador2);
+            letraArea.setText(sistema.areas[contador2]);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -325,7 +330,7 @@ public class VentanaCargas extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelIngresoEgreso;
-    private javax.swing.JLabel contador;
+    //private javax.swing.JLabel contador;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonIngr;
@@ -350,7 +355,7 @@ public class VentanaCargas extends javax.swing.JFrame {
     private Sistema sistema;
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Articulo> articulos;
-
+    private int contador2;
     private class EspacioListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -361,7 +366,7 @@ public class VentanaCargas extends javax.swing.JFrame {
             String[] parts = pos.split("\\.");
             int part1 = Integer.parseInt(parts[0]); 
             int part2 = Integer.parseInt(parts[1]); 
-            if(sistema.getCargas().get(Integer.parseInt(contador.getText())) [part1] [part2] == null){
+            if(sistema.getCargas().get(contador2) [part1] [part2] == null){
                 ingreso();
                 PanelIngresoEgreso.setBackground(Color.GREEN);
             }
