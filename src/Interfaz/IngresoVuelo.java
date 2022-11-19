@@ -232,11 +232,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
                    + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
                  "Datos incompletos",JOptionPane.ERROR_MESSAGE);
            codigosCargas.remove(0);
-           insertarEnSistema(idDron, pos, codigosCargas);
+           insertarEnSistema(idDron, pos, codigosCargas, ruta);
         } else {
             insertarEnTabla(idDron, pos, codigosCargas);
             codigosCargas.remove(0);
-            insertarEnSistema(idDron, pos, codigosCargas);
+            insertarEnSistema(idDron, pos, codigosCargas, ruta);
 
             DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         String archivo = modelo.getValueAt(0, 10).toString();
@@ -311,12 +311,12 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
         }
     }
-    private void insertarEnSistema(String id, String pos, ArrayList<String> codigos) {
+    private void insertarEnSistema(String id, String pos, ArrayList<String> codigos, String archivo) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
         String[] codigosCargas = codigos.toArray((String[]::new));
         
-        Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas);
+        Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas, archivo);
         datos.agregarVuelo(nuevo);
     }
     

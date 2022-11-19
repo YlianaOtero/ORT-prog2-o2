@@ -16,6 +16,11 @@ public class Vuelo implements Serializable {
     private String[] cargas;
     private int coincidencias;
     private int diferencias;
+    private String archivo;
+
+    public String getArchivo() {
+        return archivo;
+    }
     
     public int getCoincidencias() {
         return coincidencias;
@@ -39,11 +44,12 @@ public class Vuelo implements Serializable {
      * @param area área del vuelo (entre A y E)
      * @param fila fila del vuelo (entre 1 y 12)
      * @param cargas contiene los codigos de las cargas */
-    public Vuelo(String id, char area, int fila, String[] cargas) {
+    public Vuelo(String id, char area, int fila, String[] cargas, String archivo) {
         this.idDron = id;
         this.area = area;
         this.fila = fila;
         this.cargas = cargas;
+        this.archivo = archivo;
     }
     
     /** @return Código de identificación del dron responsable del vuelo.*/
