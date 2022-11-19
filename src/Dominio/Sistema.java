@@ -238,4 +238,8 @@ public class Sistema implements Serializable {
         }
     }
 
+    public void agregarCarga(int area, int fila, int col, Carga unaCarga) {
+        cargas.get(area)[fila][col] = unaCarga;
+    }
+
 }

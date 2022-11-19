@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 /**
  *
@@ -83,13 +84,21 @@ public class VentanaCargas extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        onp_aviso = new javax.swing.JOptionPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         PanelIngresoEgreso = new javax.swing.JPanel();
         jLabelIngEgr = new javax.swing.JLabel();
         jLabelFun = new javax.swing.JLabel();
         jLabelArt = new javax.swing.JLabel();
+        codigo1E = new javax.swing.JLabel();
+        codigo2E = new javax.swing.JLabel();
+        art1E = new javax.swing.JLabel();
+        art2E = new javax.swing.JLabel();
+        cant1E = new javax.swing.JLabel();
+        cant2E = new javax.swing.JLabel();
+        fun1E = new javax.swing.JLabel();
+        fun2E = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         //DefaultListModel<String> model = new DefaultListModel<>();
         listaFun = new javax.swing.JList<>();
@@ -101,6 +110,7 @@ public class VentanaCargas extends javax.swing.JFrame {
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCod = new javax.swing.JTextField();
         jButtonIngr = new javax.swing.JButton();
+        botonAnterior = new javax.swing.JButton();
         panelEspacios = new javax.swing.JPanel();
       //  contador = new javax.swing.JLabel();
         contador2 = 0;
@@ -141,6 +151,8 @@ public class VentanaCargas extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaArt);
 
+        jScrollPane2.setVisible(false);
+        jScrollPane1.setVisible(false);
         jTextFieldCant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldCantActionPerformed(evt);
@@ -226,6 +238,8 @@ public class VentanaCargas extends javax.swing.JFrame {
         panelEspacios.setLayout(new java.awt.GridLayout(12, 10));
         getContentPane().add(panelEspacios);
         panelEspacios.setBounds(30, 60, 610, 460);
+      
+        panelEspacios.setBackground(Color.YELLOW);
 
      //   contador.setText("0");
 //        getContentPane().add(contador);
@@ -260,6 +274,10 @@ public class VentanaCargas extends javax.swing.JFrame {
 
         setSize(new java.awt.Dimension(1165, 635));
         setLocationRelativeTo(null);
+
+        jButtonIngr.setVisible(false);
+        jTextFieldCod.setVisible(false);
+        jTextFieldCant.setVisible(false);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodActionPerformed
@@ -270,6 +288,52 @@ public class VentanaCargas extends javax.swing.JFrame {
     private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrActionPerformed
         // TODO add your handling code here:
         //CHEQUEO Y CREO OBJ DE TIPO CARGA
+    
+        if(listaFun.getSelectedValue() == null || listaArt.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(onp_aviso,
+                "Debe seleccionar tanto un usuario como un artículo.", "Datos incompletos",
+                + JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                String codigoCarga = jTextFieldCod.getText();
+                String cantArt = jTextFieldCant.getText();
+                
+                if (!codigoCarga.equals("") && !cantArt.isEmpty()) {
+                    int cantArticulos = Integer.parseInt(cantArt);
+                    if (cantArticulos > 0) {
+                        String nombreFuncionario = listaFun.getSelectedValue();
+                        String nombreArticulo = listaArt.getSelectedValue();
+    
+                        Funcionario func = sistema.buscarFuncionarioPorNombre(nombreFuncionario);
+                        Articulo art = sistema.buscarArticuloPorNombre(nombreArticulo);
+    
+                        Carga nueva = new Carga(func, art, cantArticulos, codigoCarga);
+    
+                        sistema.agregarCarga(contador2, filaSeleccionada, colSeleccionada, nueva);
+    
+                        JOptionPane.showMessageDialog(onp_aviso,
+                            "La carga fue ingresada correctamente.", "Carga ingresada",
+                            + JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(onp_aviso,
+                        "La cantidad debe ser mayor a cero", "Datos incorrectos",
+                        + JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(onp_aviso,
+                        "Debe ingresar una cantidad y un codigo de carga", "Datos incompletos",
+                        + JOptionPane.ERROR_MESSAGE);
+                }
+                
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(onp_aviso,
+                "La cantidad debe ser un número entero", "Datos incorrectos",
+                + JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+        
     }//GEN-LAST:event_jButtonIngrActionPerformed
 
     private void jTextFieldCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantActionPerformed
@@ -319,13 +383,14 @@ public class VentanaCargas extends javax.swing.JFrame {
                 nuevo.setForeground(Color.WHITE);
                 String aux1 = i + 1 + ".";
                 int aux2 = j + 1;
-
+                
                 nuevo.setText(aux1 + aux2);
-
+                nuevo.setBorder(new RoundedBorder(10));
                 nuevo.addActionListener(new VentanaCargas.EspacioListener());
                 this.panelEspacios.add(nuevo);
             }
         }
+        
     }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -356,21 +421,30 @@ public class VentanaCargas extends javax.swing.JFrame {
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Articulo> articulos;
     private int contador2;
+    private int filaSeleccionada;
+    private int colSeleccionada;
+    private javax.swing.JOptionPane onp_aviso;
+    private JButton botonAnterior;
     private class EspacioListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 // este código se ejecutará al presionar el botón, obtengo cuál botón
-            JButton cual = ((JButton) e.getSource());
             
+            JButton cual = ((JButton) e.getSource());
+            cual.setBackground(Color.red);
+            botonAnterior.setBackground(Color.GRAY);
             String pos = cual.getText();
             String[] parts = pos.split("\\.");
             int part1 = Integer.parseInt(parts[0]); 
             int part2 = Integer.parseInt(parts[1]); 
-            if(sistema.getCargas().get(contador2) [part1] [part2] == null){
+            filaSeleccionada = part1-1;
+            colSeleccionada = part2-1;
+            if(sistema.getCargas().get(contador2)[part1-1][part2-1] == null){
                 ingreso();
                 PanelIngresoEgreso.setBackground(Color.GREEN);
             }
             else {
+                egreso();
                 PanelIngresoEgreso.setBackground(Color.BLUE);
                 
                // cargaListaFuncionarios();
@@ -381,8 +455,13 @@ public class VentanaCargas extends javax.swing.JFrame {
                 
             }
           
-            
-            
+            jScrollPane2.setVisible(true);
+            jScrollPane1.setVisible(true);
+            jButtonIngr.setVisible(true);
+            jTextFieldCod.setVisible(true);
+            jTextFieldCant.setVisible(true);
+
+            botonAnterior = cual;
             
             // código a completar según el botón presionado
             //hago funcion de ingreso con set visible y la llamo cuando corresponda
@@ -415,7 +494,7 @@ public class VentanaCargas extends javax.swing.JFrame {
         }
     //hago metodo para el panel de ingreso
     public void ingreso(){
-      
+      mostrarPanelIngreso(true);
       jLabelIngEgr.setText("Ingreso");
       jLabelFun.setText("Funcionarios");
       jLabelArt.setText("Articulos");
@@ -425,18 +504,83 @@ public class VentanaCargas extends javax.swing.JFrame {
       
       String f[] = new  String [sistema.getFuncionarios().size()];
       for(int i=0; i<f.length; i++ ){
-      f[i]= sistema.getFuncionarios().get(i).getNombre();
+        f[i]= sistema.getFuncionarios().get(i).getNombre();
       } 
+      if (sistema.getFuncionarios().size() > 0) System.out.println("hay funcionarios");
+      else System.out.println("no hay funcionarios");
       listaFun.setListData(f);
       
-       String a[] = new  String [sistema.getArticulos().size()];
+      String a[] = new  String [sistema.getArticulos().size()];
       for(int i=0; i<a.length; i++ ){
-      a[i]= sistema.getArticulos().get(i).getNombre();
+        a[i]= sistema.getArticulos().get(i).getNombre();
       } 
-      listaArt.setListData(f);
+      if (sistema.getArticulos().size() > 0) System.out.println("hay articulos");
+      else System.out.println("no hay articulos");
+      listaArt.setListData(a);
     }
-    
+
+    public void mostrarPanelIngreso(boolean mostrar) {
+        jLabelArt.setVisible(!mostrar);
+        jLabelCant.setVisible(!mostrar);
+        jLabelCodigo.setVisible(!mostrar);
+        jLabelFun.setVisible(!mostrar);
+  
+        listaArt.setVisible(mostrar);
+        listaFun.setVisible(mostrar);
+        jButtonIngr.setVisible(mostrar);
+        jScrollPane1.setVisible(mostrar);
+        jScrollPane2.setVisible(mostrar);
+        jTextFieldCant.setVisible(mostrar);
+        jTextFieldCod.setVisible(mostrar);
+    }
+
+    private JLabel codigo1E;
+    private JLabel codigo2E;
+    private JLabel art1E;
+    private JLabel art2E;
+    private JLabel cant1E;
+    private JLabel cant2E;
+    private JLabel fun1E;
+    private JLabel fun2E;
+
+    public void egreso(){
+      Carga cargaActual = sistema.getCargas().get(contador2)[filaSeleccionada][colSeleccionada];
+      jLabelIngEgr.setText("Egreso");
+      art2E.setText(cargaActual.getArticulo().getNombre());
+      cant2E.setText(String.valueOf(cargaActual.getCantUnidades()));
+      codigo2E.setText(cargaActual.getCodigo());
+      fun2E.setText(cargaActual.getFuncionario().getNombre());
+
+
+      mostrarPanelIngreso(false);
+      
+    }
   
     }
   
     
+    class RoundedBorder implements Border {
+        
+        private int radius;
+    
+    
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+    
+    
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+        }
+    
+    
+        public boolean isBorderOpaque() {
+            return true;
+        }
+    
+    
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+        }
+        
+    }

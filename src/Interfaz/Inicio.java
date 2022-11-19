@@ -171,7 +171,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        VentanaCargas ventCarg = new VentanaCargas(sistema);
+        VentanaCargas ventCarg = new VentanaCargas(datos);
         ventCarg.setVisible(true);
     }                                          
 
@@ -200,7 +200,6 @@ public class Inicio extends javax.swing.JFrame {
 
     
   private Sistema datos;
-  private Sistema sistema;
     /**
      * @param args the command line arguments
      */
