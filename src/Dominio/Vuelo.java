@@ -14,12 +14,31 @@ public class Vuelo implements Serializable {
     private char area;
     private int fila;
     private String[] cargas;
+    private int coincidencias;
+    private int diferencias;
+    
+    public int getCoincidencias() {
+        return coincidencias;
+    }
+
+    public int getDiferencias() {
+        return diferencias;
+    }
+
+    public void setCoincidencias(int coincidencias) {
+        this.coincidencias = coincidencias;
+    }
+
+    public void setDiferencias(int diferencias) {
+        this.diferencias = diferencias;
+    }
+   
     
     /** Crea un objeto de tipo Vuelo. Se asume que los datos son correctos.
      * @param id código de identificación del dron del vuelo.
      * @param area área del vuelo (entre A y E)
      * @param fila fila del vuelo (entre 1 y 12)
-     * @param cargas contiene 10 codigos de cargas */
+     * @param cargas contiene los codigos de las cargas */
     public Vuelo(String id, char area, int fila, String[] cargas) {
         this.idDron = id;
         this.area = area;

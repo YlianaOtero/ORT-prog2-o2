@@ -231,6 +231,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
            JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener 10 líneas de"
                    + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
                  "Datos incompletos",JOptionPane.ERROR_MESSAGE);
+           codigosCargas.remove(0);
+           insertarEnSistema(idDron, pos, codigosCargas);
         } else {
             insertarEnTabla(idDron, pos, codigosCargas);
             codigosCargas.remove(0);
@@ -289,6 +291,12 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         
         lbl_coincidencias.setText("Total coincidencias: " + Integer.toString(coincidencias));
         lbl_diferencias.setText("Total diferencias:  " + Integer.toString(diferencias));
+        
+        ArrayList<Vuelo> vuelos = datos.getVuelos();
+        int ultimo = vuelos.size()-1;
+        Vuelo actual = vuelos.get(ultimo);
+        actual.setCoincidencias(coincidencias);
+        actual.setDiferencias(diferencias);
 
     }
     public static void setCellsAlignment(JTable table, int alignment)

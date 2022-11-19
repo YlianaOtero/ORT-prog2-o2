@@ -47,6 +47,8 @@ public class Sistema implements Serializable {
     public ArrayList<Dron> getDrones() {
         return drones;
     }
+    
+    
 
     /** @return El personal del sistema.*/
     public ArrayList<Funcionario> getFuncionarios() {
@@ -132,6 +134,45 @@ public class Sistema implements Serializable {
         }
         
         return existe;
+    }
+    
+    public ArrayList<Dron> dronesSinVuelos() {
+        ArrayList<Dron> sinVuelos = new ArrayList<Dron>();
+        
+        for (int pos = 0; pos < drones.size(); pos++) {
+            Dron dronActual = drones.get(pos);
+            if (dronActual.getTieneVuelos()) {
+                sinVuelos.add(dronActual);
+            }
+        }
+        
+        return sinVuelos;
+    }
+    
+    public ArrayList<Dron> dronesConVuelos() {
+        ArrayList<Dron> conVuelos = new ArrayList<Dron>();
+        
+        for (int pos = 0; pos < drones.size(); pos++) {
+            Dron dronActual = drones.get(pos);
+            if (!dronActual.getTieneVuelos()) {
+                conVuelos.add(dronActual);
+            }
+        }
+        
+        return conVuelos;
+    }
+    
+    public ArrayList<Vuelo> vuelosDeUnDron(String id) {
+        ArrayList<Vuelo> vuelosDron = new ArrayList<Vuelo>();
+        
+        for (int pos = 0; pos < vuelos.size(); pos++) {
+            Vuelo vueloActual = vuelos.get(pos);
+            if (vueloActual.getIdDron().equals(id)) {
+                vuelosDron.add(vueloActual);
+            }
+        }
+        
+        return vuelosDron;
     }
     
     public void agregarListener(IngresoDron ingresoDron) {

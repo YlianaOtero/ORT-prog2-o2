@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import Dominio.Sistema;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -122,8 +123,10 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem6.setText("Estadísticas");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
+
+            
         });
         jMenu3.add(jMenuItem6);
 
@@ -168,6 +171,11 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {
         IngresoVuelo ventanaVuelo = new IngresoVuelo(datos);
             ventanaVuelo.setVisible(true);
+    }
+    
+    private void jMenuItem6ActionPerformed(ActionEvent evt) {
+        Estadisticas ventanaEst = new Estadisticas(datos);
+            ventanaEst.setVisible(true);
     }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
