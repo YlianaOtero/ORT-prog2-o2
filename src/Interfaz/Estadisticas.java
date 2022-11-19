@@ -42,46 +42,46 @@ public class Estadisticas extends javax.swing.JFrame {
 
         onp_aviso = new javax.swing.JOptionPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lst_datosVuelo = new javax.swing.JList<>();
+        lst_vuelosDelDron = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lst_conVuelos = new javax.swing.JList<>();
+        lst_dronesConVuelos = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        lst_sinVuelos = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        btn_ver = new javax.swing.JButton();
+        lst_dronesSinVuelos = new javax.swing.JList<>();
+        lbl_vuelosDelDron = new javax.swing.JLabel();
+        lbl_dronesSinVuelos = new javax.swing.JLabel();
+        lbl_dronesConVuelos = new javax.swing.JLabel();
+        btn_verVuelos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estadísticas");
 
-        jScrollPane1.setViewportView(lst_datosVuelo);
-        lst_datosVuelo.setVisible(true);
+        jScrollPane1.setViewportView(lst_vuelosDelDron);
+        lst_vuelosDelDron.setVisible(true);
         jScrollPane2.setVisible(true);
 
-        lst_conVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lst_conVuelos.setToolTipText("");
-        jScrollPane2.setViewportView(lst_conVuelos);
+        lst_dronesConVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lst_dronesConVuelos.setToolTipText("");
+        jScrollPane2.setViewportView(lst_dronesConVuelos);
 
-        lst_sinVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lst_sinVuelos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lst_dronesSinVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lst_dronesSinVuelos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lst_sinVuelosValueChanged(evt);
+                lst_dronesSinVuelosValueChanged(evt);
             }
         });
-        jScrollPane3.setViewportView(lst_sinVuelos);
+        jScrollPane3.setViewportView(lst_dronesSinVuelos);
 
-        jLabel1.setText("Vuelos del dron");
-        jLabel1.setVisible(true);
+        lbl_vuelosDelDron.setText("Vuelos del dron");
+        lbl_vuelosDelDron.setVisible(true);
 
-        jLabel2.setText("Drones sin vuelos");
+        lbl_dronesSinVuelos.setText("Drones sin vuelos");
 
-        jLabel3.setText("Drones con vuelos");
+        lbl_dronesConVuelos.setText("Drones con vuelos");
 
-        btn_ver.setText("Ver vuelos");
-        btn_ver.addActionListener(new java.awt.event.ActionListener() {
+        btn_verVuelos.setText("Ver vuelos");
+        btn_verVuelos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_verActionPerformed(evt);
+                btn_verVuelosActionPerformed(evt);
             }
         });
 
@@ -91,62 +91,60 @@ public class Estadisticas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_dronesSinVuelos)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btn_ver)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_dronesConVuelos)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(btn_verVuelos)))
+                .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel1)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(lbl_vuelosDelDron)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(lbl_vuelosDelDron)
+                    .addComponent(lbl_dronesConVuelos)
+                    .addComponent(lbl_dronesSinVuelos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3))
                 .addGap(31, 31, 31)
-                .addComponent(btn_ver)
+                .addComponent(btn_verVuelos)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verActionPerformed
+    private void btn_verVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verVuelosActionPerformed
         // TODO add your handling code here:
-        if (!lst_conVuelos.isSelectionEmpty() || lst_sinVuelos.isSelectionEmpty()) {
+        if (!lst_dronesConVuelos.isSelectionEmpty() || lst_dronesSinVuelos.isSelectionEmpty()) {
             System.out.println("Por favor, elija un dron de la lista de drones con vuelos.");
             JOptionPane.showMessageDialog(onp_aviso, "Por favor, elija un dron de"
                    + " la lista de drones con vuelos.", 
                  "No hay vuelos",JOptionPane.ERROR_MESSAGE);
         } else {
             System.out.println("Bien.");
-            Dron dronSeleccionado = datos.buscarDronPorID(lst_conVuelos.getSelectedValue());
+            Dron dronSeleccionado = datos.buscarDronPorID(lst_dronesConVuelos.getSelectedValue());
             cargarListaVuelo(dronSeleccionado);
         } 
-    }//GEN-LAST:event_btn_verActionPerformed
+    }//GEN-LAST:event_btn_verVuelosActionPerformed
 
-    private void lst_sinVuelosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_sinVuelosValueChanged
+    private void lst_dronesSinVuelosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lst_dronesSinVuelosValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_lst_sinVuelosValueChanged
+    }//GEN-LAST:event_lst_dronesSinVuelosValueChanged
 
     /**
      * @param args the command line arguments
@@ -207,7 +205,7 @@ public class Estadisticas extends javax.swing.JFrame {
             info[i] = datosVuelo(vuelosDron.get(i));
         }
         
-        lst_datosVuelo.setListData(info);
+        lst_vuelosDelDron.setListData(info);
     }
     
     
@@ -227,21 +225,21 @@ public class Estadisticas extends javax.swing.JFrame {
           sinVuelos[pos] = dronesSinVuelos.get(pos).getIdentificacion();
       }
       
-      lst_conVuelos.setListData(conVuelos);
-      lst_sinVuelos.setListData(sinVuelos);
+      lst_dronesConVuelos.setListData(conVuelos);
+      lst_dronesSinVuelos.setListData(sinVuelos);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_ver;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btn_verVuelos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<String> lst_conVuelos;
-    private javax.swing.JList<String> lst_datosVuelo;
-    private javax.swing.JList<String> lst_sinVuelos;
+    private javax.swing.JLabel lbl_dronesConVuelos;
+    private javax.swing.JLabel lbl_dronesSinVuelos;
+    private javax.swing.JLabel lbl_vuelosDelDron;
+    private javax.swing.JList<String> lst_dronesConVuelos;
+    private javax.swing.JList<String> lst_dronesSinVuelos;
+    private javax.swing.JList<String> lst_vuelosDelDron;
     private javax.swing.JOptionPane onp_aviso;
     // End of variables declaration//GEN-END:variables
     private Sistema datos;
