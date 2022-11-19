@@ -130,7 +130,7 @@ public class Estadisticas extends javax.swing.JFrame {
 
     private void btn_verVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verVuelosActionPerformed
         // TODO add your handling code here:
-        if (!lst_dronesConVuelos.isSelectionEmpty() || lst_dronesSinVuelos.isSelectionEmpty()) {
+        if (lst_dronesConVuelos.isSelectionEmpty() || !lst_dronesSinVuelos.isSelectionEmpty()) {
             System.out.println("Por favor, elija un dron de la lista de drones con vuelos.");
             JOptionPane.showMessageDialog(onp_aviso, "Por favor, elija un dron de"
                    + " la lista de drones con vuelos.", 

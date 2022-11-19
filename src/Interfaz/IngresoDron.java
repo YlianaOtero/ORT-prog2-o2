@@ -209,6 +209,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
 
     private void agregarEnLista(String identificacion, String modeloDron, int tipoCamara) {
         Dron nuevo = new Dron(identificacion, modeloDron, tipoCamara);
+        nuevo.setTieneVuelos(false);
         datos.agregarDron(nuevo);
         
         JOptionPane.showMessageDialog(onp_aviso,

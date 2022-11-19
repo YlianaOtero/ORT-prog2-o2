@@ -141,7 +141,7 @@ public class Sistema implements Serializable {
         
         for (int pos = 0; pos < drones.size(); pos++) {
             Dron dronActual = drones.get(pos);
-            if (dronActual.getTieneVuelos()) {
+            if (!dronActual.getTieneVuelos()) {
                 sinVuelos.add(dronActual);
             }
         }
@@ -154,7 +154,7 @@ public class Sistema implements Serializable {
         
         for (int pos = 0; pos < drones.size(); pos++) {
             Dron dronActual = drones.get(pos);
-            if (!dronActual.getTieneVuelos()) {
+            if (dronActual.getTieneVuelos()) {
                 conVuelos.add(dronActual);
             }
         }
