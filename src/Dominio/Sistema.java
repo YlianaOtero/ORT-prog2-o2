@@ -130,7 +130,7 @@ public class Sistema implements Serializable {
             Dron dronActual = drones.get(pos);
             String identificacionActual = dronActual.getIdentificacion();
             
-            existe = identificacionActual.equalsIgnoreCase(unIdentificacion);
+            existe = identificacionActual.equals(unIdentificacion);
         }
         
         return existe;

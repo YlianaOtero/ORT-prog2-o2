@@ -6,6 +6,7 @@ package Interfaz;
 
 import Dominio.Articulo;
 import Dominio.Carga;
+import Dominio.Dron;
 import Dominio.Funcionario;
 import Dominio.Sistema;
 import Dominio.Vuelo;
@@ -261,19 +262,36 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             modelo.setRowCount(0);
         }
 
+        lbl_area.setText("Área: " + pos.charAt(0));
+        lbl_fila.setText("Fila: " + pos.charAt(2));
+        
         char area = pos.charAt(0);
-        int fila =  Character.getNumericValue(pos.charAt(2));
-        String[] manuales = datosManuales(area, fila);
-
+        int fila;
+        fila = Character.getNumericValue(pos.charAt(2));
         
+        
+        
+        cambiarVacioPorCero(codigos);
         modelo.insertRow(0,codigos.toArray());
-        modelo.insertRow(1, manuales);
-
-        lbl_area.setText("Área: " + area);
-        lbl_fila.setText("Fila: " + fila);
-
-        contarDiferencias();
         
+        if (hayDatosManuales(area, fila)) {
+            String[] manuales = datosManuales(area, fila);
+            modelo.insertRow(1, manuales);
+            contarDiferencias();
+        } else {
+            JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
+                    , "No hay datos para comparar",JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        
+    }
+    
+    private void cambiarVacioPorCero(ArrayList<String> codigos) {
+        for (int i = 0; i < codigos.size(); i++) {
+            if (codigos.get(i).isBlank()) {
+                codigos.set(i, "0");
+            }
+        }
     }
 
     private void contarDiferencias() {
@@ -312,13 +330,29 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
         }
     }
+    
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos, String archivo) {
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
         String[] codigosCargas = codigos.toArray((String[]::new));
         
         Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas, archivo);
+        
+        if (datos.identificacionDronYaExistente(idDron)) {
+            Dron dronActual = datos.buscarDronPorID(id);
+            dronActual.setTieneVuelos(true);
+        } 
+        
         datos.agregarVuelo(nuevo);
+    }
+    
+    private boolean hayDatosManuales(char area, int fila) {
+        int areaNum = area - 65;
+        Carga[] datosArea;
+        datosArea = cargas.get(areaNum)[fila];
+        
+        return datosArea != null;
+        
     }
     
     private String[] datosManuales(char area, int fila) {
@@ -327,19 +361,21 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         String[] aInsertar = new String[11];
         aInsertar[0] = "Manual";
         
-        try {
-            Carga[] datosArea;
-            datosArea = cargas.get(areaNum)[fila];
-            
-            for (int i = 0; i < 10; i++) {
-                String codigoActual = datosArea[i].getCodigo();
-                aInsertar[i+1] = codigoActual;
+       
+        Carga[] datosArea;
+        datosArea = cargas.get(areaNum)[fila-1];
+
+        for (int i = 0; i < 10; i++) {
+            String codigoActual;
+            if (datosArea[i] != null) {
+                codigoActual = datosArea[i].getCodigo();
+            } else {
+                codigoActual = "";
             }
-        } catch (java.lang.NullPointerException e){
-            JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
-                   + " "
-                    + "" , "Datos incorrectos",JOptionPane.ERROR_MESSAGE);
+
+            aInsertar[i+1] = codigoActual;
         }
+    
         
         
         return aInsertar;
