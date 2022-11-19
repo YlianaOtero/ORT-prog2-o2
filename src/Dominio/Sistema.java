@@ -17,6 +17,7 @@ public class Sistema implements Serializable {
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Carga[][]> cargas;
     private ArrayList<Vuelo> vuelos;
+    public String [] areas = { "A","B","C","D","E"};
     transient private PropertyChangeSupport manejador;
     
     /** Crea un objeto de tipo Sistema.

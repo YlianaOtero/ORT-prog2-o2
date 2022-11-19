@@ -85,25 +85,14 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jScrollPane1.setRowHeader(new JViewport());
-       // tbl_datos = new javax.swing.JTable();
-      //  tbl_datos.setDefaultRenderer(getClass(), new MyTable());
-        tbl_datos = new MyTable();
+        tbl_datos = new MyTable()
+        ;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_area = new javax.swing.JLabel();
         lbl_fila = new javax.swing.JLabel();
         lbl_coincidencias = new javax.swing.JLabel();
         lbl_diferencias = new javax.swing.JLabel();
-        tbl_rowHeader = new javax.swing.JTable();
-        tbl_rowHeader.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Manual", "Archivo"
-            }
-        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
@@ -131,7 +120,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             }
         ));
         tbl_datos.getTableHeader().setReorderingAllowed(false);
-        
         jScrollPane1.setViewportView(tbl_datos);
         if (tbl_datos.getColumnModel().getColumnCount() > 0) {
             tbl_datos.getColumnModel().getColumn(0).setResizable(false);
@@ -146,46 +134,16 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             tbl_datos.getColumnModel().getColumn(9).setResizable(false);
             tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
-        setCellsAlignment(tbl_datos, SwingConstants.CENTER);
-
-        /* TableModel frozenModel = new DefaultTableModel(                                 
-                tbl_datos.getModel().getRowCount(),                                 
-                2);       
-        //populate the frozen model     
-        for (int i = 0; i < tbl_datos.getModel().getRowCount(); i++) {       
-            for (int j = 0; j < 2; j++) {         
-                String value = (String) tbl_datos.getModel().getValueAt(i, j);         
-                frozenModel.setValueAt(value, i, j);       
-            }     
-        }
-        JTable frozenTable = new JTable(frozenModel);
-
-        for (int j = 0; j < 2; j++) {
-            tbl_datos.removeColumn(tbl_datos.getColumnModel().getColumn(0));
-            }     tbl_datos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            //format the frozen table     
-            JTableHeader header = tbl_datos.getTableHeader();     
-            frozenTable.setBackground(header.getBackground());     
-            frozenTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);    
-            frozenTable.setEnabled(false);     
-            //set frozen table as row header view   
-            JViewport viewport = new JViewport();    
-            viewport.setView(frozenTable); 
-            viewport.setPreferredSize(frozenTable.getPreferredSize());   
-            jScrollPane1.setRowHeaderView(viewport);   
-            jScrollPane1.setCorner(JScrollPane.UPPER_LEFT_CORNER, 
-                    frozenTable.getTableHeader());  */
-            
-        
-
-
-
 
         jLabel2.setText(" ");
 
-        
+        lbl_area.setText("Área: ");
 
-        
+        lbl_fila.setText("Fila: ");
+
+        lbl_coincidencias.setText("Total coincidencias: ");
+
+        lbl_diferencias.setText("Total diferencias:  ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,7 +194,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        setBounds(500, 300, 1000, 550);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
@@ -456,8 +414,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     private javax.swing.JLabel lbl_diferencias;
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
-    private javax.swing.JTable tbl_rowHeader;
-   private MyTable tbl_datos;
+    private javax.swing.JTable tbl_datos;
     // End of variables declaration//GEN-END:variables
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

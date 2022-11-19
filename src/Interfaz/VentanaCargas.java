@@ -1,8 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Interfaz;
 
 import Dominio.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -14,14 +19,58 @@ public class VentanaCargas extends javax.swing.JFrame {
     /**
      * Creates new form VentanaCargas
      */
-    private VentanaCargas() {
-
-    }
-
-    public VentanaCargas(Sistema unSistema) {
-        this.sistema = unSistema;
+    public VentanaCargas() {
         initComponents();
         generateButtons();
+    }
+    public VentanaCargas(Sistema unSistema) {
+        try {
+            this.sistema = unSistema;
+        
+        this.funcionarios = this.sistema.getFuncionarios();
+        this.articulos = this.sistema.getArticulos();
+        } catch (NullPointerException e) {
+            this.sistema = new Sistema(true);
+             this.funcionarios = this.sistema.getFuncionarios();
+        this.articulos = this.sistema.getArticulos();
+        }
+        
+        
+        initComponents();
+        generateButtons();
+        contador.setVisible(false);
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaCargas().setVisible(true);
+            }
+        });
     }
 
     /**
@@ -32,29 +81,33 @@ public class VentanaCargas extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
 
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        PanelIngresoEgreso = new javax.swing.JPanel();
+        jLabelIngEgr = new javax.swing.JLabel();
+        jLabelFun = new javax.swing.JLabel();
+        jLabelArt = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        //DefaultListModel<String> model = new DefaultListModel<>();
+        listaFun = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jLabel4 = new javax.swing.JLabel();
+        //DefaultListModel<String> model2 = new DefaultListModel<>();
+        listaArt = new javax.swing.JList<>();
+        jLabelCant = new javax.swing.JLabel();
         jTextFieldCant = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCod = new javax.swing.JTextField();
         jButtonIngr = new javax.swing.JButton();
         panelEspacios = new javax.swing.JPanel();
+        contador = new javax.swing.JLabel();
+        letraArea = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        
-        setTitle("Ingreso/Egreso de Carga");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,27 +126,19 @@ public class VentanaCargas extends javax.swing.JFrame {
         setAutoRequestFocus(false);
         getContentPane().setLayout(null);
 
-        jLabel1.setText("Ingreso");
-
-        jLabel2.setText("Funcionarios");
-
-        jLabel3.setText("Articulos");
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listaFun.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listaFun);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        listaArt.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
-
-        jLabel4.setText("Cantidad");
+        jScrollPane2.setViewportView(listaArt);
 
         jTextFieldCant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,114 +146,161 @@ public class VentanaCargas extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Codigo");
-
         jTextFieldCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldCodActionPerformed(evt);
             }
         });
 
-        jButtonIngr.setText("Ingresar");
         jButtonIngr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIngrActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PanelIngresoEgresoLayout = new javax.swing.GroupLayout(PanelIngresoEgreso);
+        PanelIngresoEgreso.setLayout(PanelIngresoEgresoLayout);
+        PanelIngresoEgresoLayout.setHorizontalGroup(
+            PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(jLabelFun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelArt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelCant, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonIngr)
                 .addGap(20, 20, 20))
+            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel4)))
+        PanelIngresoEgresoLayout.setVerticalGroup(
+            PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelFun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelArt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addComponent(jLabelCant, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 6, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
                         .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel5)
                         .addGap(18, 18, 18)
+                        .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jButtonIngr)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIngr, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(490, 20, 370, 300);
+        getContentPane().add(PanelIngresoEgreso);
+        PanelIngresoEgreso.setBounds(710, 90, 370, 300);
 
         panelEspacios.setLayout(new java.awt.GridLayout(12, 10));
         getContentPane().add(panelEspacios);
-        panelEspacios.setBounds(10, 10, 470, 460);
+        panelEspacios.setBounds(30, 60, 610, 460);
+
+        contador.setText("0");
+        getContentPane().add(contador);
+        contador.setBounds(440, 560, 37, 16);
+
+        letraArea.setText("A");
+        getContentPane().add(letraArea);
+        letraArea.setBounds(170, 0, 60, 16);
+
+        jButton1.setText(">>");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(420, 540, 72, 22);
+
+        jButton2.setText("<<");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(60, 540, 72, 22);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(885, 551));
+        setSize(new java.awt.Dimension(1165, 635));
         setLocationRelativeTo(null);
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldCodActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    private void jTextFieldCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodActionPerformed
         // TODO add your handling code here:
         jTextFieldCod.getText();
-    }                                             
+    }//GEN-LAST:event_jTextFieldCodActionPerformed
 
-    private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrActionPerformed
         // TODO add your handling code here:
         //CHEQUEO Y CREO OBJ DE TIPO CARGA
-    }                                           
+    }//GEN-LAST:event_jButtonIngrActionPerformed
 
-    private void jTextFieldCantActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jTextFieldCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantActionPerformed
         // TODO add your handling code here:
         jTextFieldCant.getText();
-    }                                              
+    }//GEN-LAST:event_jTextFieldCantActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+       if (contador.getText() == "0") {
+           letraArea.setText("E");
+            contador.setText("4");
+        } else {
+           contador.setText(Integer.parseInt(contador.getText()) - 1 + "");
+            
+           letraArea.setText(sistema.areas[Integer.parseInt(contador.getText())]);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        if (contador.getText() == "4") {
+            letraArea.setText("A");
+            contador.setText("0");
+        } else {
+            contador.setText(Integer.parseInt(contador.getText()) + 1 + "");
+            
+            letraArea.setText(sistema.areas[Integer.parseInt(contador.getText())]);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,77 +322,116 @@ public class VentanaCargas extends javax.swing.JFrame {
             }
         }
     }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IngresoDron.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IngresoDron.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IngresoDron.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IngresoDron.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaCargas().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify                     
+   
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelIngresoEgreso;
+    private javax.swing.JLabel contador;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonIngr;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JLabel jLabelArt;
+    private javax.swing.JLabel jLabelCant;
+    private javax.swing.JLabel jLabelCodigo;
+    private javax.swing.JLabel jLabelFun;
+    private javax.swing.JLabel jLabelIngEgr;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldCant;
     private javax.swing.JTextField jTextFieldCod;
+    private javax.swing.JLabel letraArea;
+    private javax.swing.JList<String> listaArt;
+    private javax.swing.JList<String> listaFun;
     private javax.swing.JPanel panelEspacios;
-    // End of variables declaration                   
-private Sistema sistema;
+    // End of variables declaration//GEN-END:variables
+    private Sistema sistema;
+    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Articulo> articulos;
 
     private class EspacioListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 // este código se ejecutará al presionar el botón, obtengo cuál botón
             JButton cual = ((JButton) e.getSource());
+            
+            String pos = cual.getText();
+            String[] parts = pos.split("\\.");
+            int part1 = Integer.parseInt(parts[0]); 
+            int part2 = Integer.parseInt(parts[1]); 
+            if(sistema.getCargas().get(Integer.parseInt(contador.getText())) [part1] [part2] == null){
+                ingreso();
+                PanelIngresoEgreso.setBackground(Color.GREEN);
+            }
+            else {
+                PanelIngresoEgreso.setBackground(Color.BLUE);
+                
+               // cargaListaFuncionarios();
+                //cargarListaArticulos();
+                // int cant = Integer.parseInt(jTextFieldCant.getText());
+                 // int cod = Integer.parseInt(jTextFieldCod.getText());
+                
+                
+            }
+          
+            
+            
+            
             // código a completar según el botón presionado
             //hago funcion de ingreso con set visible y la llamo cuando corresponda
 //hago metodo que haga visible cuando ingrese
 //hago otro metodo que se haga visible cuando egrese
             // public void ingreso() {
-            
-            //  if()
-            //si la lista de cargas en esa posicion es null
-            //ingreso
-            // }
 
+            //  if()
+            //sni la lista de cargas en esa posicion es null
+            //ingreso
+            // relacion entre boton y lugar de sstema
+            //tengo array de matrices a b c d e 
+            //
+            //dominio.sistema.cargas[i]
+            //dominio.sistema.cargas.get(i) eso devuelve objeto de tipo matriz
+          // sistema.cargas es un arraylist por eso uso get
+          //contador me ice en que area estoy 
+          //obtengo en que area: sistema.cargas.get(Integer.parseInt(contador.getText()))
+          // estoy en una matriz, como obtengo i y j? depende del boton
+          //relacion matriz boton?
+          //cual ya tiene sus numeros literal es como i y j 
+          //String pos = cual.getText();
+          //String[] parts = string.split(".");
+            //String part1 = Integer.parseInt(parts[0]); 
+            //String part2 = Integer.parseInt(parts[1]); 
+            //sistema.cargas.get(Integer.parseInt(contador.getText())) [part1] [part2];
+          
         }
+//
+        }
+    //hago metodo para el panel de ingreso
+    public void ingreso(){
+      
+      jLabelIngEgr.setText("Ingreso");
+      jLabelFun.setText("Funcionarios");
+      jLabelArt.setText("Articulos");
+      jLabelCant.setText("Cantidad");
+      jLabelCodigo.setText("Codigo");
+      jButtonIngr.setText("Ingresar");
+      
+      String f[] = new  String [sistema.getFuncionarios().size()];
+      for(int i=0; i<f.length; i++ ){
+      f[i]= sistema.getFuncionarios().get(i).getNombre();
+      } 
+      listaFun.setListData(f);
+      
+       String a[] = new  String [sistema.getArticulos().size()];
+      for(int i=0; i<a.length; i++ ){
+      a[i]= sistema.getArticulos().get(i).getNombre();
+      } 
+      listaArt.setListData(f);
     }
-}
+    
+  
+    }
+  
+    
