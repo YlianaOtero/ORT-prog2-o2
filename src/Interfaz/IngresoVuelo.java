@@ -134,6 +134,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             tbl_datos.getColumnModel().getColumn(9).setResizable(false);
             tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
+        setCellsAlignment(tbl_datos, SwingConstants.CENTER);
 
         jLabel2.setText(" ");
 
