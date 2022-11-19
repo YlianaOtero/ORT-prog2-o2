@@ -85,4 +85,5 @@ public class Vuelo implements Serializable {
     public static boolean filaValida(int filaPosible) {
         return filaPosible > 0 && filaPosible <= 12;
     }
+    
 }

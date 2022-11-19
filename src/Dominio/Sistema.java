@@ -268,6 +268,19 @@ public class Sistema implements Serializable {
         
         return unDron;
     }
+    
+    public ArrayList<Vuelo> vuelosDeUnDron(Dron unDron) {
+        ArrayList<Vuelo> vuelosDron = new ArrayList<Vuelo>();
+        
+        for (int pos = 0; pos < vuelos.size(); pos++) {
+            Vuelo vueloActual = vuelos.get(pos);
+            if (vueloActual.getIdDron().equals(unDron.getIdentificacion())) {
+                vuelosDron.add(vueloActual);
+            }
+        }
+        
+        return vuelosDron;
+    }
 
     public void agregarListener(IngresoVuelo ingresoVuelo) {
         manejador.addPropertyChangeListener(ingresoVuelo); // anota interesado
