@@ -4,6 +4,7 @@ import Interfaz.IngresoArticulo;
 import Interfaz.IngresoDron;
 import Interfaz.IngresoFuncionario;
 import Interfaz.IngresoVuelo;
+import Interfaz.VentanaCargas;
 
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class Sistema implements Serializable {
         resetCargas();
         vuelos = new ArrayList<Vuelo>();
     }
-    
+
     public void crearManejador() {
         this.manejador = new PropertyChangeSupport(this);
     }
@@ -48,8 +49,6 @@ public class Sistema implements Serializable {
         return drones;
     }
     
-    
-
     /** @return El personal del sistema.*/
     public ArrayList<Funcionario> getFuncionarios() {
         return funcionarios;
@@ -90,6 +89,9 @@ public class Sistema implements Serializable {
         return existe;
     }
 
+    /** @param unNombre El nombre del artículo a buscar. Se asume que es válido y que pertenece
+     * al inventario del sistema.
+     * @return El artículo con el nombre correspondiente.*/
     public Articulo buscarArticuloPorNombre(String unNombre) {
         boolean existe = false;
         Articulo unArticulo = new Articulo(unNombre, "");
@@ -136,6 +138,7 @@ public class Sistema implements Serializable {
         return existe;
     }
     
+    /** @return Devuelve una lista con todos los drones del sistema que no tienen vuelos asociados.*/
     public ArrayList<Dron> dronesSinVuelos() {
         ArrayList<Dron> sinVuelos = new ArrayList<Dron>();
         
@@ -149,6 +152,7 @@ public class Sistema implements Serializable {
         return sinVuelos;
     }
     
+    /** @return Devuelve una lista con todos los drones del sistema que tienen vuelos asociados.*/
     public ArrayList<Dron> dronesConVuelos() {
         ArrayList<Dron> conVuelos = new ArrayList<Dron>();
         
@@ -162,6 +166,8 @@ public class Sistema implements Serializable {
         return conVuelos;
     }
     
+    /** @param id la identificación del dron. Se asume que es válido y pertenece a la lista de drones.
+     * @return Devuelve una lista con todos los vuelos que el correspondiente dron tiene asociados.*/
     public ArrayList<Vuelo> vuelosDeUnDron(String id) {
         ArrayList<Vuelo> vuelosDron = new ArrayList<Vuelo>();
         
@@ -174,9 +180,29 @@ public class Sistema implements Serializable {
         
         return vuelosDron;
     }
+
+    /** @param unID La identificación del dron a buscar. Se asume que es válido y que pertenece
+     * a la lista de drones del sistema.
+     * @return El dron con el código de identificación correspondiente.*/
+    public Dron buscarDronPorID(String unID) {
+        boolean existe = false;
+        Dron unDron = new Dron(unID, "", 1);
+
+        for (int pos = 0; pos < drones.size() && !existe; pos++) {
+            Dron dronActual = drones.get(pos);
+            String idActual = dronActual.getIdentificacion();
+            
+            existe = idActual.equalsIgnoreCase(unID);
+            if (existe) {
+                unDron = dronActual;
+            }
+        }
+        
+        return unDron;
+    }
     
     public void agregarListener(IngresoDron ingresoDron) {
-        manejador.addPropertyChangeListener(ingresoDron); // anota interesado
+        manejador.addPropertyChangeListener(ingresoDron);
     }
     
     /*LISTA DE FUNCIONARIOS*/
@@ -204,6 +230,9 @@ public class Sistema implements Serializable {
         return existe;
     }
 
+    /** @param unNombre el nombre del funcionario a buscar. Se asume que es válido y que pertenece
+     * al personal del sistema.
+     * @return El funcionario que tiene ese nombre.*/
     public Funcionario buscarFuncionarioPorNombre(String unNombre) {
         boolean existe = false;
         Funcionario unFuncionario = new Funcionario(unNombre, 0);
@@ -220,10 +249,6 @@ public class Sistema implements Serializable {
         
         return unFuncionario;
     }
-
-    public void agregarListener(IngresoFuncionario ingresoFuncionario) {
-        manejador.addPropertyChangeListener(ingresoFuncionario); // anota interesado
-    }
     
     /** Busca el número de funcionario mas alto en la lista.
      * @return El mayor número de funcionario entre los presentes.*/
@@ -239,6 +264,10 @@ public class Sistema implements Serializable {
         
         return numero;
     }
+
+    public void agregarListener(IngresoFuncionario ingresoFuncionario) {
+        manejador.addPropertyChangeListener(ingresoFuncionario); // anota interesado
+    }
     
     /*LISTA DE VUELOS*/
     
@@ -249,24 +278,6 @@ public class Sistema implements Serializable {
         Dron dronDelVuelo = buscarDronPorID(unVuelo.getIdDron());
         dronDelVuelo.setTieneVuelos(true);
         manejador.firePropertyChange("cant", vuelos.size()-1, vuelos.size());
-    }
-    
-
-    public Dron buscarDronPorID(String unID) {
-        boolean existe = false;
-        Dron unDron = new Dron(unID, "", 1);
-
-        for (int pos = 0; pos < drones.size() && !existe; pos++) {
-            Dron dronActual = drones.get(pos);
-            String idActual = dronActual.getIdentificacion();
-            
-            existe = idActual.equalsIgnoreCase(unID);
-            if (existe) {
-                unDron = dronActual;
-            }
-        }
-        
-        return unDron;
     }
     
     public ArrayList<Vuelo> vuelosDeUnDron(Dron unDron) {
@@ -286,6 +297,10 @@ public class Sistema implements Serializable {
         manejador.addPropertyChangeListener(ingresoVuelo); // anota interesado
     }
     
+    /*LISTA DE CARGAS*/
+
+    /** Reinicia la lista de cargas, dejando en cada posición una matriz de cargas limpia
+     * sin datos dentro.*/
     public final void resetCargas(){
         for(int i=0; i<5;i++){
             Carga[][] mat = new Carga[12][10];
@@ -293,8 +308,18 @@ public class Sistema implements Serializable {
         }
     }
 
+    /** Agrega una carga a la lista de cargas. Se asumen datos válidos.
+     * @param area el área en el que se ingresó la carga
+     * @param fila la fila en la que se ingresó la carga
+     * @param col la columna en la que se ingresó la carga
+     * @param unaCarga la carga a agregar al sistema.*/
     public void agregarCarga(int area, int fila, int col, Carga unaCarga) {
+        Carga anterior = cargas.get(area)[fila][col];
         cargas.get(area)[fila][col] = unaCarga;
+        manejador.firePropertyChange("cant", anterior, unaCarga);
     }
 
+    public void agregarListener(VentanaCargas ingresoCarga) {
+        manejador.addPropertyChangeListener(ingresoCarga); // anota interesado
+    }
 }

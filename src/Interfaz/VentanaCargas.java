@@ -6,6 +6,8 @@ package Interfaz;
 
 import Dominio.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -14,7 +16,7 @@ import javax.swing.*;
  *
  * @author nalux
  */
-public class VentanaCargas extends javax.swing.JFrame {
+public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form VentanaCarga
@@ -67,12 +69,16 @@ public class VentanaCargas extends javax.swing.JFrame {
         jTextFieldCant = new javax.swing.JTextField();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCod = new javax.swing.JTextField();
+        jLabelcod = new javax.swing.JLabel();
+        jLabelart = new javax.swing.JLabel();
+        jLabelcant = new javax.swing.JLabel();
+        jLabelfun = new javax.swing.JLabel();
         letraArea = new javax.swing.JLabel();
         jButtonAvanzar = new javax.swing.JButton();
         jButtonRetroceder = new javax.swing.JButton();
         onp_aviso = new javax.swing.JOptionPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         panelEspacios.setLayout(new java.awt.GridLayout(12, 10));
@@ -80,149 +86,180 @@ public class VentanaCargas extends javax.swing.JFrame {
         panelEspacios.setBounds(70, 50, 550, 510);
         botonAnterior = new javax.swing.JButton();
 
-        jLabelIngEgr.setText("aaa\\");
+        listaFun.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listaFun);
 
-            jLabelCodEg.setText("aafhjajad");
+        listaArt.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(listaArt);
 
-            listaFun.setModel(new javax.swing.AbstractListModel<String>() {
-                String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            });
-            jScrollPane1.setViewportView(listaFun);
+        jLabelFun.setText("jLabel4");
 
-            listaArt.setModel(new javax.swing.AbstractListModel<String>() {
-                String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            });
-            jScrollPane2.setViewportView(listaArt);
+        jLabelArt.setText("jLabel5");
 
-            jLabelArtEg.setText("jLabel1");
+        jButtonIngr.setText("jButton1");
+        jButtonIngr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIngrActionPerformed(evt);
+            }
+        });
 
-            jLabelCantEg.setText("jLabel2");
+        jLabelCant.setText("jLabel1");
 
-            jLabelFunEg.setText("jLabel3");
+        jTextFieldCant.setText("jTextField1");
 
-            jLabelFun.setText("jLabel4");
+        jLabelCodigo.setText("jLabel1");
 
-            jLabelArt.setText("jLabel5");
+        jTextFieldCod.setText("jTextField1");
 
-            jButtonIngr.setText("jButton1");
-            jButtonIngr.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonIngrActionPerformed(evt);
-                }
-            });
+        jLabelcod.setText("jLabel1");
 
-            jLabelCant.setText("jLabel1");
+        jLabelart.setText("jLabel1");
 
-            jTextFieldCant.setText("jTextField1");
+        jLabelcant.setText("jLabel1");
 
-            jLabelCodigo.setText("jLabel1");
+        jLabelfun.setText("jLabel1");
 
-            jTextFieldCod.setText("jTextField1");
+        javax.swing.GroupLayout PanelIngresoEgresoLayout = new javax.swing.GroupLayout(PanelIngresoEgreso);
+        PanelIngresoEgreso.setLayout(PanelIngresoEgresoLayout);
+        PanelIngresoEgresoLayout.setHorizontalGroup(
+            PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addGap(102, 102, 102)
+                                        .addComponent(jLabelfun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(66, 66, 66)
+                                        .addComponent(jLabelFun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(129, 129, 129)
+                                        .addComponent(jLabelArt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addComponent(jLabelCantEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelcant, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabelCant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonIngr, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldCant)
+                                    .addComponent(jLabelCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldCod)))
+                            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                                .addComponent(jLabelArtEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                                                .addComponent(jLabelCodEg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(3, 3, 3)))
+                                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabelcod, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelart, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addGap(102, 102, 102)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(28, 28, 28))
+        );
+        PanelIngresoEgresoLayout.setVerticalGroup(
+            PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelcod)
+                    .addComponent(jLabelCodEg, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelArtEg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelart))
+                .addGap(18, 18, 18)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCantEg, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelcant))
+                .addGap(18, 18, 18)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelfun))
+                .addContainerGap(260, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(jLabelCant)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabelCodigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonIngr)
+                        .addContainerGap(173, Short.MAX_VALUE))
+                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelFun)
+                            .addComponent(jLabelArt))
+                        .addGap(30, 30, 30)
+                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
 
-            javax.swing.GroupLayout PanelIngresoEgresoLayout = new javax.swing.GroupLayout(PanelIngresoEgreso);
-            PanelIngresoEgreso.setLayout(PanelIngresoEgresoLayout);
-            PanelIngresoEgresoLayout.setHorizontalGroup(
-                PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
-                    .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelIngresoEgresoLayout.createSequentialGroup()
-                            .addGap(42, 42, 42)
-                            .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelArtEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelCodEg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                                    .addComponent(jLabelCantEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(58, 58, 58)
-                                    .addComponent(jLabelFun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(155, 155, 155)
-                                    .addComponent(jLabelArt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
-                                    .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(42, 42, 42)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                                    .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabelCant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonIngr, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldCant)
-                                        .addComponent(jLabelCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldCod)))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelIngresoEgresoLayout.createSequentialGroup()
-                            .addGap(19, 19, 19)
-                            .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(28, 28, 28))
-            );
-            PanelIngresoEgresoLayout.setVerticalGroup(
-                PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                    .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabelCodEg)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabelArtEg)
-                            .addGap(18, 18, 18)
-                            .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabelCantEg)
-                                .addComponent(jLabelFun)
-                                .addComponent(jLabelArt))
-                            .addGap(18, 18, 18)
-                            .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelFunEg)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                            .addGap(93, 93, 93)
-                            .addComponent(jLabelCant)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(33, 33, 33)
-                            .addComponent(jLabelCodigo)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonIngr)))
-                    .addContainerGap(104, Short.MAX_VALUE))
-            );
+        getContentPane().add(PanelIngresoEgreso);
+        PanelIngresoEgreso.setBounds(700, 50, 770, 440);
 
-            getContentPane().add(PanelIngresoEgreso);
-            PanelIngresoEgreso.setBounds(700, 50, 770, 440);
+        letraArea.setText("A");
+        getContentPane().add(letraArea);
+        letraArea.setBounds(280, 20, 60, 20);
 
-            letraArea.setText("A");
-            getContentPane().add(letraArea);
-            letraArea.setBounds(280, 20, 60, 20);
+        jButtonAvanzar.setText(">>");
+        jButtonAvanzar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAvanzarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAvanzar);
+        jButtonAvanzar.setBounds(500, 570, 72, 22);
 
-            jButtonAvanzar.setText(">>");
-            jButtonAvanzar.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonAvanzarActionPerformed(evt);
-                }
-            });
-            getContentPane().add(jButtonAvanzar);
-            jButtonAvanzar.setBounds(500, 570, 72, 22);
+        jButtonRetroceder.setText("<<");
+        jButtonRetroceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRetrocederActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonRetroceder);
+        jButtonRetroceder.setBounds(110, 570, 72, 22);
+        getContentPane().add(onp_aviso);
+        onp_aviso.setBounds(1020, 520, 262, 90);
 
-            jButtonRetroceder.setText("<<");
-            jButtonRetroceder.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonRetrocederActionPerformed(evt);
-                }
-            });
-            getContentPane().add(jButtonRetroceder);
-            jButtonRetroceder.setBounds(110, 570, 72, 22);
-            getContentPane().add(onp_aviso);
-            onp_aviso.setBounds(1020, 520, 262, 90);
-
-            setBounds(0, 0, 1519, 713);
-        }// </editor-fold>//GEN-END:initComponents
+        setBounds(0, 0, 1519, 713);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetrocederActionPerformed
         // TODO add your handling code here:
@@ -246,7 +283,17 @@ public class VentanaCargas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonAvanzarActionPerformed
 
-    /** Asumiendo que los datos cantArticulos y codigoCargas son correctos, y que
+    private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrActionPerformed
+if (jButtonIngr.getText().equals("Ingresar")) {
+            agregarSegunDatos();
+        } else {
+            //cosas de egreso
+        }
+    }
+        
+        
+        
+        /** Asumiendo que los datos cantArticulos y codigoCargas son correctos, y que
      * el usuario seleccionó un funcionario y un articulo de las listas correspondientes,
      * crea una carga con esos datos y la agrega a la lista.
      * @param cantArticulos cantidad de articulos que hay en la carga
@@ -303,19 +350,9 @@ public class VentanaCargas extends javax.swing.JFrame {
                 + JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-
-    private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrActionPerformed
-        // TODO add your handling code here:
-        if (jButtonIngr.getText().equals("Ingresar")) {
-            agregarSegunDatos();
-        } else {
-            //cosas de egreso
-        }
-    }
-
-
-    //GEN-LAST:event_jButtonIngrActionPerformed
+    
+       
+    }//GEN-LAST:event_jButtonIngrActionPerformed
 
     public void generateButtons() {
         for (int i = 0; i < 12; i++) {
@@ -385,6 +422,10 @@ public class VentanaCargas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFun;
     private javax.swing.JLabel jLabelFunEg;
     private javax.swing.JLabel jLabelIngEgr;
+    private javax.swing.JLabel jLabelart;
+    private javax.swing.JLabel jLabelcant;
+    private javax.swing.JLabel jLabelcod;
+    private javax.swing.JLabel jLabelfun;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextFieldCant;
@@ -461,5 +502,28 @@ public class VentanaCargas extends javax.swing.JFrame {
         }
         listaArt.setListData(a);
     }
+    
+    
+    public void egreso() {
 
+        jLabelIngEgr.setText("Egreso");
+        jLabelArtEg.setText("Articulos");
+        jLabelCantEg.setText("Cantidad");
+        jLabelCodEg.setText("Codigo");
+        jLabelFunEg.setText("Funcionarios");
+
+        Carga cargaActual = sistema.getCargas().get(contador)[filaSeleccionada][colSeleccionada];
+ 
+        jLabelart.setText(cargaActual.getArticulo().getNombre());
+        jLabelcant.setText(String.valueOf(cargaActual.getCantUnidades()));
+        jLabelcod.setText(cargaActual.getCodigo());
+        jLabelfun.setText(cargaActual.getFuncionario().getNombre());
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        
+    }
 }
