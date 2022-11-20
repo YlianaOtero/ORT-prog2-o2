@@ -2,7 +2,7 @@ package Dominio;
 
 import java.io.Serializable;
 
-/** Representa a un dron puntual, con su código de indentificación, modelo y
+/** Representa a un dron, con su código de indentificación, modelo y
  * tipo de cámara.
  * @author yliana*/
 public class Dron implements Serializable {
@@ -10,14 +10,6 @@ public class Dron implements Serializable {
     private String modelo;
     private int tipoCamara;
     private boolean tieneVuelos;
-
-    public boolean getTieneVuelos() {
-        return tieneVuelos;
-    }
-
-    public void setTieneVuelos(boolean tieneVuelos) {
-        this.tieneVuelos = tieneVuelos;
-    }
 
     /** Crea un objeto de tipo Dron. Se asume que los datos son correctos.
      * @param unaIdentificacion código de identificación del dron.
@@ -45,6 +37,11 @@ public class Dron implements Serializable {
         return this.tipoCamara;
     }
     
+    /** @return Devuelve True si el dron tiene vuelos, y False en caso contrario.*/
+    public boolean getTieneVuelos() {
+        return tieneVuelos;
+    }
+
     /** Modifica el código de identificación del dron. Se asume que los datos son correctos.
      * @param unaIdentificacion el nuevo código de identificación a sobreescribir en el dron.*/
     public void setIdentificacion(String unaIdentificacion) {
@@ -62,5 +59,11 @@ public class Dron implements Serializable {
      */
     public void setTipoCamara(int unTipoCamara) {
         this.tipoCamara = unTipoCamara;
+    }
+
+    /** @param tieneVuelos ingresar True si se ha registrado algun vuelo con el mismo ID del dron, y false si
+     * se han eliminado todos.*/
+    public void setTieneVuelos(boolean tieneVuelos) {
+        this.tieneVuelos = tieneVuelos;
     }
 }

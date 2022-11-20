@@ -17,39 +17,21 @@ public class Vuelo implements Serializable {
     private int coincidencias;
     private int diferencias;
     private String archivo;
-
-    public String getArchivo() {
-        return archivo;
-    }
-    
-    public int getCoincidencias() {
-        return coincidencias;
-    }
-
-    public int getDiferencias() {
-        return diferencias;
-    }
-
-    public void setCoincidencias(int coincidencias) {
-        this.coincidencias = coincidencias;
-    }
-
-    public void setDiferencias(int diferencias) {
-        this.diferencias = diferencias;
-    }
-   
     
     /** Crea un objeto de tipo Vuelo. Se asume que los datos son correctos.
-     * @param id código de identificación del dron del vuelo.
+     * @param id código de identificación del dron del vuelo
      * @param area área del vuelo (entre A y E)
      * @param fila fila del vuelo (entre 1 y 12)
-     * @param cargas contiene los codigos de las cargas */
+     * @param cargas contiene los codigos de las cargas
+     * @param archivo el nombre del archivo desde el que se ingresó el vuelo*/
     public Vuelo(String id, char area, int fila, String[] cargas, String archivo) {
         this.idDron = id;
         this.area = area;
         this.fila = fila;
         this.cargas = cargas;
         this.archivo = archivo;
+        this.coincidencias = 0;
+        this.diferencias = 0;
     }
     
     /** @return Código de identificación del dron responsable del vuelo.*/
@@ -71,19 +53,29 @@ public class Vuelo implements Serializable {
     public String[] getCargas() {
         return cargas;
     }
-    
-    /** Verifica que un área sea correcta para un vuelo.
-     * @param areaPosible el área a evaluar si es válida o no.
-     * @return True en caso de ser un área válida, False en caso contrario.*/
-    public static boolean areaValida(char areaPosible) {
-        return "ABCDEF".contains(Character.toString(areaPosible));
+
+    /** @return Nombre del archivo desde el que se ingresó el vuelo*/
+    public String getArchivo() {
+        return archivo;
     }
     
-    /** Verifica que una fila sea correcta para un vuelo.
-     * @param filaPosible la fila a evaluar si es válida o no.
-     * @return True en caso de ser una fila válida, False en caso contrario.*/
-    public static boolean filaValida(int filaPosible) {
-        return filaPosible > 0 && filaPosible <= 12;
+    /** @return Coincidencias encontradas entre el vuelo y las cargas ingresadas en area y fila correspondiente*/
+    public int getCoincidencias() {
+        return coincidencias;
     }
-    
+
+    /** @return Diferencias encontradas entre el vuelo y las cargas ingresadas en area y fila correspondiente*/
+    public int getDiferencias() {
+        return diferencias;
+    }
+
+    /** @param coincidencias coincidencias encontradas entre el vuelo y las cargas ingresadas en area y fila correspondiente*/
+    public void setCoincidencias(int coincidencias) {
+        this.coincidencias = coincidencias;
+    }
+
+    /** @param diferencias diferencias encontradas entre el vuelo y las cargas ingresadas en area y fila correspondiente*/
+    public void setDiferencias(int diferencias) {
+        this.diferencias = diferencias;
+    }
 }

@@ -36,5 +36,4 @@ public class Articulo implements Serializable {
     public void setDescripcion(String unaDescripcion) {
         this.descripcion = unaDescripcion;
     }
-
 }

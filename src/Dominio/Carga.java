@@ -2,7 +2,7 @@ package Dominio;
 
 import java.io.Serializable;
 
-/** Representa una carga puntual.
+/** Representa una carga.
  * @author yliana*/
 public class Carga implements Serializable{
     private Funcionario funcionario;
