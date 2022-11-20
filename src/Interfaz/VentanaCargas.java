@@ -6,8 +6,6 @@ package Interfaz;
 
 import Dominio.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -16,7 +14,7 @@ import javax.swing.*;
  *
  * @author nalux
  */
-public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeListener {
+public class VentanaCargas extends javax.swing.JFrame {
 
     /**
      * Creates new form VentanaCarga
@@ -51,6 +49,7 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        onp_aviso = new javax.swing.JOptionPane();
         panelEspacios = new javax.swing.JPanel();
         PanelIngresoEgreso = new javax.swing.JPanel();
         jLabelIngEgr = new javax.swing.JLabel();
@@ -64,19 +63,18 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
         jLabelFunEg = new javax.swing.JLabel();
         jLabelFun = new javax.swing.JLabel();
         jLabelArt = new javax.swing.JLabel();
-        jButtonIngr = new javax.swing.JButton();
+        jButtonIngrEgr = new javax.swing.JButton();
         jLabelCant = new javax.swing.JLabel();
         jTextFieldCant = new javax.swing.JTextField();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCod = new javax.swing.JTextField();
-        jLabelcod = new javax.swing.JLabel();
-        jLabelart = new javax.swing.JLabel();
-        jLabelcant = new javax.swing.JLabel();
-        jLabelfun = new javax.swing.JLabel();
+        labelcod = new javax.swing.JLabel();
+        labelart = new javax.swing.JLabel();
+        labelcant = new javax.swing.JLabel();
+        labelfun = new javax.swing.JLabel();
         letraArea = new javax.swing.JLabel();
         jButtonAvanzar = new javax.swing.JButton();
         jButtonRetroceder = new javax.swing.JButton();
-        onp_aviso = new javax.swing.JOptionPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -86,46 +84,36 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
         panelEspacios.setBounds(70, 50, 550, 510);
         botonAnterior = new javax.swing.JButton();
 
-        listaFun.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listaFun);
 
-        listaArt.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listaArt);
 
-        jLabelFun.setText("jLabel4");
+        jLabelFun.setText("               ");
 
-        jLabelArt.setText("jLabel5");
+        jLabelArt.setText("           ");
 
-        jButtonIngr.setText("jButton1");
-        jButtonIngr.addActionListener(new java.awt.event.ActionListener() {
+        jButtonIngrEgr.setText("        ");
+        jButtonIngrEgr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonIngrActionPerformed(evt);
+                jButtonIngrEgrActionPerformed(evt);
             }
         });
 
-        jLabelCant.setText("jLabel1");
+        jLabelCant.setText("              ");
 
-        jTextFieldCant.setText("jTextField1");
+        jTextFieldCant.setText("");
 
-        jLabelCodigo.setText("jLabel1");
+        jLabelCodigo.setText("              ");
 
-        jTextFieldCod.setText("jTextField1");
+        jTextFieldCod.setText("");
 
-        jLabelcod.setText("jLabel1");
+        labelcod.setText("                    ");
 
-        jLabelart.setText("jLabel1");
+        labelart.setText("                ");
 
-        jLabelcant.setText("jLabel1");
+        labelcant.setText("            ");
 
-        jLabelfun.setText("jLabel1");
+        labelfun.setText("               ");
 
         javax.swing.GroupLayout PanelIngresoEgresoLayout = new javax.swing.GroupLayout(PanelIngresoEgreso);
         PanelIngresoEgreso.setLayout(PanelIngresoEgresoLayout);
@@ -137,29 +125,26 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
                         .addGap(42, 42, 42)
                         .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
                                 .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                                        .addGap(102, 102, 102)
-                                        .addComponent(jLabelfun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                                        .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(66, 66, 66)
-                                        .addComponent(jLabelFun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(129, 129, 129)
-                                        .addComponent(jLabelArt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonIngrEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
+                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
                                         .addComponent(jLabelCantEg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelcant, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
-                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabelCant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonIngr, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldCant)
-                                    .addComponent(jLabelCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldCod)))
-                            .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(labelcant, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
+                                        .addGap(102, 102, 102)
+                                        .addComponent(labelfun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
                                         .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
@@ -169,14 +154,17 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
                                                 .addComponent(jLabelCodEg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(3, 3, 3)))
                                         .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelcod, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelart, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(labelcod, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelart, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                                        .addGap(102, 102, 102)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(156, 156, 156)
+                                        .addComponent(jLabelFun, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(124, 124, 124)
+                                        .addComponent(jLabelArt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelCant, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelIngresoEgresoLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,49 +178,44 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
                 .addComponent(jLabelIngEgr, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelcod)
+                    .addComponent(labelcod)
                     .addComponent(jLabelCodEg, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelArtEg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelart))
+                    .addComponent(labelart))
                 .addGap(18, 18, 18)
                 .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCantEg, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelcant))
+                    .addComponent(labelcant))
                 .addGap(18, 18, 18)
                 .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFunEg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelfun))
-                .addContainerGap(260, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIngresoEgresoLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jLabelCant)
-                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelfun)
+                    .addComponent(jLabelCant))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelFun)
+                    .addComponent(jLabelArt)
+                    .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(43, 43, 43)
                         .addComponent(jLabelCodigo)
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonIngr)
-                        .addContainerGap(173, Short.MAX_VALUE))
+                        .addComponent(jButtonIngrEgr))
                     .addGroup(PanelIngresoEgresoLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelFun)
-                            .addComponent(jLabelArt))
-                        .addGap(30, 30, 30)
                         .addGroup(PanelIngresoEgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(47, 47, 47))
         );
 
         getContentPane().add(PanelIngresoEgreso);
-        PanelIngresoEgreso.setBounds(700, 50, 770, 440);
+        PanelIngresoEgreso.setBounds(700, 50, 770, 470);
 
         letraArea.setText("A");
         getContentPane().add(letraArea);
@@ -255,10 +238,13 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
         });
         getContentPane().add(jButtonRetroceder);
         jButtonRetroceder.setBounds(110, 570, 72, 22);
-        getContentPane().add(onp_aviso);
-        onp_aviso.setBounds(1020, 520, 262, 90);
 
-        setBounds(0, 0, 1519, 713);
+        jScrollPane1.setVisible(false);
+        jScrollPane2.setVisible(false);
+        jButtonIngrEgr.setVisible(false);
+        jTextFieldCant.setVisible(false);
+        jTextFieldCod.setVisible(false);
+        setBounds(0, 0, 1496, 635);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetrocederActionPerformed
@@ -283,16 +269,24 @@ public class VentanaCargas extends javax.swing.JFrame implements PropertyChangeL
 
     }//GEN-LAST:event_jButtonAvanzarActionPerformed
 
-    private void jButtonIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrActionPerformed
-if (jButtonIngr.getText().equals("Ingresar")) {
+    private void jButtonIngrEgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrEgrActionPerformed
+        if (jButtonIngrEgr.getText().equals("Ingresar")) {
             agregarSegunDatos();
+           PanelIngresoEgreso.setBackground(Color.green);
         } else {
-            //cosas de egreso
+           eliminar();
+           PanelIngresoEgreso.setBackground(Color.BLUE);
+           
         }
     }
         
         
-        
+    private void eliminar() {
+        sistema.eliminarCarga(contador, filaSeleccionada, colSeleccionada);
+        JOptionPane.showMessageDialog(onp_aviso,
+                            "La carga fue egresada correctamente.", "Carga egresada",
+                            + JOptionPane.INFORMATION_MESSAGE);
+    }
         /** Asumiendo que los datos cantArticulos y codigoCargas son correctos, y que
      * el usuario seleccionó un funcionario y un articulo de las listas correspondientes,
      * crea una carga con esos datos y la agrega a la lista.
@@ -352,7 +346,7 @@ if (jButtonIngr.getText().equals("Ingresar")) {
         }
     
        
-    }//GEN-LAST:event_jButtonIngrActionPerformed
+    }//GEN-LAST:event_jButtonIngrEgrActionPerformed
 
     public void generateButtons() {
         for (int i = 0; i < 12; i++) {
@@ -411,7 +405,7 @@ if (jButtonIngr.getText().equals("Ingresar")) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelIngresoEgreso;
     private javax.swing.JButton jButtonAvanzar;
-    private javax.swing.JButton jButtonIngr;
+    private javax.swing.JButton jButtonIngrEgr;
     private javax.swing.JButton jButtonRetroceder;
     private javax.swing.JLabel jLabelArt;
     private javax.swing.JLabel jLabelArtEg;
@@ -422,14 +416,14 @@ if (jButtonIngr.getText().equals("Ingresar")) {
     private javax.swing.JLabel jLabelFun;
     private javax.swing.JLabel jLabelFunEg;
     private javax.swing.JLabel jLabelIngEgr;
-    private javax.swing.JLabel jLabelart;
-    private javax.swing.JLabel jLabelcant;
-    private javax.swing.JLabel jLabelcod;
-    private javax.swing.JLabel jLabelfun;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextFieldCant;
     private javax.swing.JTextField jTextFieldCod;
+    private javax.swing.JLabel labelart;
+    private javax.swing.JLabel labelcant;
+    private javax.swing.JLabel labelcod;
+    private javax.swing.JLabel labelfun;
     private javax.swing.JLabel letraArea;
     private javax.swing.JList<String> listaArt;
     private javax.swing.JList<String> listaFun;
@@ -464,16 +458,11 @@ if (jButtonIngr.getText().equals("Ingresar")) {
                 ingreso();
                 PanelIngresoEgreso.setBackground(Color.GREEN);
             } else {
-                //egreso();
+                egreso();
                 PanelIngresoEgreso.setBackground(Color.BLUE);
 
             }
 
-            jScrollPane2.setVisible(true);
-            jScrollPane1.setVisible(true);
-            jButtonIngr.setVisible(true);
-            jTextFieldCod.setVisible(true);
-            jTextFieldCant.setVisible(true);
 
             botonAnterior = cual;
 
@@ -487,7 +476,7 @@ if (jButtonIngr.getText().equals("Ingresar")) {
         jLabelArt.setText("Articulos");
         jLabelCant.setText("Cantidad");
         jLabelCodigo.setText("Codigo");
-        jButtonIngr.setText("Ingresar");
+        jButtonIngrEgr.setText("Ingresar");
 
         String f[] = new String[sistema.getFuncionarios().size()];
         for (int i = 0; i < f.length; i++) {
@@ -501,7 +490,31 @@ if (jButtonIngr.getText().equals("Ingresar")) {
             a[i] = sistema.getArticulos().get(i).getNombre();
         }
         listaArt.setListData(a);
+
+        jLabelIngEgr.setVisible(true);
+        jLabelFun.setVisible(true);
+        jLabelArt.setVisible(true);
+        jLabelCant.setVisible(true);
+        jLabelCodigo.setVisible(true);
+        jTextFieldCant.setVisible(true);
+        jTextFieldCod.setVisible(true);
+
+        jButtonIngrEgr.setVisible(true);
+        jScrollPane1.setVisible(true);
+        jScrollPane2.setVisible(true);
+
+
+        jLabelArtEg.setVisible(false);
+        jLabelCantEg.setVisible(false);
+        jLabelCodEg.setVisible(false);
+        jLabelFunEg.setVisible(false);
+
+        labelart.setVisible(false);
+        labelcant.setVisible(false);
+        labelcod.setVisible(false);
+        labelfun.setVisible(false);
     }
+
     
     
     public void egreso() {
@@ -511,19 +524,38 @@ if (jButtonIngr.getText().equals("Ingresar")) {
         jLabelCantEg.setText("Cantidad");
         jLabelCodEg.setText("Codigo");
         jLabelFunEg.setText("Funcionarios");
+        jButtonIngrEgr.setText("Egresar");
 
         Carga cargaActual = sistema.getCargas().get(contador)[filaSeleccionada][colSeleccionada];
  
-        jLabelart.setText(cargaActual.getArticulo().getNombre());
-        jLabelcant.setText(String.valueOf(cargaActual.getCantUnidades()));
-        jLabelcod.setText(cargaActual.getCodigo());
-        jLabelfun.setText(cargaActual.getFuncionario().getNombre());
-
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
+        labelart.setText(cargaActual.getArticulo().getNombre());
+        labelcant.setText(String.valueOf(cargaActual.getCantUnidades()));
+        labelcod.setText(cargaActual.getCodigo());
+        labelfun.setText(cargaActual.getFuncionario().getNombre());
         
+        
+        jLabelIngEgr.setVisible(true);
+        jLabelArtEg.setVisible(true);
+        jLabelCantEg.setVisible(true);
+        jLabelCodEg.setVisible(true);
+        jLabelFunEg.setVisible(true);
+        jButtonIngrEgr.setVisible(true);
+        labelart.setVisible(true);
+        labelcant.setVisible(true);
+        labelcod.setVisible(true);
+        labelfun.setVisible(true);
+      
+       
+        jLabelFun.setVisible(false);
+        jLabelArt.setVisible(false);
+        jLabelCant.setVisible(false);
+        jLabelCodigo.setVisible(false);
+        jTextFieldCant.setVisible(false);
+        jTextFieldCod.setVisible(false);
+        jScrollPane1.setVisible(false);
+        jScrollPane2.setVisible(false);
+        
+        
+
     }
 }
