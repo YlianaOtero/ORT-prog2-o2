@@ -325,6 +325,23 @@ public class Sistema implements Serializable {
     public void eliminarCarga(int area, int fila, int col) {
         cargas.get(area)[fila][col] = null;
     }
+    
+    public boolean codigoCargaYaExistente(String codigo) {
+        boolean encontrado = false;
+        
+        for (int pos = 0; pos < cargas.size() && !encontrado; pos++) {
+            Carga[][] matrizActual = cargas.get(pos);
+            for (int i = 0; i < matrizActual.length; i++) {
+                for (int j = 0; j < matrizActual[0].length; j++) {
+                    if (matrizActual[i][j] != null) {
+                        encontrado = matrizActual[i][j].getCodigo().equalsIgnoreCase(codigo);
+                    }
+                }
+            }
+        }
+        
+        return encontrado;
+    }
 
     /*public void agregarListener(VentanaCargas ingresoCarga) {
         manejador.addPropertyChangeListener(ingresoCarga); // anota interesado

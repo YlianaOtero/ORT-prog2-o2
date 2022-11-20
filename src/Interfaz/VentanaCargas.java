@@ -271,12 +271,13 @@ public class VentanaCargas extends javax.swing.JFrame {
 
     private void jButtonIngrEgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngrEgrActionPerformed
         if (jButtonIngrEgr.getText().equals("Ingresar")) {
-            agregarSegunDatos();
-           PanelIngresoEgreso.setBackground(Color.green);
+           agregarSegunDatos();
+           egreso();
+           PanelIngresoEgreso.setBackground(Color.BLUE);
         } else {
            eliminar();
-           PanelIngresoEgreso.setBackground(Color.BLUE);
-           
+           ingreso();
+           PanelIngresoEgreso.setBackground(Color.GREEN);
         }
     }
         
@@ -321,7 +322,11 @@ public class VentanaCargas extends javax.swing.JFrame {
                 if (!codigoCarga.equals("") && !cantArt.isEmpty()) {
                     int cantArticulos = Integer.parseInt(cantArt);
 
-                    if (cantArticulos > 0) {
+                    if (sistema.codigoCargaYaExistente(codigoCarga)) {
+                        JOptionPane.showMessageDialog(onp_aviso,
+                        "Código de carga ya existente.", "Datos incorrectos",
+                        + JOptionPane.ERROR_MESSAGE);
+                    } else if (cantArticulos > 0) {
                         agregarCargaManual(cantArticulos, codigoCarga);
                         JOptionPane.showMessageDialog(onp_aviso,
                             "La carga fue ingresada correctamente.", "Carga ingresada",
