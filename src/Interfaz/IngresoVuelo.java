@@ -239,14 +239,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             insertarEnTabla(idDron, pos, codigosCargas);
             codigosCargas.remove(0);
             insertarEnSistema(idDron, pos, codigosCargas, ruta);
-
-            DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-        String archivo = modelo.getValueAt(0, 10).toString();
-        String manual = modelo.getValueAt(1, 10).toString();
-
-        System.out.println(archivo.equals(manual));
         }
-        
         
     }//GEN-LAST:event_fileChooserActionPerformed
 
@@ -269,8 +262,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         int fila;
         fila = Character.getNumericValue(pos.charAt(2));
         
-        
-        
         cambiarVacioPorCero(codigos);
         modelo.insertRow(0,codigos.toArray());
         
@@ -282,8 +273,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
                     , "No hay datos para comparar",JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
     }
     
     private void cambiarVacioPorCero(ArrayList<String> codigos) {
@@ -341,18 +330,22 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         if (datos.identificacionDronYaExistente(idDron)) {
             Dron dronActual = datos.buscarDronPorID(id);
             dronActual.setTieneVuelos(true);
-        } 
+        } else {
+            Dron dronNuevo = new Dron(id, "", 1);
+            dronNuevo.setTieneVuelos(true);
+            datos.agregarDron(dronNuevo);
+        }
         
         datos.agregarVuelo(nuevo);
     }
     
     private boolean hayDatosManuales(char area, int fila) {
         int areaNum = area - 65;
-        Carga[] datosArea;
-        datosArea = cargas.get(areaNum)[fila];
-        
-        return datosArea != null;
-        
+
+        boolean esVacio = (cargas.size() < areaNum) || (cargas.get(areaNum) == null) || 
+                        (cargas.get(areaNum)[fila] == null);
+    
+        return !esVacio;
     }
     
     private String[] datosManuales(char area, int fila) {

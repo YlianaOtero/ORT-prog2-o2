@@ -40,9 +40,9 @@ public class TablaCustomizada extends JTable {
 
     private boolean debeSerVerde(int columna) {
         boolean debe = false;
-
-        if (columna > 0) {
-            DefaultTableModel modelo = (DefaultTableModel) super.getModel();
+        
+        DefaultTableModel modelo = (DefaultTableModel) super.getModel();
+        if (modelo.getRowCount() > 1) {
             String archivo = modelo.getValueAt(0, columna).toString();
             String manual = modelo.getValueAt(1, columna).toString();
 
