@@ -54,15 +54,20 @@ public class Estadisticas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estadísticas");
+        setBounds(new java.awt.Rectangle(500, 400, 828, 400));
 
+        lst_vuelosDelDron.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lst_vuelosDelDron.setEnabled(false);
         jScrollPane1.setViewportView(lst_vuelosDelDron);
         lst_vuelosDelDron.setVisible(true);
         jScrollPane2.setVisible(true);
 
+        lst_dronesConVuelos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lst_dronesConVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lst_dronesConVuelos.setToolTipText("");
         jScrollPane2.setViewportView(lst_dronesConVuelos);
 
+        lst_dronesSinVuelos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lst_dronesSinVuelos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lst_dronesSinVuelos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -71,11 +76,14 @@ public class Estadisticas extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(lst_dronesSinVuelos);
 
+        lbl_vuelosDelDron.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_vuelosDelDron.setText("Vuelos del dron");
         lbl_vuelosDelDron.setVisible(true);
 
+        lbl_dronesSinVuelos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_dronesSinVuelos.setText("Drones sin vuelos");
 
+        lbl_dronesConVuelos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_dronesConVuelos.setText("Drones con vuelos");
 
         btn_verVuelos.setText("Ver vuelos");
@@ -101,11 +109,11 @@ public class Estadisticas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(btn_verVuelos)))
-                .addGap(77, 77, 77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_vuelosDelDron)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_vuelosDelDron))
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,11 +126,11 @@ public class Estadisticas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane1))
                 .addGap(31, 31, 31)
                 .addComponent(btn_verVuelos)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,16 +191,17 @@ public class Estadisticas extends javax.swing.JFrame {
     
     private String datosVuelo(Vuelo unVuelo) {
         String datosVuelo = new String();
-        datosVuelo = "Archivo: " + unVuelo.getArchivo() + "\n"
-                + "Area: "+ unVuelo.getArea() + "\n"
-                + "Fila: "+ unVuelo.getFila() + "\n";
+        datosVuelo = "Archivo: " + unVuelo.getArchivo() + " \n "
+                + "Area: "+ unVuelo.getArea() + " \n "
+                + "Fila: "+ unVuelo.getFila() + " \n ";
         
         if (unVuelo.getCargas().length == 10) {
-            datosVuelo += "Coincidencias: " + String.valueOf(unVuelo.getCoincidencias()) + "\n"
-                    + "Diferencias: " + String.valueOf(unVuelo.getDiferencias()) + "\n";
+            datosVuelo += " Coincidencias: " + String.valueOf(unVuelo.getCoincidencias()) + " \n "
+                    + " Diferencias: " + String.valueOf(unVuelo.getDiferencias()) + " \n  ";
         } else {
-            datosVuelo += "Lineas de carga: " + unVuelo.getCargas().length;
+            datosVuelo += "Lineas de carga: " + unVuelo.getCargas().length +" ";
         }
+        
         
         return datosVuelo;    
     }

@@ -78,14 +78,17 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Funcionarios");
+        setBounds(new java.awt.Rectangle(500, 300, 600, 400));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
+        lbl_edad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_edad.setText("Edad");
 
+        btn_agregar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_agregar.setText("Agregar");
         btn_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,20 +96,24 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
             }
         });
 
+        txt_edad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_edad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_edadActionPerformed(evt);
             }
         });
 
+        txt_nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nombreActionPerformed(evt);
             }
         });
 
+        lbl_nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_nombre.setText("Nombre");
 
+        tbl_datos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -151,7 +158,7 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
                             .addComponent(lbl_nombre)
                             .addGap(30, 30, 30)
                             .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(slp_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -171,10 +178,8 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
                             .addComponent(lbl_edad))
                         .addGap(31, 31, 31)
                         .addComponent(btn_agregar)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        setBounds(500, 300, 600, 400);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

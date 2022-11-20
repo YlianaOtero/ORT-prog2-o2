@@ -75,14 +75,17 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Drones");
+        setBounds(new java.awt.Rectangle(500, 300, 600, 400));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
+        lbl_identificacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_identificacion.setText("Identificación");
 
+        tbl_datos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -110,8 +113,10 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
         tbl_datos.getTableHeader().setReorderingAllowed(false);
         slp_datos.setViewportView(tbl_datos);
 
+        lbl_modelo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_modelo.setText("Modelo");
 
+        btn_agregar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_agregar.setText("Agregar");
         btn_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,20 +124,24 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
             }
         });
 
+        txt_modelo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_modelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_modeloActionPerformed(evt);
             }
         });
 
+        txt_identificacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_identificacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_identificacionActionPerformed(evt);
             }
         });
 
+        spr_tipoCamara.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         spr_tipoCamara.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
 
+        lbl_tipoCamara.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_tipoCamara.setText("Tipo de cámara");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,7 +161,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
                             .addComponent(spr_tipoCamara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_identificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_agregar)
@@ -167,7 +176,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(slp_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(42, Short.MAX_VALUE))
+                        .addContainerGap(65, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_identificacion)
@@ -185,8 +194,6 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
                         .addGap(26, 26, 26))))
         );
 
-        setBounds(500, 300, 600, 400);
-        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

@@ -73,6 +73,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Artículos");
+        setBounds(new java.awt.Rectangle(500, 300, 600, 400));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -82,8 +83,10 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
             }
         });
 
+        lbl_descripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_descripcion.setText("Descripción");
 
+        btn_agregar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_agregar.setText("Agregar");
         btn_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,20 +94,24 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
             }
         });
 
+        txt_descripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_descripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_descripcionActionPerformed(evt);
             }
         });
 
+        txt_nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nombreActionPerformed(evt);
             }
         });
 
+        lbl_nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_nombre.setText("Nombre");
 
+        tbl_datos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -149,7 +156,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
                             .addComponent(lbl_nombre)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(slp_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -157,7 +164,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(slp_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -169,11 +176,9 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
                             .addComponent(lbl_descripcion))
                         .addGap(31, 31, 31)
                         .addComponent(btn_agregar)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        setBounds(500, 300, 600, 400);
-        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
