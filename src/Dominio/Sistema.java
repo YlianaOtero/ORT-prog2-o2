@@ -165,21 +165,6 @@ public class Sistema implements Serializable {
         
         return conVuelos;
     }
-    
-    /** @param id la identificación del dron. Se asume que es válido y pertenece a la lista de drones.
-     * @return Devuelve una lista con todos los vuelos que el correspondiente dron tiene asociados.*/
-    public ArrayList<Vuelo> vuelosDeUnDron(String id) {
-        ArrayList<Vuelo> vuelosDron = new ArrayList<Vuelo>();
-        
-        for (int pos = 0; pos < vuelos.size(); pos++) {
-            Vuelo vueloActual = vuelos.get(pos);
-            if (vueloActual.getIdDron().equals(id)) {
-                vuelosDron.add(vueloActual);
-            }
-        }
-        
-        return vuelosDron;
-    }
 
     /** @param unID La identificación del dron a buscar. Se asume que es válido y que pertenece
      * a la lista de drones del sistema.
@@ -280,6 +265,8 @@ public class Sistema implements Serializable {
         manejador.firePropertyChange("cant", vuelos.size()-1, vuelos.size());
     }
     
+    /** @param unDron El dron del cual queremos hallar los vuelos. Se asume que es válido y pertenece a la lista de drones.
+     * @return Devuelve una lista con todos los vuelos que el correspondiente dron tiene asociados.*/
     public ArrayList<Vuelo> vuelosDeUnDron(Dron unDron) {
         ArrayList<Vuelo> vuelosDron = new ArrayList<Vuelo>();
         
@@ -319,7 +306,15 @@ public class Sistema implements Serializable {
         manejador.firePropertyChange("cant", anterior, unaCarga);
     }
 
-    public void agregarListener(VentanaCargas ingresoCarga) {
-        manejador.addPropertyChangeListener(ingresoCarga); // anota interesado
+    /** Elimina una carga de la lista de cargas. Se asumen datos válidos.
+     * @param area  el área en el que se ingresó la carga a borrar
+     * @param fila la fila en la que se ingresó la carga a borrar
+     * @param col la columna en la que se ingresó la carga a borrar*/
+    public void eliminarCarga(int area, int fila, int col) {
+        cargas.get(area)[fila][col] = null;
     }
+
+    /*public void agregarListener(VentanaCargas ingresoCarga) {
+        manejador.addPropertyChangeListener(ingresoCarga); // anota interesado
+    }*/
 }
