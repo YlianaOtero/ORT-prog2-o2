@@ -10,6 +10,7 @@ import Interfaz.*;
  * @author natalia
  */
 public class Ejecucion {
+    
     public static void main(String[] args) {
         Sistema datos = cargarSistema(); 
 
