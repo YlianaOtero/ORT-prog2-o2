@@ -34,7 +34,7 @@ import javax.swing.table.TableModel;
  *
  * @author ylian
  */
-public class IngresoVuelo extends javax.swing.JFrame implements TableCellRenderer, PropertyChangeListener {
+public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoVuelo
@@ -199,8 +199,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
-        // TODO add your handling code here:
+    private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {
         String ruta = fileChooser.getSelectedFile().getAbsolutePath();
         ArchivoLectura arch = new ArchivoLectura(ruta);
         int cantLineas = 0;
@@ -209,7 +208,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         String idDron = "";
         String pos = "";
         ArrayList<String> codigosCargas = new ArrayList<String>();
-        codigosCargas.add("Archivo");
         
         while (arch.hayMasLineas()) {
             cantLineas++;
@@ -233,21 +231,14 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
            JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener 10 líneas de"
                    + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
                  "Datos incompletos",JOptionPane.ERROR_MESSAGE);
-           codigosCargas.remove(0);
            insertarEnSistema(idDron, pos, codigosCargas, ruta);
         } else {
-            insertarEnTabla(idDron, pos, codigosCargas);
-            codigosCargas.remove(0);
             insertarEnSistema(idDron, pos, codigosCargas, ruta);
-        }
-        
-    }//GEN-LAST:event_fileChooserActionPerformed
+            insertarEnTabla(idDron, pos, codigosCargas);
+        } 
+    }
 
-    private String idDron = "";
-    private String pos = "";
-    private ArrayList<String> codigosCargas = new ArrayList<String>();
     
-
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
 
@@ -262,6 +253,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         int fila;
         fila = Character.getNumericValue(pos.charAt(2));
         
+        codigos.add(0, "Archivo");
+
         cambiarVacioPorCero(codigos);
         modelo.insertRow(0,codigos.toArray());
         
@@ -269,10 +262,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             String[] manuales = datosManuales(area, fila);
             modelo.insertRow(1, manuales);
             contarDiferencias();
-        } else {
-            JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
-                    , "No hay datos para comparar",JOptionPane.INFORMATION_MESSAGE);
-        }
+        } 
     }
     
     private void cambiarVacioPorCero(ArrayList<String> codigos) {
@@ -287,10 +277,14 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         int diferencias = 0;
         int coincidencias = 10;
+
         for (int columna = 1; columna < 11; columna++) {
             String archivo = modelo.getValueAt(0, columna).toString();
-            String manual = modelo.getValueAt(1, columna).toString();
-
+            String manual = "";
+            if (modelo.getRowCount() > 0) {
+                manual = modelo.getValueAt(1, columna).toString();
+            }
+             
             if (!archivo.equals(manual)) {
                 diferencias++;
                 coincidencias--;
@@ -302,20 +296,23 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         
         ArrayList<Vuelo> vuelos = datos.getVuelos();
         int ultimo = vuelos.size()-1;
-        Vuelo actual = vuelos.get(ultimo);
-        actual.setCoincidencias(coincidencias);
-        actual.setDiferencias(diferencias);
 
+        if (ultimo >= 0) {
+            Vuelo actual = vuelos.get(ultimo);
+            actual.setCoincidencias(coincidencias);
+            actual.setDiferencias(diferencias);
+        } else {
+            System.out.println("No encontre ningun vuelo en la lista!!!!");
+        }
     }
-    public static void setCellsAlignment(JTable table, int alignment)
-    {
+
+    public static void setCellsAlignment(JTable table, int alignment) {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(alignment);
 
         TableModel tableModel = table.getModel();
 
-        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++)
-        {
+        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++) {
             table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
         }
     }
@@ -334,17 +331,23 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             Dron dronNuevo = new Dron(id, "", 1);
             dronNuevo.setTieneVuelos(true);
             datos.agregarDron(dronNuevo);
-        }
+        } 
         
         datos.agregarVuelo(nuevo);
     }
     
     private boolean hayDatosManuales(char area, int fila) {
         int areaNum = area - 65;
+        Carga[][] datosArea = cargas.get(areaNum);
+        boolean esVacio = false;
 
-        boolean esVacio = (cargas.size() < areaNum) || (cargas.get(areaNum) == null) || 
-                        (cargas.get(areaNum)[fila] == null);
-    
+        if (datosArea != null) {
+            Carga[] datosFila = datosArea[fila];
+            esVacio = datosFila == null;
+        } else {
+            esVacio = true;
+        }
+
         return !esVacio;
     }
     
@@ -353,8 +356,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         
         String[] aInsertar = new String[11];
         aInsertar[0] = "Manual";
-        
-       
+           
         Carga[] datosArea;
         datosArea = cargas.get(areaNum)[fila-1];
 
@@ -368,9 +370,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
 
             aInsertar[i+1] = codigoActual;
         }
-    
-        
-        
+
         return aInsertar;
     }
     
@@ -441,8 +441,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     
     private Sistema datos = new Sistema();
     private ArrayList<Carga[][]> cargas = datos.getCargas();
-    private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -453,35 +451,9 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JTable tbl_datos;
-    // End of variables declaration//GEN-END:variables
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-            int row, int column) {
-                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-                if (modelo.getRowCount() > 0) {
-                int diferencias = 0;
-                int coincidencias = 0;
-                
-                for (int i = 1; i <11; i++) {
-                    String archivo = (String) modelo.getValueAt(0, i);
-                    String manual = (String) modelo.getValueAt(1, i);
-                    
-                  //  Component compColumna = tbl_datos.getComponent(i);
-                    
-                    if (archivo.equals(manual)) {
-                        coincidencias++;
-                        super.setBackground(Color.GREEN);
-                    } else {
-                        diferencias++;
-                        super.setBackground(Color.red);
-                    }
-                }
-        
-                lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
-                lbl_diferencias.setText(lbl_fila.getText() + diferencias);
-            }
-        return this;
-    }
+    private String idDron = "";
+    private String pos = "";
+    private ArrayList<String> codigosCargas;
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -489,11 +461,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         tbl_datos = new TablaCustomizada();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.setRowCount(0);
-        codigosCargas.add("Archivo");
-        insertarEnTabla(idDron, pos, codigosCargas);
-
-
-        
-        
+        insertarEnTabla(idDron, pos, codigosCargas); 
     }
 }
