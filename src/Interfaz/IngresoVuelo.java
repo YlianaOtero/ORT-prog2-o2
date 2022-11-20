@@ -17,35 +17,27 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
  *
  * @author ylian
  */
-public class IngresoVuelo extends javax.swing.JFrame implements TableCellRenderer, PropertyChangeListener {
+public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoVuelo
      */
     public IngresoVuelo() {
         crearCargasPrueba();
-
-        
         initComponents();
-
-
     }
 
     public IngresoVuelo(Sistema datos) {
@@ -93,6 +85,9 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         lbl_fila = new javax.swing.JLabel();
         lbl_coincidencias = new javax.swing.JLabel();
         lbl_diferencias = new javax.swing.JLabel();
+
+        idDron = "";
+        pos = "";
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regístro de Vuelo");
@@ -201,52 +196,49 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-        String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-        ArchivoLectura arch = new ArchivoLectura(ruta);
-        int cantLineas = 0;
-        int cantLineasDeCarga = 0;
-        
-        String idDron = "";
-        String pos = "";
-        codigosCargas.clear();
-        codigosCargas.add("Archivo");
-        
-        while (arch.hayMasLineas()) {
-            cantLineas++;
-            switch (cantLineas) {
-                case 1 -> idDron = arch.linea();
-                case 2 -> pos = arch.linea();
-                default -> {
-                    codigosCargas.add(arch.linea());
-                    cantLineasDeCarga++;
+        try {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            ArchivoLectura arch = new ArchivoLectura(ruta);
+            int cantLineas = 0;
+            int cantLineasDeCarga = 0;
+            
+            idDron = "";
+            pos = "";
+            codigosCargas.clear();
+            codigosCargas.add("Archivo");
+            
+            while (arch.hayMasLineas()) {
+                cantLineas++;
+                switch (cantLineas) {
+                    case 1 -> idDron = arch.linea();
+                    case 2 -> pos = arch.linea();
+                    default -> {
+                        codigosCargas.add(arch.linea());
+                        cantLineasDeCarga++;
+                    }
                 }
             }
+            
+            arch.cerrar();
+            
+            if (cantLineas < 2) {
+                JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener "
+                       + "identificación del dron, área y fila, y los correspondientes "
+                        + "códigos de carga." , "Datos incompletos",JOptionPane.ERROR_MESSAGE);
+            } else if (cantLineasDeCarga < 10) {
+               JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener 10 líneas de"
+                       + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
+                     "Datos incompletos",JOptionPane.ERROR_MESSAGE);
+               codigosCargas.remove(0);
+               insertarEnSistema(idDron, pos, codigosCargas, ruta);
+            } else {
+                insertarEnTabla(idDron, pos, codigosCargas);
+                codigosCargas.remove(0);
+                insertarEnSistema(idDron, pos, codigosCargas, ruta);
+            }
+        } catch (NullPointerException e) {
         }
-        
-        arch.cerrar();
-        
-        if (cantLineas < 2) {
-            JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener "
-                   + "identificación del dron, área y fila, y los correspondientes "
-                    + "códigos de carga." , "Datos incompletos",JOptionPane.ERROR_MESSAGE);
-        } else if (cantLineasDeCarga < 10) {
-           JOptionPane.showMessageDialog(onp_aviso, "El archivo debe tener 10 líneas de"
-                   + " código de carga, pero se encontraron " +(cantLineasDeCarga), 
-                 "Datos incompletos",JOptionPane.ERROR_MESSAGE);
-           codigosCargas.remove(0);
-           insertarEnSistema(idDron, pos, codigosCargas, ruta);
-        } else {
-            insertarEnTabla(idDron, pos, codigosCargas);
-            codigosCargas.remove(0);
-            insertarEnSistema(idDron, pos, codigosCargas, ruta);
-        }
-        
-        
     }                                           
-
-    private String idDron = "";
-    private String pos = "";
-    
 
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
@@ -269,12 +261,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
             String[] manuales = datosManuales(area, fila);
             modelo.insertRow(1, manuales);
             contarDiferencias();
-        } else {
-            JOptionPane.showMessageDialog(onp_aviso, "No se encontraron cargas en esa posicion. "
-                    , "No hay datos para comparar",JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        
+        }  
     }
     
     private void cambiarVacioPorCero(ArrayList<String> codigos) {
@@ -307,8 +294,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         
         if (ultimo > -1) {
             Vuelo actual = vuelos.get(ultimo);
-        actual.setCoincidencias(coincidencias);
-        actual.setDiferencias(diferencias);
+            actual.setCoincidencias(coincidencias);
+            actual.setDiferencias(diferencias);
         } else {
             System.out.println("no hay vuelos para contar diferencias");
         }
@@ -338,7 +325,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         if (datos.identificacionDronYaExistente(idDron)) {
             Dron dronActual = datos.buscarDronPorID(id);
             dronActual.setTieneVuelos(true);
-        } 
+        } else {
+            JOptionPane.showMessageDialog(onp_aviso, "No se ha registrado ningun dron "
+                   + "con la identificación del archivo. \nTenga en cuenta que si desea ver las estadísticas "
+                    + "para este dron, deberá registrarlo primero." , "Dron inexistente", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         datos.agregarVuelo(nuevo);
     }
@@ -372,8 +363,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
 
             aInsertar[i+1] = codigoActual;
         }
-    
-        
         
         return aInsertar;
     }
@@ -444,9 +433,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     
     
     private Sistema datos = new Sistema();
-    private ArrayList<Carga[][]> cargas = datos.getCargas();
-    private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
-    // Variables declaration - do not modify                     
+    private ArrayList<Carga[][]> cargas = datos.getCargas();             
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -457,36 +444,9 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JTable tbl_datos;
-    // End of variables declaration                   
-   private ArrayList<String> codigosCargas;
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-            int row, int column) {
-                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-                if (modelo.getRowCount() > 0) {
-                int diferencias = 0;
-                int coincidencias = 0;
-                
-                for (int i = 1; i <11; i++) {
-                    String archivo = (String) modelo.getValueAt(0, i);
-                    String manual = (String) modelo.getValueAt(1, i);
-                    
-                  //  Component compColumna = tbl_datos.getComponent(i);
-                    
-                    if (archivo.equals(manual)) {
-                        coincidencias++;
-                        super.setBackground(Color.GREEN);
-                    } else {
-                        diferencias++;
-                        super.setBackground(Color.red);
-                    }
-                }
-        
-                lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
-                lbl_diferencias.setText(lbl_fila.getText() + diferencias);
-            }
-        return this;
-    }
+    private String idDron;
+    private String pos;     
+    private ArrayList<String> codigosCargas;
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

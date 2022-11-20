@@ -132,7 +132,7 @@ public class Sistema implements Serializable {
             Dron dronActual = drones.get(pos);
             String identificacionActual = dronActual.getIdentificacion();
             
-            existe = identificacionActual.equals(unIdentificacion);
+            existe = identificacionActual.equalsIgnoreCase(unIdentificacion);
         }
         
         return existe;
@@ -278,6 +278,18 @@ public class Sistema implements Serializable {
         }
         
         return vuelosDron;
+    }
+
+    public boolean tieneVuelosEnLista(Dron unDron) {
+        boolean tiene = false;
+
+        String idDron = unDron.getIdentificacion();
+        for (int pos = 0; pos < vuelos.size() && !tiene; pos++) {
+            String idActual = vuelos.get(pos).getIdDron();
+            tiene = idActual.equalsIgnoreCase(idDron);
+        }
+
+        return tiene;
     }
 
     public void agregarListener(IngresoVuelo ingresoVuelo) {
