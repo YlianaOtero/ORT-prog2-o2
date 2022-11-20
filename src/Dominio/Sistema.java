@@ -280,6 +280,10 @@ public class Sistema implements Serializable {
         return vuelosDron;
     }
 
+    /** Recorre la lista de vuelos del sistema para verificar si un dron tiene
+     * vuelos registrados en ella.
+     * @param unDron el dron del cual se quiere saber si tiene vuelos registrados.
+     * @return True si tiene vuelos, False en caso contrario.*/
     public boolean tieneVuelosEnLista(Dron unDron) {
         boolean tiene = false;
 
@@ -326,6 +330,11 @@ public class Sistema implements Serializable {
         cargas.get(area)[fila][col] = null;
     }
     
+    /** Recorre la lista de cargas buscando el codigo que se le pasa por parametro.
+     * Es una manera de, antes de agregar cargas, verificar que el código que se quiere
+     * utilizar sea único.
+     * @param codigo el código de una carga.
+     * @return  True si se encuentra en la lista de cargas, False en caso contrario.*/
     public boolean codigoCargaYaExistente(String codigo) {
         boolean encontrado = false;
         
