@@ -27,7 +27,7 @@ public class Ejecucion {
         
            datos.crearManejador();
         } catch (IOException | ClassNotFoundException | NullPointerException ex) {
-            datos =  new Sistema(true);
+            datos =  new Sistema();
         }
         
         return datos;

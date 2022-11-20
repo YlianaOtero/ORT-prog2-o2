@@ -12,18 +12,18 @@ import java.util.ArrayList;
 /** Clase principal del programa. Funciona como una base de datos.
  * @author yliana*/
 public class Sistema implements Serializable {
+    public static String [] areas = { "A","B","C","D","E"};
     private ArrayList<Articulo> articulos;
     private ArrayList<Dron> drones;
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Carga[][]> cargas;
     private ArrayList<Vuelo> vuelos;
-    public String [] areas = { "A","B","C","D","E"};
     transient private PropertyChangeSupport manejador;
     
     /** Crea un objeto de tipo Sistema.
      * @param sistemaPrecargado si es True, se debe intentar cargar los datos del sistema desde archivos existentes.
      * Si es False, es debe crear todo desde cero.*/
-    public Sistema(boolean sistemaPrecargado) {
+    public Sistema() {
         this.manejador = new PropertyChangeSupport(this);
         
         articulos = new ArrayList<Articulo>();

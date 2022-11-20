@@ -86,7 +86,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_datos = new MyTable()
+        tbl_datos = new TablaCustomizada()
         ;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -446,7 +446,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     }
     
     
-    private Sistema datos = new Sistema(true);
+    private Sistema datos = new Sistema();
     private ArrayList<Carga[][]> cargas = datos.getCargas();
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .txt", "txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -493,7 +493,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements TableCellRendere
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO Auto-generated method stub
-        tbl_datos = new MyTable();
+        tbl_datos = new TablaCustomizada();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.setRowCount(0);
         codigosCargas.add("Archivo");
