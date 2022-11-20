@@ -17,16 +17,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -34,7 +31,7 @@ import javax.swing.table.TableModel;
  *
  * @author ylian
  */
-public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeListener {
+public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeListener, TableCellRenderer {
 
     /**
      * Creates new form IngresoVuelo
@@ -51,7 +48,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     public IngresoVuelo(Sistema datos) {
         this.datos = datos;
         this.cargas = datos.getCargas();
-        
+        datos.agregarListener(this);
+
         initComponents();
     } 
     
@@ -81,13 +79,14 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        codigosCargas = new ArrayList<String>();
+        idDron = " ";
+        pos = "   ";
         onp_aviso = new javax.swing.JOptionPane();
         fileChooser = new javax.swing.JFileChooser();
         modificarFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_datos = new TablaCustomizada()
-        ;
+        tbl_datos = new TablaCustomizada();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_area = new javax.swing.JLabel();
@@ -200,14 +199,11 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("Estoy en fileChooserActionPerformed");
         String ruta = fileChooser.getSelectedFile().getAbsolutePath();
         ArchivoLectura arch = new ArchivoLectura(ruta);
         int cantLineas = 0;
         int cantLineasDeCarga = 0;
-        
-        String idDron = "";
-        String pos = "";
-        ArrayList<String> codigosCargas = new ArrayList<String>();
         
         while (arch.hayMasLineas()) {
             cantLineas++;
@@ -215,7 +211,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
                 case 1 -> idDron = arch.linea();
                 case 2 -> pos = arch.linea();
                 default -> {
-                    codigosCargas.add(arch.linea());
+                    this.codigosCargas.add(arch.linea());
                     cantLineasDeCarga++;
                 }
             }
@@ -240,6 +236,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
 
     
     private void insertarEnTabla(String id, String pos, ArrayList<String> codigos) {
+        System.out.println("Estoy en insertarEnTabla");
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
 
         if (modelo.getRowCount() != 0) {
@@ -266,6 +263,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
     
     private void cambiarVacioPorCero(ArrayList<String> codigos) {
+        System.out.println("Estoy en cambiarVacioPorCero");
         for (int i = 0; i < codigos.size(); i++) {
             if (codigos.get(i).isBlank()) {
                 codigos.set(i, "0");
@@ -274,6 +272,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
 
     private void contarDiferencias() {
+        System.out.println("Estoy en contarDiferencias");
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         int diferencias = 0;
         int coincidencias = 10;
@@ -307,6 +306,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
 
     public static void setCellsAlignment(JTable table, int alignment) {
+        System.out.println("Estoy en setCellsAlignment");
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(alignment);
 
@@ -318,6 +318,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
     
     private void insertarEnSistema(String id, String pos, ArrayList<String> codigos, String archivo) {
+        System.out.println("Estoy en insertarEnSistema");
         char area = pos.charAt(0);
         int fila =  Character.getNumericValue(pos.charAt(2));
         String[] codigosCargas = codigos.toArray((String[]::new));
@@ -337,6 +338,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
     
     private boolean hayDatosManuales(char area, int fila) {
+        System.out.println("Estoy en hayDatosManuales");
+
         int areaNum = area - 65;
         Carga[][] datosArea = cargas.get(areaNum);
         boolean esVacio = false;
@@ -352,6 +355,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }
     
     private String[] datosManuales(char area, int fila) {
+        System.out.println("Estoy en datosManuales");
+
         int areaNum = area - 65;
         
         String[] aInsertar = new String[11];
@@ -376,6 +381,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     
     
     private void modificarFileChooser() {
+        System.out.println("Estoy en modificarFileChooser");
+
         UIManager.put("FileChooser.lookInLabelText","Mirar en:");
         UIManager.put("FileChooser.saveButtonText","Guardar");
         UIManager.put("FileChooser.openButtonText","Abrir");
@@ -451,16 +458,62 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     private javax.swing.JLabel lbl_fila;
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JTable tbl_datos;
-    private String idDron = "";
-    private String pos = "";
+    private String idDron;
+    private String pos;
     private ArrayList<String> codigosCargas;
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Entre a propertyChange");
         // TODO Auto-generated method stub
         tbl_datos = new TablaCustomizada();
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         modelo.setRowCount(0);
-        insertarEnTabla(idDron, pos, codigosCargas); 
+
+        int ultimo = datos.getVuelos().size();
+        Vuelo ultimoVuelo = datos.getVuelos().get(ultimo-1);
+
+        String idDronAux = ultimoVuelo.getIdDron();
+        String posAux = ultimoVuelo.getArea() + "#" + ultimoVuelo.getFila();
+
+        ArrayList<String> codigosCargasAux = new ArrayList<String>();
+        String[] arregloCodigos = ultimoVuelo.getCargas();
+
+        for (int i = 0; i < arregloCodigos.length; i++) {
+            codigosCargasAux.add(arregloCodigos[i]);
+        }
+        
+        insertarEnTabla(idDronAux, posAux, codigosCargasAux); 
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
+        System.out.println("Estoy en getTableCellRendererComponent");
+
+                DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
+                if (modelo.getRowCount() > 0) {
+                int diferencias = 0;
+                int coincidencias = 0;
+                
+                for (int i = 1; i <11; i++) {
+                    String archivo = (String) modelo.getValueAt(0, i);
+                    String manual = (String) modelo.getValueAt(1, i);
+                    
+                  //  Component compColumna = tbl_datos.getComponent(i);
+                    
+                    if (archivo.equals(manual)) {
+                        coincidencias++;
+                        super.setBackground(Color.GREEN);
+                    } else {
+                        diferencias++;
+                        super.setBackground(Color.red);
+                    }
+                }
+        
+                lbl_coincidencias.setText(lbl_area.getText() + coincidencias);
+                lbl_diferencias.setText(lbl_fila.getText() + diferencias);
+            }
+        return this;
     }
 }
