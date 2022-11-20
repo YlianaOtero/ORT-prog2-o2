@@ -5,26 +5,22 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.Color;
 
-public class MyTable extends JTable {
+public class TablaCustomizada extends JTable {
     private int coincidencias;
+    private int diferencias;
+
     public int getCoincidencias() {
         return coincidencias;
     }
 
-
-
     public int getDiferencias() {
         return diferencias;
     }
-
-    private int diferencias;
-
-    public MyTable() {
+    
+    public TablaCustomizada() {
         this.coincidencias = 0;
         this.diferencias = 0;
     }
-
-    
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int columna) {
@@ -61,7 +57,6 @@ public class MyTable extends JTable {
         
         DefaultTableModel modelo = (DefaultTableModel) super.getModel();
         String archivo = modelo.getValueAt(0, columna).toString();
-        String manual = modelo.getValueAt(1, columna).toString();
         
         debe = archivo.equals("Archivo");
         
