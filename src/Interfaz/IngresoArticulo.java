@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Dominio.Articulo;
@@ -13,10 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author ylian
- */
+/** Ventana para registrar artículos
+ * @author yliana*/
 public class IngresoArticulo extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
@@ -226,43 +220,6 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(IngresoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new IngresoArticulo().setVisible(true);
-//            }
-//        });
-//    }
-
     private ArrayList<Articulo> articulos;
     private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -275,6 +232,7 @@ public class IngresoArticulo extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables
+    
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         limpiarTabla();
