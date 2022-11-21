@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Dominio.Funcionario;
@@ -231,7 +227,6 @@ public class IngresoFuncionario extends javax.swing.JFrame implements PropertyCh
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-      //  guardarPersonal();
     }//GEN-LAST:event_formWindowClosing
 
     private ArrayList<Funcionario> funcionarios;
