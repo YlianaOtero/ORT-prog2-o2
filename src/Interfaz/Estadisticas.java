@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Dominio.Dron;
@@ -10,10 +6,8 @@ import Dominio.Vuelo;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ylian
- */
+/** Ventana de Estadísticas.
+ * @author yliana*/
 public class Estadisticas extends javax.swing.JFrame {
 
     /**
@@ -25,9 +19,7 @@ public class Estadisticas extends javax.swing.JFrame {
 
     public Estadisticas(Sistema datos) {
         this.datos = datos;
-        
         initComponents();
-        
         cargarListasDrones();
     }
     
@@ -139,12 +131,10 @@ public class Estadisticas extends javax.swing.JFrame {
     private void btn_verVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verVuelosActionPerformed
         // TODO add your handling code here:
         if (lst_dronesConVuelos.isSelectionEmpty() || !lst_dronesSinVuelos.isSelectionEmpty()) {
-            System.out.println("Por favor, elija un dron de la lista de drones con vuelos.");
             JOptionPane.showMessageDialog(onp_aviso, "Por favor, elija un dron de"
                    + " la lista de drones con vuelos.", 
                  "No hay vuelos",JOptionPane.ERROR_MESSAGE);
         } else {
-            System.out.println("Bien.");
             Dron dronSeleccionado = datos.buscarDronPorID(lst_dronesConVuelos.getSelectedValue());
             cargarListaVuelo(dronSeleccionado);
         } 
@@ -154,41 +144,6 @@ public class Estadisticas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lst_dronesSinVuelosValueChanged
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Estadisticas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Estadisticas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Estadisticas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Estadisticas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Estadisticas().setVisible(true);
-//            }
-//        });
-//    }
-    
     private String datosVuelo(Vuelo unVuelo) {
         String datosVuelo = new String();
         datosVuelo = "Archivo: " + unVuelo.getArchivo() + " \n "
@@ -201,7 +156,6 @@ public class Estadisticas extends javax.swing.JFrame {
         } else {
             datosVuelo += "Lineas de carga: " + unVuelo.getCargas().length +" ";
         }
-        
         
         return datosVuelo;    
     }
@@ -216,9 +170,7 @@ public class Estadisticas extends javax.swing.JFrame {
         
         lst_vuelosDelDron.setListData(info);
     }
-    
-    
-    
+     
     private void cargarListasDrones() {
       ArrayList<Dron> dronesConVuelos = datos.dronesConVuelos();
       ArrayList<Dron> dronesSinVuelos = datos.dronesSinVuelos();  
@@ -252,6 +204,4 @@ public class Estadisticas extends javax.swing.JFrame {
     private javax.swing.JOptionPane onp_aviso;
     // End of variables declaration//GEN-END:variables
     private Sistema datos;
-    
-    
 }
