@@ -319,7 +319,7 @@ public class Sistema implements Serializable {
     public void agregarCarga(int area, int fila, int col, Carga unaCarga) {
         Carga anterior = cargas.get(area)[fila][col];
         cargas.get(area)[fila][col] = unaCarga;
-        manejador.firePropertyChange("cant", anterior, unaCarga);
+        manejador.firePropertyChange("cargaEnPos", anterior, unaCarga);
     }
 
     /** Elimina una carga de la lista de cargas. Se asumen datos válidos.
@@ -327,7 +327,9 @@ public class Sistema implements Serializable {
      * @param fila la fila en la que se ingresó la carga a borrar
      * @param col la columna en la que se ingresó la carga a borrar*/
     public void eliminarCarga(int area, int fila, int col) {
+        Carga anterior = cargas.get(area)[fila][col];
         cargas.get(area)[fila][col] = null;
+        manejador.firePropertyChange("cargaEnPos", anterior, null);
     }
     
     /** Recorre la lista de cargas buscando el codigo que se le pasa por parametro.
@@ -352,7 +354,7 @@ public class Sistema implements Serializable {
         return encontrado;
     }
 
-    /*public void agregarListener(VentanaCargas ingresoCarga) {
+    public void agregarListener(VentanaCargas ingresoCarga) {
         manejador.addPropertyChangeListener(ingresoCarga); // anota interesado
-    }*/
+    }
 }
