@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Dominio.Dron;
@@ -236,7 +232,6 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
-
     private ArrayList<Dron> drones;
     private Sistema datos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -251,6 +246,7 @@ public class IngresoDron extends javax.swing.JFrame implements PropertyChangeLis
     private javax.swing.JTextField txt_identificacion;
     private javax.swing.JTextField txt_modelo;
     // End of variables declaration//GEN-END:variables
+    
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         limpiarTabla();
