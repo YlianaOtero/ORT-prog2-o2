@@ -1,19 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Dominio.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-/**
- *
- * @author nalux
- */
+/** Ventana de ingreso y egreso manual de cargas.
+ * @author natalia*/
 public class VentanaCargas extends javax.swing.JFrame {
 
     /**
@@ -27,15 +23,15 @@ public class VentanaCargas extends javax.swing.JFrame {
     public VentanaCargas(Sistema unSistema) {
         try {
             this.sistema = unSistema;
-
-            this.funcionarios = this.sistema.getFuncionarios();
-            this.articulos = this.sistema.getArticulos();
         } catch (NullPointerException e) {
             this.sistema = new Sistema();
+        } finally {
             this.funcionarios = this.sistema.getFuncionarios();
             this.articulos = this.sistema.getArticulos();
         }
 
+//        sistema.agregarListener(this);
+        
         initComponents();
         generateButtons();
     }
@@ -275,20 +271,22 @@ public class VentanaCargas extends javax.swing.JFrame {
            egreso();
            PanelIngresoEgreso.setBackground(Color.BLUE);
         } else {
-           eliminar();
+           eliminarCargaManual();
            ingreso();
            PanelIngresoEgreso.setBackground(Color.GREEN);
+           ultimaAccion = "Egreso";
         }
     }
-        
-        
-    private void eliminar() {
+    
+    /** Elimina la carga que está en la posición seleccionada.*/
+    private void eliminarCargaManual() {
         sistema.eliminarCarga(contador, filaSeleccionada, colSeleccionada);
         JOptionPane.showMessageDialog(onp_aviso,
                             "La carga fue egresada correctamente.", "Carga egresada",
                             + JOptionPane.INFORMATION_MESSAGE);
     }
-        /** Asumiendo que los datos cantArticulos y codigoCargas son correctos, y que
+        
+    /** Asumiendo que los datos cantArticulos y codigoCargas son correctos, y que
      * el usuario seleccionó un funcionario y un articulo de las listas correspondientes,
      * crea una carga con esos datos y la agrega a la lista.
      * @param cantArticulos cantidad de articulos que hay en la carga
@@ -331,6 +329,7 @@ public class VentanaCargas extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(onp_aviso,
                             "La carga fue ingresada correctamente.", "Carga ingresada",
                             + JOptionPane.INFORMATION_MESSAGE);
+                        ultimaAccion = "Ingreso";
                     } else {
                         JOptionPane.showMessageDialog(onp_aviso,
                         "La cantidad debe ser mayor a cero", "Datos incorrectos",
@@ -353,6 +352,7 @@ public class VentanaCargas extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jButtonIngrEgrActionPerformed
 
+    /** Crea los botones y los carga en la grilla de botones.*/
     public void generateButtons() {
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 10; j++) {
@@ -370,42 +370,81 @@ public class VentanaCargas extends javax.swing.JFrame {
             }
         }
     }
+    
+    /** Muestra el panel de ingreso.*/
+    public void ingreso() {
+        jLabelIngEgr.setText("Ingreso");
+        jLabelFun.setText("Funcionarios");
+        jLabelArt.setText("Articulos");
+        jLabelCant.setText("Cantidad");
+        jLabelCodigo.setText("Codigo");
+        jButtonIngrEgr.setText("Ingresar");
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(VentanaCargas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new VentanaCargas().setVisible(true);
-//            }
-//        });
-//    }
+        String f[] = new String[sistema.getFuncionarios().size()];
+        for (int i = 0; i < f.length; i++) {
+            f[i] = sistema.getFuncionarios().get(i).getNombre();
+        }
+
+        listaFun.setListData(f);
+
+        String a[] = new String[sistema.getArticulos().size()];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = sistema.getArticulos().get(i).getNombre();
+        }
+        listaArt.setListData(a);
+
+        jLabelIngEgr.setVisible(true);
+        jButtonIngrEgr.setVisible(true);
+        
+        visibilidadContenidoDeEgreso(false);
+    }
+    
+    /** Muestra el panel de egreso.*/
+    public void egreso() {
+        jButtonIngrEgr.setVisible(true);
+        jLabelIngEgr.setVisible(true);
+        
+        jLabelIngEgr.setText("Egreso");
+        jLabelArtEg.setText("Articulos");
+        jLabelCantEg.setText("Cantidad");
+        jLabelCodEg.setText("Codigo");
+        jLabelFunEg.setText("Funcionarios");
+        jButtonIngrEgr.setText("Egresar");
+
+        Carga cargaActual = sistema.getCargas().get(contador)[filaSeleccionada][colSeleccionada];
+ 
+        labelart.setText(cargaActual.getArticulo().getNombre());
+        labelcant.setText(String.valueOf(cargaActual.getCantUnidades()));
+        labelcod.setText(cargaActual.getCodigo());
+        labelfun.setText(cargaActual.getFuncionario().getNombre());
+        
+        visibilidadContenidoDeEgreso(true);
+    }
+
+    /** Marca algunos de los atributos del panel de ingreso/egreso como visibles
+     * o no, segun qué panel se quiere mostrar.
+     * @param sonVisibles debería ser True cuando se quiere mostrar el panel de egreso,
+     * y False cuando se quiere mostrar el de ingreso.*/
+    public void visibilidadContenidoDeEgreso(boolean sonVisibles) {
+        jLabelArtEg.setVisible(sonVisibles);
+        jLabelCantEg.setVisible(sonVisibles);
+        jLabelCodEg.setVisible(sonVisibles);
+        jLabelFunEg.setVisible(sonVisibles);
+        
+        labelart.setVisible(sonVisibles);
+        labelcant.setVisible(sonVisibles);
+        labelcod.setVisible(sonVisibles);
+        labelfun.setVisible(sonVisibles);
+        
+        jLabelFun.setVisible(!sonVisibles);
+        jLabelArt.setVisible(!sonVisibles);
+        jLabelCant.setVisible(!sonVisibles);
+        jLabelCodigo.setVisible(!sonVisibles);
+        jTextFieldCant.setVisible(!sonVisibles);
+        jTextFieldCod.setVisible(!sonVisibles);
+        jScrollPane1.setVisible(!sonVisibles);
+        jScrollPane2.setVisible(!sonVisibles);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelIngresoEgreso;
@@ -435,21 +474,29 @@ public class VentanaCargas extends javax.swing.JFrame {
     private javax.swing.JOptionPane onp_aviso;
     private javax.swing.JPanel panelEspacios;
     // End of variables declaration//GEN-END:variables
-
     private Sistema sistema;
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Articulo> articulos;
-
     int contador = 0;
     private JButton botonAnterior;
-    private int filaSeleccionada;
-    private int colSeleccionada;
+    private static int filaSeleccionada;
+    private static int colSeleccionada;
+    private static String ultimaAccion = "";
+
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        if (ultimaAccion.equals("Egreso")) {
+//            egreso();
+//            PanelIngresoEgreso.setBackground(Color.BLUE);
+//        } else {
+//            ingreso();
+//            PanelIngresoEgreso.setBackground(Color.GREEN);
+//        }
+//    }
 
     private class EspacioListener implements ActionListener {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
-// este código se ejecutará al presionar el botón, obtengo cuál botón
-
             JButton cual = ((JButton) e.getSource());
             cual.setBackground(Color.red);
             botonAnterior.setBackground(Color.GRAY);
@@ -457,110 +504,19 @@ public class VentanaCargas extends javax.swing.JFrame {
             String[] parts = pos.split("\\.");
             int part1 = Integer.parseInt(parts[0]);
             int part2 = Integer.parseInt(parts[1]);
+            
             filaSeleccionada = part1 - 1;
             colSeleccionada = part2 - 1;
+            
             if (sistema.getCargas().get(contador)[part1 - 1][part2 - 1] == null) {
                 ingreso();
                 PanelIngresoEgreso.setBackground(Color.GREEN);
             } else {
                 egreso();
                 PanelIngresoEgreso.setBackground(Color.BLUE);
-
             }
 
-
             botonAnterior = cual;
-
         }
-    }
-
-    public void ingreso() {
-
-        jLabelIngEgr.setText("Ingreso");
-        jLabelFun.setText("Funcionarios");
-        jLabelArt.setText("Articulos");
-        jLabelCant.setText("Cantidad");
-        jLabelCodigo.setText("Codigo");
-        jButtonIngrEgr.setText("Ingresar");
-
-        String f[] = new String[sistema.getFuncionarios().size()];
-        for (int i = 0; i < f.length; i++) {
-            f[i] = sistema.getFuncionarios().get(i).getNombre();
-        }
-
-        listaFun.setListData(f);
-
-        String a[] = new String[sistema.getArticulos().size()];
-        for (int i = 0; i < a.length; i++) {
-            a[i] = sistema.getArticulos().get(i).getNombre();
-        }
-        listaArt.setListData(a);
-
-        jLabelIngEgr.setVisible(true);
-        jLabelFun.setVisible(true);
-        jLabelArt.setVisible(true);
-        jLabelCant.setVisible(true);
-        jLabelCodigo.setVisible(true);
-        jTextFieldCant.setVisible(true);
-        jTextFieldCod.setVisible(true);
-
-        jButtonIngrEgr.setVisible(true);
-        jScrollPane1.setVisible(true);
-        jScrollPane2.setVisible(true);
-
-
-        jLabelArtEg.setVisible(false);
-        jLabelCantEg.setVisible(false);
-        jLabelCodEg.setVisible(false);
-        jLabelFunEg.setVisible(false);
-
-        labelart.setVisible(false);
-        labelcant.setVisible(false);
-        labelcod.setVisible(false);
-        labelfun.setVisible(false);
-    }
-
-    
-    
-    public void egreso() {
-
-        jLabelIngEgr.setText("Egreso");
-        jLabelArtEg.setText("Articulos");
-        jLabelCantEg.setText("Cantidad");
-        jLabelCodEg.setText("Codigo");
-        jLabelFunEg.setText("Funcionarios");
-        jButtonIngrEgr.setText("Egresar");
-
-        Carga cargaActual = sistema.getCargas().get(contador)[filaSeleccionada][colSeleccionada];
- 
-        labelart.setText(cargaActual.getArticulo().getNombre());
-        labelcant.setText(String.valueOf(cargaActual.getCantUnidades()));
-        labelcod.setText(cargaActual.getCodigo());
-        labelfun.setText(cargaActual.getFuncionario().getNombre());
-        
-        
-        jLabelIngEgr.setVisible(true);
-        jLabelArtEg.setVisible(true);
-        jLabelCantEg.setVisible(true);
-        jLabelCodEg.setVisible(true);
-        jLabelFunEg.setVisible(true);
-        jButtonIngrEgr.setVisible(true);
-        labelart.setVisible(true);
-        labelcant.setVisible(true);
-        labelcod.setVisible(true);
-        labelfun.setVisible(true);
-      
-       
-        jLabelFun.setVisible(false);
-        jLabelArt.setVisible(false);
-        jLabelCant.setVisible(false);
-        jLabelCodigo.setVisible(false);
-        jTextFieldCant.setVisible(false);
-        jTextFieldCod.setVisible(false);
-        jScrollPane1.setVisible(false);
-        jScrollPane2.setVisible(false);
-        
-        
-
     }
 }

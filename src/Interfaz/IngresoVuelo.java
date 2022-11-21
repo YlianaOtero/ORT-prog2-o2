@@ -1,23 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
-import Dominio.Articulo;
 import Dominio.Carga;
 import Dominio.Dron;
-import Dominio.Funcionario;
 import Dominio.Sistema;
 import Dominio.Vuelo;
 import IO.ArchivoLectura;
-import java.awt.Color;
-import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -26,17 +17,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author ylian
- */
+/** Ventana para ingresar vuelos.
+ * @author yliana*/
 public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeListener {
 
     /**
      * Creates new form IngresoVuelo
      */
     public IngresoVuelo() {
-        crearCargasPrueba();
         initComponents();
     }
 
@@ -47,24 +35,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
         initComponents();
     } 
     
-    private void crearCargasPrueba() {
-        Funcionario f = new Funcionario("Yliana", 20);
-        Articulo a = new Articulo("Test", "test");
-        datos.resetCargas();
-        for (int i = 0; i < 10; i++) {
-            char codigo = (char)(i+1 + '0');
-            String cod = Character.toString(codigo);
-            if (i == 0) {
-                cod = "1";
-            } else if (i == 3) {
-                cod = "3";
-            }
-            Carga c1 = new Carga(f, a, i, cod);
-            
-            cargas.get(0)[0][i] = c1;
-        }
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,7 +99,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
             tbl_datos.getColumnModel().getColumn(9).setResizable(false);
             tbl_datos.getColumnModel().getColumn(10).setResizable(false);
         }
-        setCellsAlignment(tbl_datos, SwingConstants.CENTER);
+        centrarCeldas();
         codigosCargas = new ArrayList<String>();
 
         jLabel2.setText(" ");
@@ -195,7 +165,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
     }// </editor-fold>                        
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
         try {
             String ruta = fileChooser.getSelectedFile().getAbsolutePath();
             ArchivoLectura arch = new ArchivoLectura(ruta);
@@ -237,6 +206,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
                 insertarEnSistema(idDron, pos, codigosCargas, ruta);
             }
         } catch (NullPointerException e) {
+            //No hacer nada
         }
     }                                           
 
@@ -264,6 +234,65 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
         }  
     }
     
+    private void insertarEnSistema(String id, String pos, ArrayList<String> codigos, String archivo) {
+        char area = pos.charAt(0);
+        int fila =  Character.getNumericValue(pos.charAt(2));
+        String[] codigosCargas = codigos.toArray((String[]::new));
+        
+        Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas, archivo);
+        
+        if (datos.identificacionDronYaExistente(idDron)) {
+            Dron dronActual = datos.buscarDronPorID(id);
+            dronActual.setTieneVuelos(true);
+        } else {
+            JOptionPane.showMessageDialog(onp_aviso, "No se ha registrado ningun dron "
+                   + "con la identificación del archivo. \nTenga en cuenta que si desea ver las estadísticas "
+                    + "para este dron, deberá registrarlo primero." , "Dron inexistente", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        datos.agregarVuelo(nuevo);
+    }
+    
+    /**Chequea que en esa area y fila haya al menos una carga en una fila.
+     * @return True si hay datos en esa area y fila, False en caso contrario.*/
+    private boolean hayDatosManuales(char area, int fila) {
+        int areaNum = area - 65;
+        Carga[] datosArea;
+        datosArea = cargas.get(areaNum)[fila];
+        
+        return datosArea != null;
+    }
+    
+    /** @param area un área del inventario.
+     * @param fila una fila del inventario.
+     * @return Un arreglo con los códigos de las cargas insertadas manualmente
+     * en esa área y fila puntual.*/
+    private String[] datosManuales(char area, int fila) {
+        int areaNum = area - 65;
+        
+        String[] aInsertar = new String[11];
+        aInsertar[0] = "Manual";
+        
+       
+        Carga[] datosArea;
+        datosArea = cargas.get(areaNum)[fila-1];
+
+        for (int i = 0; i < 10; i++) {
+            String codigoActual;
+            if (datosArea[i] != null) {
+                codigoActual = datosArea[i].getCodigo();
+            } else {
+                codigoActual = "";
+            }
+
+            aInsertar[i+1] = codigoActual;
+        }
+        
+        return aInsertar;
+    }
+    
+    /** Busca todos los strings vacios y los cambia por 0.
+     * @param codigos los códigos de carga que fueron ingresados en el archivo de un vuelo.*/
     private void cambiarVacioPorCero(ArrayList<String> codigos) {
         for (int i = 0; i < codigos.size(); i++) {
             if (codigos.get(i).isBlank()) {
@@ -272,6 +301,8 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
         }
     }
 
+    /** Identifica diferencias entre las cargas registradas por un dron, y las registradas
+    * manualmente. Muestra la cantidad de diferencias y coincidencias en la ventana.*/
     private void contarDiferencias() {
         DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
         int diferencias = 0;
@@ -299,75 +330,21 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
         } else {
             System.out.println("no hay vuelos para contar diferencias");
         }
-        
-
     }
-    public static void setCellsAlignment(JTable table, int alignment)
-    {
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(alignment);
+    
+    public void centrarCeldas() {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        TableModel modelo = tbl_datos.getModel();
+        
+        int alineacion = SwingConstants.CENTER;
+        renderer.setHorizontalAlignment(alineacion);
 
-        TableModel tableModel = table.getModel();
-
-        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++)
-        {
-            table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
+        for (int col = 1; col < modelo.getColumnCount(); col++){
+            tbl_datos.getColumnModel().getColumn(col).setCellRenderer(renderer);
         }
     }
     
-    private void insertarEnSistema(String id, String pos, ArrayList<String> codigos, String archivo) {
-        char area = pos.charAt(0);
-        int fila =  Character.getNumericValue(pos.charAt(2));
-        String[] codigosCargas = codigos.toArray((String[]::new));
-        
-        Vuelo nuevo = new Vuelo(id, area, fila, codigosCargas, archivo);
-        
-        if (datos.identificacionDronYaExistente(idDron)) {
-            Dron dronActual = datos.buscarDronPorID(id);
-            dronActual.setTieneVuelos(true);
-        } else {
-            JOptionPane.showMessageDialog(onp_aviso, "No se ha registrado ningun dron "
-                   + "con la identificación del archivo. \nTenga en cuenta que si desea ver las estadísticas "
-                    + "para este dron, deberá registrarlo primero." , "Dron inexistente", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        datos.agregarVuelo(nuevo);
-    }
-    
-    private boolean hayDatosManuales(char area, int fila) {
-        int areaNum = area - 65;
-        Carga[] datosArea;
-        datosArea = cargas.get(areaNum)[fila];
-        
-        return datosArea != null;
-        
-    }
-    
-    private String[] datosManuales(char area, int fila) {
-        int areaNum = area - 65;
-        
-        String[] aInsertar = new String[11];
-        aInsertar[0] = "Manual";
-        
-       
-        Carga[] datosArea;
-        datosArea = cargas.get(areaNum)[fila-1];
-
-        for (int i = 0; i < 10; i++) {
-            String codigoActual;
-            if (datosArea[i] != null) {
-                codigoActual = datosArea[i].getCodigo();
-            } else {
-                codigoActual = "";
-            }
-
-            aInsertar[i+1] = codigoActual;
-        }
-        
-        return aInsertar;
-    }
-    
-    
+    /**Settea el texto del File Chooser para ponerlo en español.*/
     private void modificarFileChooser() {
         UIManager.put("FileChooser.lookInLabelText","Mirar en:");
         UIManager.put("FileChooser.saveButtonText","Guardar");
@@ -396,42 +373,7 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
         
         SwingUtilities.updateComponentTreeUI(fileChooser);
     }
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(IngresoVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(IngresoVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(IngresoVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(IngresoVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new IngresoVuelo().setVisible(true);
-//            }
-//        });
-//    }
-    
-    
+
     private Sistema datos = new Sistema();
     private ArrayList<Carga[][]> cargas = datos.getCargas();             
     private javax.swing.JFileChooser fileChooser;
@@ -450,12 +392,6 @@ public class IngresoVuelo extends javax.swing.JFrame implements PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Entre a propertyChange");
-        // TODO Auto-generated method stub
-    //    tbl_datos = new TablaCustomizada();
-      //   DefaultTableModel modelo = (DefaultTableModel) tbl_datos.getModel();
-      //  modelo.setRowCount(0);
-
         int ultimo = datos.getVuelos().size();
         Vuelo ultimoVuelo = datos.getVuelos().get(ultimo-1);
 
